@@ -1,5 +1,8 @@
 import Observation
 import Foundation
+#if os(iOS)
+import AVFoundation
+#endif
 
 // MARK: - Connection State
 
@@ -80,6 +83,37 @@ final class ConnectionManager {
         usedStorageBytes = 0
         transfer = nil
     }
+
+    // MARK: - Phase 3: USB Audio Detection
+
+    func startUSBMonitoring() {
+        #if os(iOS)
+        NotificationCenter.default.addObserver(
+            forName: AVAudioSession.routeChangeNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.checkUSBAudioInput()
+        }
+        checkUSBAudioInput()
+        #endif
+    }
+
+    #if os(iOS)
+    private func checkUSBAudioInput() {
+        let session = AVAudioSession.sharedInstance()
+        let usbInput = session.currentRoute.inputs.first { $0.portType == .usbAudio }
+        if let input = usbInput {
+            guard !status.isConnected else { return }
+            let name = input.portName.isEmpty ? "DIGITAKT" : input.portName.uppercased()
+            status = .connected(deviceName: name)
+            transfer = MockDigitaktTransfer()
+            loadMockSamples()
+        } else if status.isConnected {
+            disconnect()
+        }
+    }
+    #endif
 
     /// Refresh sample list from device (mock for Phase 2)
     func refreshSamples() async {

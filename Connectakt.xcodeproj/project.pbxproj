@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		083C0E14E8B0E259735E2216 /* CKStatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F895A52492FE00EA7F8FE67 /* CKStatusBadge.swift */; };
 		0DD2FFD4AC73F588149D8321 /* BrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB00A1625168106BDACEDEB3 /* BrowserView.swift */; };
+		0DFE11774E3C480E1C712ED5 /* AudioRecorderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FE6FD6199BADAD02B0F1F4 /* AudioRecorderTests.swift */; };
 		288CB2D6CADE6FFD959ACF79 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C7D55A49097AD4089807E6 /* ContentView.swift */; };
 		29EFCE77BEA484ADBC528CF0 /* UploadProgressSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9E1AB6A4153D42605321B4 /* UploadProgressSheet.swift */; };
 		2B1AE55CA4B7DA893FF4EA7F /* CKStatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F895A52492FE00EA7F8FE67 /* CKStatusBadge.swift */; };
@@ -18,27 +19,38 @@
 		32A53591FC394125252AC743 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C7D55A49097AD4089807E6 /* ContentView.swift */; };
 		3B869D594DC8FD3292D3FA05 /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5E22F7CC4BF80CC5147EA5 /* EditorView.swift */; };
 		3C0FC9890B8457915F2A2804 /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5E22F7CC4BF80CC5147EA5 /* EditorView.swift */; };
+		3C3A8D6F62D55FCF2989CA67 /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24387D6827FDE0D1673072F0 /* AudioRecorder.swift */; };
 		40C435419F055BAC1B292D61 /* CKWaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037ACA4D8989D66080F0F6FC /* CKWaveformView.swift */; };
 		42F451F45BC81C4037CF3D27 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8FC49648B8478CA3471678 /* Theme.swift */; };
 		431607C55BA570F41B5F9A4C /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA668168998E55E6D0204E4 /* ConnectionManager.swift */; };
+		4472644C1D015CEBC7427748 /* RecordingSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176DAA41F43626558AECF38B /* RecordingSession.swift */; };
 		44F4CD508E459A3B7C91BE0D /* CKButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A915367173B99D944147402A /* CKButton.swift */; };
 		50315435A992AD3E576B3B86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 89413AAE77EADED746853E47 /* Assets.xcassets */; };
 		51CB9F3CA36B42450AFF88C6 /* CKHeaderBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99145EDEE04D45477DA7900F /* CKHeaderBar.swift */; };
 		530C4DCE8C8B775BDE8D3437 /* ConnektaktApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFFB7021E8F0B2CCE826E52 /* ConnektaktApp.swift */; };
 		5590AEEE59632FE6DCD79C8B /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8FC49648B8478CA3471678 /* Theme.swift */; };
+		567798845F5618C9AA901400 /* RecordingHistoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5FC57F54A4147F031E562D /* RecordingHistoryManager.swift */; };
 		58F1D03191993E3BD6EE982A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35AF121A6E17FD3D22A45CED /* SettingsView.swift */; };
 		65468F9F23E5573D0728A211 /* OptimizationSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7260F0651BE1A2E29FB159 /* OptimizationSheet.swift */; };
+		71F57F545AE1AFD0698040D6 /* CKLiveWaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD9CEB1C42963084A2D7F5C /* CKLiveWaveformView.swift */; };
 		7461E93731537325316AD695 /* BrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB00A1625168106BDACEDEB3 /* BrowserView.swift */; };
 		78C00AE476BC6A13FB9CDB6C /* ImportCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F36A1861531C2276CA51B9F /* ImportCoordinator.swift */; };
 		79FFBF5009A30A1FDD348503 /* RecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C97EF19A5E6494B0827C773 /* RecorderView.swift */; };
 		89282EFCE9F777AA276C5359 /* CKStorageMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67393F84B6D8EEEA1B725768 /* CKStorageMeter.swift */; };
 		8BCB4266F62BB64AB8145617 /* CKWaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037ACA4D8989D66080F0F6FC /* CKWaveformView.swift */; };
+		8D91C7437095367586CC46D7 /* RecordingHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAD2EAF075738CEA5C26F38 /* RecordingHistoryView.swift */; };
+		90E3C085E9E204D948196886 /* BPMDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 340A3337A1FC628ACA0C8F8F /* BPMDetector.swift */; };
+		9C67250BD5AC3FFF374C08E8 /* RecordingHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAD2EAF075738CEA5C26F38 /* RecordingHistoryView.swift */; };
 		9CA58BA51B460E5E34ED5FB5 /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA668168998E55E6D0204E4 /* ConnectionManager.swift */; };
 		9CB99158564B7EB6BFBC2C9B /* AudioOptimizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A27E2C67542316DBB64E24E /* AudioOptimizer.swift */; };
 		A402521C5444EDF2330A9873 /* ConnektaktApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFFB7021E8F0B2CCE826E52 /* ConnektaktApp.swift */; };
+		B81CB901712FAF49FA62D7D8 /* CKLiveWaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD9CEB1C42963084A2D7F5C /* CKLiveWaveformView.swift */; };
+		BCD1CA53E72287916CAC20A3 /* BPMDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 340A3337A1FC628ACA0C8F8F /* BPMDetector.swift */; };
 		C323515DF175D1704B855FBB /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35AF121A6E17FD3D22A45CED /* SettingsView.swift */; };
 		C46AC52BCA3F26BBE52AC813 /* DigitaktTransferProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7C53C9A83183DCD32F0E97 /* DigitaktTransferProtocol.swift */; };
 		CA6C483CE5A6A3E4AE7A764A /* ImportCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F36A1861531C2276CA51B9F /* ImportCoordinator.swift */; };
+		CD83E237F4B239F9C7CEDA46 /* RecordingSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176DAA41F43626558AECF38B /* RecordingSession.swift */; };
+		D06DF783A4AF79659B5106D4 /* RecordingHistoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5FC57F54A4147F031E562D /* RecordingHistoryManager.swift */; };
 		D524A4708149A119C68E44D4 /* ConnektaktTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CE098A1F59F9A78824FA31 /* ConnektaktTests.swift */; };
 		D6F5C5AED6CA9FA849F016A3 /* UploadProgressSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9E1AB6A4153D42605321B4 /* UploadProgressSheet.swift */; };
 		E67B3E3D8D00E4FCC159AB52 /* CKHeaderBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99145EDEE04D45477DA7900F /* CKHeaderBar.swift */; };
@@ -48,6 +60,7 @@
 		F286FC66F6D51C0E69528455 /* AudioOptimizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A27E2C67542316DBB64E24E /* AudioOptimizer.swift */; };
 		F394F5234353004D93669967 /* CKStorageMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67393F84B6D8EEEA1B725768 /* CKStorageMeter.swift */; };
 		F4BFD1CB894559E0A7D0CE84 /* OptimizationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0E26435CBCEB452D132BE4 /* OptimizationModels.swift */; };
+		F53AF62C6C265D0D9ABCC92E /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24387D6827FDE0D1673072F0 /* AudioRecorder.swift */; };
 		F98AD62F41E05733122CDF95 /* CKButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A915367173B99D944147402A /* CKButton.swift */; };
 /* End PBXBuildFile section */
 
@@ -66,16 +79,21 @@
 		088C407D0E42E84019136545 /* Connectakt.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Connectakt.entitlements; sourceTree = "<group>"; };
 		119846DD553B9520030A3C3B /* ConnektaktTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = ConnektaktTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		15FA6B96C644C817EBEF488D /* Connectakt.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Connectakt.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		176DAA41F43626558AECF38B /* RecordingSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingSession.swift; sourceTree = "<group>"; };
 		1A0E26435CBCEB452D132BE4 /* OptimizationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptimizationModels.swift; sourceTree = "<group>"; };
 		1A8FC49648B8478CA3471678 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		1CD9CEB1C42963084A2D7F5C /* CKLiveWaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKLiveWaveformView.swift; sourceTree = "<group>"; };
 		1F36A1861531C2276CA51B9F /* ImportCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportCoordinator.swift; sourceTree = "<group>"; };
+		24387D6827FDE0D1673072F0 /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
 		2F895A52492FE00EA7F8FE67 /* CKStatusBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKStatusBadge.swift; sourceTree = "<group>"; };
+		340A3337A1FC628ACA0C8F8F /* BPMDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPMDetector.swift; sourceTree = "<group>"; };
 		35AF121A6E17FD3D22A45CED /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		36C7D55A49097AD4089807E6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3919E88A9D3F8399A53198B4 /* Connectakt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Connectakt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EA668168998E55E6D0204E4 /* ConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
 		4A27E2C67542316DBB64E24E /* AudioOptimizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioOptimizer.swift; sourceTree = "<group>"; };
 		4F7260F0651BE1A2E29FB159 /* OptimizationSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptimizationSheet.swift; sourceTree = "<group>"; };
+		5F5FC57F54A4147F031E562D /* RecordingHistoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingHistoryManager.swift; sourceTree = "<group>"; };
 		67393F84B6D8EEEA1B725768 /* CKStorageMeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKStorageMeter.swift; sourceTree = "<group>"; };
 		7DFFB7021E8F0B2CCE826E52 /* ConnektaktApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnektaktApp.swift; sourceTree = "<group>"; };
 		89413AAE77EADED746853E47 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -87,7 +105,9 @@
 		AD1B3AF560CD2681566EC770 /* AudioOptimizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioOptimizerTests.swift; sourceTree = "<group>"; };
 		BA7C53C9A83183DCD32F0E97 /* DigitaktTransferProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitaktTransferProtocol.swift; sourceTree = "<group>"; };
 		CB00A1625168106BDACEDEB3 /* BrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserView.swift; sourceTree = "<group>"; };
+		DFAD2EAF075738CEA5C26F38 /* RecordingHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingHistoryView.swift; sourceTree = "<group>"; };
 		E7CE098A1F59F9A78824FA31 /* ConnektaktTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnektaktTests.swift; sourceTree = "<group>"; };
+		F6FE6FD6199BADAD02B0F1F4 /* AudioRecorderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -102,7 +122,12 @@
 		07B5747EDE4A793234883CF0 /* Recorder */ = {
 			isa = PBXGroup;
 			children = (
+				24387D6827FDE0D1673072F0 /* AudioRecorder.swift */,
+				340A3337A1FC628ACA0C8F8F /* BPMDetector.swift */,
 				8C97EF19A5E6494B0827C773 /* RecorderView.swift */,
+				5F5FC57F54A4147F031E562D /* RecordingHistoryManager.swift */,
+				DFAD2EAF075738CEA5C26F38 /* RecordingHistoryView.swift */,
+				176DAA41F43626558AECF38B /* RecordingSession.swift */,
 			);
 			path = Recorder;
 			sourceTree = "<group>";
@@ -154,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				AD1B3AF560CD2681566EC770 /* AudioOptimizerTests.swift */,
+				F6FE6FD6199BADAD02B0F1F4 /* AudioRecorderTests.swift */,
 				E7CE098A1F59F9A78824FA31 /* ConnektaktTests.swift */,
 			);
 			path = ConnektaktTests;
@@ -236,6 +262,7 @@
 			children = (
 				A915367173B99D944147402A /* CKButton.swift */,
 				99145EDEE04D45477DA7900F /* CKHeaderBar.swift */,
+				1CD9CEB1C42963084A2D7F5C /* CKLiveWaveformView.swift */,
 				2F895A52492FE00EA7F8FE67 /* CKStatusBadge.swift */,
 				67393F84B6D8EEEA1B725768 /* CKStorageMeter.swift */,
 				037ACA4D8989D66080F0F6FC /* CKWaveformView.swift */,
@@ -373,6 +400,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				322F4C85B2DFE8EE3FFBF115 /* AudioOptimizerTests.swift in Sources */,
+				0DFE11774E3C480E1C712ED5 /* AudioRecorderTests.swift in Sources */,
 				D524A4708149A119C68E44D4 /* ConnektaktTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -382,9 +410,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				9CB99158564B7EB6BFBC2C9B /* AudioOptimizer.swift in Sources */,
+				3C3A8D6F62D55FCF2989CA67 /* AudioRecorder.swift in Sources */,
+				BCD1CA53E72287916CAC20A3 /* BPMDetector.swift in Sources */,
 				0DD2FFD4AC73F588149D8321 /* BrowserView.swift in Sources */,
 				F98AD62F41E05733122CDF95 /* CKButton.swift in Sources */,
 				E67B3E3D8D00E4FCC159AB52 /* CKHeaderBar.swift in Sources */,
+				B81CB901712FAF49FA62D7D8 /* CKLiveWaveformView.swift in Sources */,
 				2B1AE55CA4B7DA893FF4EA7F /* CKStatusBadge.swift in Sources */,
 				F394F5234353004D93669967 /* CKStorageMeter.swift in Sources */,
 				40C435419F055BAC1B292D61 /* CKWaveformView.swift in Sources */,
@@ -397,6 +428,9 @@
 				F4BFD1CB894559E0A7D0CE84 /* OptimizationModels.swift in Sources */,
 				319C7120026500E7D6B03D43 /* OptimizationSheet.swift in Sources */,
 				79FFBF5009A30A1FDD348503 /* RecorderView.swift in Sources */,
+				567798845F5618C9AA901400 /* RecordingHistoryManager.swift in Sources */,
+				9C67250BD5AC3FFF374C08E8 /* RecordingHistoryView.swift in Sources */,
+				4472644C1D015CEBC7427748 /* RecordingSession.swift in Sources */,
 				58F1D03191993E3BD6EE982A /* SettingsView.swift in Sources */,
 				5590AEEE59632FE6DCD79C8B /* Theme.swift in Sources */,
 				D6F5C5AED6CA9FA849F016A3 /* UploadProgressSheet.swift in Sources */,
@@ -408,9 +442,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				F286FC66F6D51C0E69528455 /* AudioOptimizer.swift in Sources */,
+				F53AF62C6C265D0D9ABCC92E /* AudioRecorder.swift in Sources */,
+				90E3C085E9E204D948196886 /* BPMDetector.swift in Sources */,
 				7461E93731537325316AD695 /* BrowserView.swift in Sources */,
 				44F4CD508E459A3B7C91BE0D /* CKButton.swift in Sources */,
 				51CB9F3CA36B42450AFF88C6 /* CKHeaderBar.swift in Sources */,
+				71F57F545AE1AFD0698040D6 /* CKLiveWaveformView.swift in Sources */,
 				083C0E14E8B0E259735E2216 /* CKStatusBadge.swift in Sources */,
 				89282EFCE9F777AA276C5359 /* CKStorageMeter.swift in Sources */,
 				8BCB4266F62BB64AB8145617 /* CKWaveformView.swift in Sources */,
@@ -423,6 +460,9 @@
 				F19CE00F8765D7914E9969A3 /* OptimizationModels.swift in Sources */,
 				65468F9F23E5573D0728A211 /* OptimizationSheet.swift in Sources */,
 				2CEDF8DB48F53CAC946179F7 /* RecorderView.swift in Sources */,
+				D06DF783A4AF79659B5106D4 /* RecordingHistoryManager.swift in Sources */,
+				8D91C7437095367586CC46D7 /* RecordingHistoryView.swift in Sources */,
+				CD83E237F4B239F9C7CEDA46 /* RecordingSession.swift in Sources */,
 				C323515DF175D1704B855FBB /* SettingsView.swift in Sources */,
 				42F451F45BC81C4037CF3D27 /* Theme.swift in Sources */,
 				29EFCE77BEA484ADBC528CF0 /* UploadProgressSheet.swift in Sources */,
@@ -456,6 +496,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = Connectakt;
 				INFOPLIST_KEY_LSMultipleInstancesProhibited = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Connectakt records audio from your Digitakt via USB to capture samples.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -642,6 +683,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = Connectakt;
 				INFOPLIST_KEY_LSMultipleInstancesProhibited = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Connectakt records audio from your Digitakt via USB to capture samples.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -675,6 +717,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = Connectakt;
 				INFOPLIST_KEY_LSMultipleInstancesProhibited = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Connectakt records audio from your Digitakt via USB to capture samples.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -707,6 +750,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = Connectakt;
 				INFOPLIST_KEY_LSMultipleInstancesProhibited = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Connectakt records audio from your Digitakt via USB to capture samples.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

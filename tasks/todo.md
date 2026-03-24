@@ -25,13 +25,22 @@
 - BrowserView: UPLOAD wired to .fileImporter
 - 18 unit tests — all passing
 
-### 🔶 In Progress — Phase 3: USB Audio Recording & Real USB Connection
-- [ ] CoreUSB device enumeration (VID 0x1935) — real hardware detection
-- [ ] Elektron Transfer protocol (ref: elektron-ctl on GitHub) — replace mock
-- [ ] AVCaptureSession USB audio recording from Digitakt
-- [ ] Live waveform visualization during recording
-- [ ] One-tap resample loop (record → optimize → upload)
-- [ ] Recording history
+### ✅ Done — Phase 3 (commit TBD)
+- AudioRecorder actor: AVAudioEngine + installTap pipeline (native format → temp CAF)
+- BPMDetector: rising-edge onset detection, NSLock thread-safe
+- RecordingSession: Identifiable + Codable model with auto-name (timestamp + BPM)
+- RecordingHistoryManager: @Observable, JSON persistence, max 20 sessions
+- CKLiveWaveformView: Canvas-based, re-renders on [Float] levels change
+- RecordingHistoryView: scrollable session list with delete
+- RecorderView: full rewrite — live waveform, BPM badge, transport, one-tap optimize + upload
+- ConnectionManager: AVAudioSession routeChangeNotification for real USB audio detection
+- ConnektaktApp: AudioRecorder + RecordingHistoryManager injected as environments
+- project.yml: NSMicrophoneUsageDescription + com.apple.security.device.audio-input
+- 32 unit tests — all passing
+
+### 🔶 Remaining Phase 3 TODOs
+- [ ] CoreUSB device enumeration (VID 0x1935) — real hardware detection (file transfer)
+- [ ] Elektron Transfer protocol (ref: elektron-ctl on GitHub) — replace MockDigitaktTransfer
 
 ### Backlog
 - USB connection manager (CoreUSB / ExternalAccessory)
