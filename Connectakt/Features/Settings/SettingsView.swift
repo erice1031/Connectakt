@@ -3,6 +3,7 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(ConnectionManager.self) private var connection
     @State private var autoConnect = true
+    @State private var showDiagnostics = false
     @State private var sampleRate: SampleRate = .khz44
     @State private var bitDepth: BitDepth = .bit16
     @State private var channelMode: ChannelMode = .mono
@@ -66,10 +67,19 @@ struct SettingsView: View {
                 settingSection("DEVELOPER") {
                     infoRow(label: "GITHUB", value: "erice1031/Connectakt")
                     infoRow(label: "AGENT DOCS", value: "ROADMAP.md / CODEX.md")
+                    buttonRow {
+                        CKButton("MIDI DIAGNOSTICS", icon: "waveform.path", variant: .secondary) {
+                            showDiagnostics = true
+                        }
+                    }
                 }
             }
         }
         .ckScreen()
+        .sheet(isPresented: $showDiagnostics) {
+            MIDIDiagnosticsView()
+                .environment(connection)
+        }
     }
 
     // MARK: - Section Builder

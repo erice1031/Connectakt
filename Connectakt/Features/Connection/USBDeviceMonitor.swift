@@ -10,7 +10,8 @@ struct ElektronDeviceInfo: Equatable {
     let destination: MIDIEndpointRef
 
     // Digitakt VID 0x1935, PID 0x0b2c (Overbridge mode) or 0x000C (legacy)
-    static let knownNames = ["Digitakt"]
+    // Display name confirmed via macOS Audio MIDI Setup: "Elektron Digitakt"
+    static let knownNames = ["Elektron Digitakt", "Digitakt"]
 }
 
 // MARK: - USB / MIDI Device Monitor

@@ -18,6 +18,7 @@
 		319C7120026500E7D6B03D43 /* OptimizationSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7260F0651BE1A2E29FB159 /* OptimizationSheet.swift */; };
 		322F4C85B2DFE8EE3FFBF115 /* AudioOptimizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1B3AF560CD2681566EC770 /* AudioOptimizerTests.swift */; };
 		32A53591FC394125252AC743 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C7D55A49097AD4089807E6 /* ContentView.swift */; };
+		3AE5C060BD8444E82AE69461 /* MIDIDiagnosticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D829A6261210F638E84580 /* MIDIDiagnosticsView.swift */; };
 		3B869D594DC8FD3292D3FA05 /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5E22F7CC4BF80CC5147EA5 /* EditorView.swift */; };
 		3C0FC9890B8457915F2A2804 /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5E22F7CC4BF80CC5147EA5 /* EditorView.swift */; };
 		3C3A8D6F62D55FCF2989CA67 /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24387D6827FDE0D1673072F0 /* AudioRecorder.swift */; };
@@ -41,10 +42,12 @@
 		78C00AE476BC6A13FB9CDB6C /* ImportCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F36A1861531C2276CA51B9F /* ImportCoordinator.swift */; };
 		79FFBF5009A30A1FDD348503 /* RecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C97EF19A5E6494B0827C773 /* RecorderView.swift */; };
 		834415FD4F031B86EFF824C7 /* ElektronMIDITransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF0CA517D85FC08AAA1229 /* ElektronMIDITransfer.swift */; };
+		87E2AF59262A3D06D6C7EA03 /* MIDIMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7684740174FC5BAA740F6304 /* MIDIMonitor.swift */; };
 		89282EFCE9F777AA276C5359 /* CKStorageMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67393F84B6D8EEEA1B725768 /* CKStorageMeter.swift */; };
 		8BCB4266F62BB64AB8145617 /* CKWaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037ACA4D8989D66080F0F6FC /* CKWaveformView.swift */; };
 		8D91C7437095367586CC46D7 /* RecordingHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAD2EAF075738CEA5C26F38 /* RecordingHistoryView.swift */; };
 		90E3C085E9E204D948196886 /* BPMDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 340A3337A1FC628ACA0C8F8F /* BPMDetector.swift */; };
+		95A17615866536B9133D398E /* MIDIMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7684740174FC5BAA740F6304 /* MIDIMonitor.swift */; };
 		9C67250BD5AC3FFF374C08E8 /* RecordingHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAD2EAF075738CEA5C26F38 /* RecordingHistoryView.swift */; };
 		9CA58BA51B460E5E34ED5FB5 /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA668168998E55E6D0204E4 /* ConnectionManager.swift */; };
 		9CB99158564B7EB6BFBC2C9B /* AudioOptimizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A27E2C67542316DBB64E24E /* AudioOptimizer.swift */; };
@@ -67,6 +70,7 @@
 		F394F5234353004D93669967 /* CKStorageMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67393F84B6D8EEEA1B725768 /* CKStorageMeter.swift */; };
 		F4BFD1CB894559E0A7D0CE84 /* OptimizationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0E26435CBCEB452D132BE4 /* OptimizationModels.swift */; };
 		F53AF62C6C265D0D9ABCC92E /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24387D6827FDE0D1673072F0 /* AudioRecorder.swift */; };
+		F6F7E2E8D9E4F2F4A5C86925 /* MIDIDiagnosticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D829A6261210F638E84580 /* MIDIDiagnosticsView.swift */; };
 		F98AD62F41E05733122CDF95 /* CKButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A915367173B99D944147402A /* CKButton.swift */; };
 		FCDA4B5409F39C88FFDF3A92 /* ElektronProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C07060B98BF21F6444C1CE /* ElektronProtocolTests.swift */; };
 /* End PBXBuildFile section */
@@ -104,6 +108,8 @@
 		54C07060B98BF21F6444C1CE /* ElektronProtocolTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElektronProtocolTests.swift; sourceTree = "<group>"; };
 		5F5FC57F54A4147F031E562D /* RecordingHistoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingHistoryManager.swift; sourceTree = "<group>"; };
 		67393F84B6D8EEEA1B725768 /* CKStorageMeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKStorageMeter.swift; sourceTree = "<group>"; };
+		73D829A6261210F638E84580 /* MIDIDiagnosticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MIDIDiagnosticsView.swift; sourceTree = "<group>"; };
+		7684740174FC5BAA740F6304 /* MIDIMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MIDIMonitor.swift; sourceTree = "<group>"; };
 		7DFFB7021E8F0B2CCE826E52 /* ConnektaktApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnektaktApp.swift; sourceTree = "<group>"; };
 		89413AAE77EADED746853E47 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8B5E22F7CC4BF80CC5147EA5 /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; };
@@ -275,6 +281,8 @@
 		E466CDE522E71804C0223C9B /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				73D829A6261210F638E84580 /* MIDIDiagnosticsView.swift */,
+				7684740174FC5BAA740F6304 /* MIDIMonitor.swift */,
 				35AF121A6E17FD3D22A45CED /* SettingsView.swift */,
 			);
 			path = Settings;
@@ -451,6 +459,8 @@
 				107B0F51EC0A23113E3ABE40 /* ElektronMIDITransfer.swift in Sources */,
 				3D9AD8984FF4C800406509F2 /* ElektronProtocol.swift in Sources */,
 				78C00AE476BC6A13FB9CDB6C /* ImportCoordinator.swift in Sources */,
+				3AE5C060BD8444E82AE69461 /* MIDIDiagnosticsView.swift in Sources */,
+				87E2AF59262A3D06D6C7EA03 /* MIDIMonitor.swift in Sources */,
 				F4BFD1CB894559E0A7D0CE84 /* OptimizationModels.swift in Sources */,
 				319C7120026500E7D6B03D43 /* OptimizationSheet.swift in Sources */,
 				79FFBF5009A30A1FDD348503 /* RecorderView.swift in Sources */,
@@ -486,6 +496,8 @@
 				834415FD4F031B86EFF824C7 /* ElektronMIDITransfer.swift in Sources */,
 				6463C7C2F9EC33E755BF37C0 /* ElektronProtocol.swift in Sources */,
 				CA6C483CE5A6A3E4AE7A764A /* ImportCoordinator.swift in Sources */,
+				F6F7E2E8D9E4F2F4A5C86925 /* MIDIDiagnosticsView.swift in Sources */,
+				95A17615866536B9133D398E /* MIDIMonitor.swift in Sources */,
 				F19CE00F8765D7914E9969A3 /* OptimizationModels.swift in Sources */,
 				65468F9F23E5573D0728A211 /* OptimizationSheet.swift in Sources */,
 				2CEDF8DB48F53CAC946179F7 /* RecorderView.swift in Sources */,
