@@ -12,6 +12,7 @@
 | Phase | Feature | Commit |
 |-------|---------|--------|
 | 0 | Project bootstrap, repo init, workflow docs | dae8193 |
+| 1 | Xcode project, Elektron UI shell, 4-tab nav, ConnectionManager, 10 unit tests | 5d8346d |
 
 ---
 
