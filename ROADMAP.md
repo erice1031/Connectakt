@@ -11,7 +11,7 @@
 
 | Phase | Feature | Commit |
 |-------|---------|--------|
-| 0 | Project bootstrap, repo init, workflow docs | — |
+| 0 | Project bootstrap, repo init, workflow docs | dae8193 |
 
 ---
 
