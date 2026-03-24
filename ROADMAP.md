@@ -13,6 +13,7 @@
 |-------|---------|--------|
 | 0 | Project bootstrap, repo init, workflow docs | dae8193 |
 | 1 | Xcode project, Elektron UI shell, 4-tab nav, ConnectionManager, 10 unit tests | 5d8346d |
+| 2 | AudioOptimizer, DigitaktTransferProtocol, import flow UI, 18 unit tests | bd24c96 |
 
 ---
 
