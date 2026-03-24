@@ -71,7 +71,8 @@ final class MIDIMonitor {
     private var inputPort:  MIDIPortRef   = 0
     private var outputPort: MIDIPortRef   = 0
 
-    let maxLogEntries = 100
+    let maxLogEntries = 200
+    var isPaused = false
 
     // MARK: - Start / Stop
 
@@ -162,9 +163,10 @@ final class MIDIMonitor {
 
     @MainActor
     private func appendLog(_ direction: MIDILogEntry.Direction, bytes: [UInt8]) {
+        guard !isPaused else { return }
         let entry = MIDILogEntry(timestamp: Date(), direction: direction, bytes: bytes)
-        log.insert(entry, at: 0)
-        if log.count > maxLogEntries { log.removeLast() }
+        log.append(entry)                          // newest at bottom (terminal style)
+        if log.count > maxLogEntries { log.removeFirst() }
     }
 
     private func sendSysEx(_ bytes: [UInt8], to destination: MIDIEndpointRef) {
