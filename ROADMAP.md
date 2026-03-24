@@ -14,7 +14,8 @@
 | 0 | Project bootstrap, repo init, workflow docs | dae8193 |
 | 1 | Xcode project, Elektron UI shell, 4-tab nav, ConnectionManager, 10 unit tests | 5d8346d |
 | 2 | AudioOptimizer, DigitaktTransferProtocol, import flow UI, 18 unit tests | bd24c96 |
-| 3 | AudioRecorder, BPMDetector, RecordingSession/History, live waveform, USB detection, 32 tests | TBD |
+| 3 | AudioRecorder, BPMDetector, RecordingSession/History, live waveform, 32 tests | d3ad842 |
+| 3b | ElektronProtocol (SysEx), ElektronMIDITransfer, USBDeviceMonitor (CoreMIDI), 53 tests | TBD |
 
 ---
 

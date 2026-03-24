@@ -94,32 +94,4 @@ final class MockDigitaktTransfer: DigitaktTransferProtocol {
     }
 }
 
-// MARK: - Elektron Transfer Stub (Phase 3)
-
-final class ElektronTransfer: DigitaktTransferProtocol {
-
-    func uploadSample(localURL: URL, remotePath: String, progress: @escaping @Sendable (TransferProgress) -> Void) async throws {
-        throw ElektronTransferError.notImplemented
-    }
-
-    func downloadSample(remotePath: String, progress: @escaping @Sendable (TransferProgress) -> Void) async throws -> URL {
-        throw ElektronTransferError.notImplemented
-    }
-
-    func listFiles(remotePath: String) async throws -> [SampleFile] {
-        throw ElektronTransferError.notImplemented
-    }
-
-    func deleteFile(remotePath: String) async throws {
-        throw ElektronTransferError.notImplemented
-    }
-
-    func getStorageInfo() async throws -> StorageInfo {
-        throw ElektronTransferError.notImplemented
-    }
-
-    enum ElektronTransferError: LocalizedError {
-        case notImplemented
-        var errorDescription: String? { "Elektron USB Transfer not yet implemented (Phase 3)." }
-    }
-}
+// ElektronTransfer stub removed — replaced by ElektronMIDITransfer (Phase 3).

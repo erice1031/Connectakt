@@ -38,9 +38,18 @@
 - project.yml: NSMicrophoneUsageDescription + com.apple.security.device.audio-input
 - 32 unit tests — all passing
 
-### 🔶 Remaining Phase 3 TODOs
-- [ ] CoreUSB device enumeration (VID 0x1935) — real hardware detection (file transfer)
-- [ ] Elektron Transfer protocol (ref: elektron-ctl on GitHub) — replace MockDigitaktTransfer
+### ✅ Done — Phase 3 completion (commit TBD)
+- USBDeviceMonitor: CoreMIDI device enumeration (USB MIDI class-compliant, no entitlements)
+- ElektronProtocol: Full SysEx message format, nibble encoding/decoding, checksum, payload helpers
+- ElektronMIDITransfer: Full DigitaktTransferProtocol impl — actor mailbox, chunked upload/download
+- ConnectionManager: USBDeviceMonitor-driven connection lifecycle, falls back to mock on sim
+- Removed ElektronTransfer stub — replaced by ElektronMIDITransfer
+- ElektronProtocolTests: 21 new tests (SysEx build/parse, nibble round-trip, payload helpers)
+- 53 unit tests total — all passing
+
+### Backlog (hardware-dependent)
+- [ ] Verify ElektronMsgType command byte values against real Digitakt hardware
+- [ ] Stress-test chunked file upload/download with large samples
 
 ### Backlog
 - USB connection manager (CoreUSB / ExternalAccessory)
