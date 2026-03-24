@@ -1,0 +1,768 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		083C0E14E8B0E259735E2216 /* CKStatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F895A52492FE00EA7F8FE67 /* CKStatusBadge.swift */; };
+		0DD2FFD4AC73F588149D8321 /* BrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB00A1625168106BDACEDEB3 /* BrowserView.swift */; };
+		288CB2D6CADE6FFD959ACF79 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C7D55A49097AD4089807E6 /* ContentView.swift */; };
+		29EFCE77BEA484ADBC528CF0 /* UploadProgressSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9E1AB6A4153D42605321B4 /* UploadProgressSheet.swift */; };
+		2B1AE55CA4B7DA893FF4EA7F /* CKStatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F895A52492FE00EA7F8FE67 /* CKStatusBadge.swift */; };
+		2CEDF8DB48F53CAC946179F7 /* RecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C97EF19A5E6494B0827C773 /* RecorderView.swift */; };
+		319C7120026500E7D6B03D43 /* OptimizationSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7260F0651BE1A2E29FB159 /* OptimizationSheet.swift */; };
+		322F4C85B2DFE8EE3FFBF115 /* AudioOptimizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1B3AF560CD2681566EC770 /* AudioOptimizerTests.swift */; };
+		32A53591FC394125252AC743 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C7D55A49097AD4089807E6 /* ContentView.swift */; };
+		3B869D594DC8FD3292D3FA05 /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5E22F7CC4BF80CC5147EA5 /* EditorView.swift */; };
+		3C0FC9890B8457915F2A2804 /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5E22F7CC4BF80CC5147EA5 /* EditorView.swift */; };
+		40C435419F055BAC1B292D61 /* CKWaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037ACA4D8989D66080F0F6FC /* CKWaveformView.swift */; };
+		42F451F45BC81C4037CF3D27 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8FC49648B8478CA3471678 /* Theme.swift */; };
+		431607C55BA570F41B5F9A4C /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA668168998E55E6D0204E4 /* ConnectionManager.swift */; };
+		44F4CD508E459A3B7C91BE0D /* CKButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A915367173B99D944147402A /* CKButton.swift */; };
+		50315435A992AD3E576B3B86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 89413AAE77EADED746853E47 /* Assets.xcassets */; };
+		51CB9F3CA36B42450AFF88C6 /* CKHeaderBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99145EDEE04D45477DA7900F /* CKHeaderBar.swift */; };
+		530C4DCE8C8B775BDE8D3437 /* ConnektaktApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFFB7021E8F0B2CCE826E52 /* ConnektaktApp.swift */; };
+		5590AEEE59632FE6DCD79C8B /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8FC49648B8478CA3471678 /* Theme.swift */; };
+		58F1D03191993E3BD6EE982A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35AF121A6E17FD3D22A45CED /* SettingsView.swift */; };
+		65468F9F23E5573D0728A211 /* OptimizationSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7260F0651BE1A2E29FB159 /* OptimizationSheet.swift */; };
+		7461E93731537325316AD695 /* BrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB00A1625168106BDACEDEB3 /* BrowserView.swift */; };
+		78C00AE476BC6A13FB9CDB6C /* ImportCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F36A1861531C2276CA51B9F /* ImportCoordinator.swift */; };
+		79FFBF5009A30A1FDD348503 /* RecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C97EF19A5E6494B0827C773 /* RecorderView.swift */; };
+		89282EFCE9F777AA276C5359 /* CKStorageMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67393F84B6D8EEEA1B725768 /* CKStorageMeter.swift */; };
+		8BCB4266F62BB64AB8145617 /* CKWaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037ACA4D8989D66080F0F6FC /* CKWaveformView.swift */; };
+		9CA58BA51B460E5E34ED5FB5 /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA668168998E55E6D0204E4 /* ConnectionManager.swift */; };
+		9CB99158564B7EB6BFBC2C9B /* AudioOptimizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A27E2C67542316DBB64E24E /* AudioOptimizer.swift */; };
+		A402521C5444EDF2330A9873 /* ConnektaktApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFFB7021E8F0B2CCE826E52 /* ConnektaktApp.swift */; };
+		C323515DF175D1704B855FBB /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35AF121A6E17FD3D22A45CED /* SettingsView.swift */; };
+		C46AC52BCA3F26BBE52AC813 /* DigitaktTransferProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7C53C9A83183DCD32F0E97 /* DigitaktTransferProtocol.swift */; };
+		CA6C483CE5A6A3E4AE7A764A /* ImportCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F36A1861531C2276CA51B9F /* ImportCoordinator.swift */; };
+		D524A4708149A119C68E44D4 /* ConnektaktTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CE098A1F59F9A78824FA31 /* ConnektaktTests.swift */; };
+		D6F5C5AED6CA9FA849F016A3 /* UploadProgressSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9E1AB6A4153D42605321B4 /* UploadProgressSheet.swift */; };
+		E67B3E3D8D00E4FCC159AB52 /* CKHeaderBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99145EDEE04D45477DA7900F /* CKHeaderBar.swift */; };
+		EED32E39084BE105DF1B6E82 /* DigitaktTransferProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7C53C9A83183DCD32F0E97 /* DigitaktTransferProtocol.swift */; };
+		F13A0C35B1C202B38EC6A971 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 89413AAE77EADED746853E47 /* Assets.xcassets */; };
+		F19CE00F8765D7914E9969A3 /* OptimizationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0E26435CBCEB452D132BE4 /* OptimizationModels.swift */; };
+		F286FC66F6D51C0E69528455 /* AudioOptimizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A27E2C67542316DBB64E24E /* AudioOptimizer.swift */; };
+		F394F5234353004D93669967 /* CKStorageMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67393F84B6D8EEEA1B725768 /* CKStorageMeter.swift */; };
+		F4BFD1CB894559E0A7D0CE84 /* OptimizationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0E26435CBCEB452D132BE4 /* OptimizationModels.swift */; };
+		F98AD62F41E05733122CDF95 /* CKButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A915367173B99D944147402A /* CKButton.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		013D5EABBE64FF3D3402A037 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E3C4DF9D4664822B865F5FC7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AE6450538734C5EEA5CFDB2D;
+			remoteInfo = Connectakt_iOS;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		037ACA4D8989D66080F0F6FC /* CKWaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKWaveformView.swift; sourceTree = "<group>"; };
+		088C407D0E42E84019136545 /* Connectakt.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Connectakt.entitlements; sourceTree = "<group>"; };
+		119846DD553B9520030A3C3B /* ConnektaktTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = ConnektaktTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		15FA6B96C644C817EBEF488D /* Connectakt.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Connectakt.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A0E26435CBCEB452D132BE4 /* OptimizationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptimizationModels.swift; sourceTree = "<group>"; };
+		1A8FC49648B8478CA3471678 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		1F36A1861531C2276CA51B9F /* ImportCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportCoordinator.swift; sourceTree = "<group>"; };
+		2F895A52492FE00EA7F8FE67 /* CKStatusBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKStatusBadge.swift; sourceTree = "<group>"; };
+		35AF121A6E17FD3D22A45CED /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		36C7D55A49097AD4089807E6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		3919E88A9D3F8399A53198B4 /* Connectakt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Connectakt.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3EA668168998E55E6D0204E4 /* ConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
+		4A27E2C67542316DBB64E24E /* AudioOptimizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioOptimizer.swift; sourceTree = "<group>"; };
+		4F7260F0651BE1A2E29FB159 /* OptimizationSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptimizationSheet.swift; sourceTree = "<group>"; };
+		67393F84B6D8EEEA1B725768 /* CKStorageMeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKStorageMeter.swift; sourceTree = "<group>"; };
+		7DFFB7021E8F0B2CCE826E52 /* ConnektaktApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnektaktApp.swift; sourceTree = "<group>"; };
+		89413AAE77EADED746853E47 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8B5E22F7CC4BF80CC5147EA5 /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; };
+		8C97EF19A5E6494B0827C773 /* RecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderView.swift; sourceTree = "<group>"; };
+		8D9E1AB6A4153D42605321B4 /* UploadProgressSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadProgressSheet.swift; sourceTree = "<group>"; };
+		99145EDEE04D45477DA7900F /* CKHeaderBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKHeaderBar.swift; sourceTree = "<group>"; };
+		A915367173B99D944147402A /* CKButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKButton.swift; sourceTree = "<group>"; };
+		AD1B3AF560CD2681566EC770 /* AudioOptimizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioOptimizerTests.swift; sourceTree = "<group>"; };
+		BA7C53C9A83183DCD32F0E97 /* DigitaktTransferProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitaktTransferProtocol.swift; sourceTree = "<group>"; };
+		CB00A1625168106BDACEDEB3 /* BrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserView.swift; sourceTree = "<group>"; };
+		E7CE098A1F59F9A78824FA31 /* ConnektaktTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnektaktTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		072F6C296F748DCFE6ABDDF3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3EA668168998E55E6D0204E4 /* ConnectionManager.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		07B5747EDE4A793234883CF0 /* Recorder */ = {
+			isa = PBXGroup;
+			children = (
+				8C97EF19A5E6494B0827C773 /* RecorderView.swift */,
+			);
+			path = Recorder;
+			sourceTree = "<group>";
+		};
+		0B2C707E0562359351670646 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				89413AAE77EADED746853E47 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		10F9E2EDE00F59317365D140 /* Optimizer */ = {
+			isa = PBXGroup;
+			children = (
+				4A27E2C67542316DBB64E24E /* AudioOptimizer.swift */,
+				1A0E26435CBCEB452D132BE4 /* OptimizationModels.swift */,
+			);
+			path = Optimizer;
+			sourceTree = "<group>";
+		};
+		1291D1B75640FA0D6D4481BA /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				072F6C296F748DCFE6ABDDF3 /* Models */,
+				C4EF8AE6F6FA70A1BAECBB55 /* UI */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		15AEFE100772980AB4044F63 = {
+			isa = PBXGroup;
+			children = (
+				6A6DCAC0F2FA5ECA7E3B40F9 /* Connectakt */,
+				53E8105CBEA2460BB33BA9AA /* ConnektaktTests */,
+				88EFB87F065438F249DA61AF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3B95EB717C18F6E58437EC02 /* Transfer */ = {
+			isa = PBXGroup;
+			children = (
+				BA7C53C9A83183DCD32F0E97 /* DigitaktTransferProtocol.swift */,
+			);
+			path = Transfer;
+			sourceTree = "<group>";
+		};
+		53E8105CBEA2460BB33BA9AA /* ConnektaktTests */ = {
+			isa = PBXGroup;
+			children = (
+				AD1B3AF560CD2681566EC770 /* AudioOptimizerTests.swift */,
+				E7CE098A1F59F9A78824FA31 /* ConnektaktTests.swift */,
+			);
+			path = ConnektaktTests;
+			sourceTree = "<group>";
+		};
+		6A6DCAC0F2FA5ECA7E3B40F9 /* Connectakt */ = {
+			isa = PBXGroup;
+			children = (
+				088C407D0E42E84019136545 /* Connectakt.entitlements */,
+				BDF143F938ECC7ACCB0FD22B /* App */,
+				9E857255612D8B14F3D5C88D /* Features */,
+				0B2C707E0562359351670646 /* Resources */,
+				1291D1B75640FA0D6D4481BA /* Shared */,
+			);
+			path = Connectakt;
+			sourceTree = "<group>";
+		};
+		800AF527B2BECBB0BBC8B552 /* Browser */ = {
+			isa = PBXGroup;
+			children = (
+				CB00A1625168106BDACEDEB3 /* BrowserView.swift */,
+				1F36A1861531C2276CA51B9F /* ImportCoordinator.swift */,
+				4F7260F0651BE1A2E29FB159 /* OptimizationSheet.swift */,
+				8D9E1AB6A4153D42605321B4 /* UploadProgressSheet.swift */,
+			);
+			path = Browser;
+			sourceTree = "<group>";
+		};
+		88EFB87F065438F249DA61AF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				15FA6B96C644C817EBEF488D /* Connectakt.app */,
+				3919E88A9D3F8399A53198B4 /* Connectakt.app */,
+				119846DD553B9520030A3C3B /* ConnektaktTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9E857255612D8B14F3D5C88D /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				800AF527B2BECBB0BBC8B552 /* Browser */,
+				FD2DE237FF9DC55B3B757909 /* Editor */,
+				10F9E2EDE00F59317365D140 /* Optimizer */,
+				07B5747EDE4A793234883CF0 /* Recorder */,
+				E466CDE522E71804C0223C9B /* Settings */,
+				3B95EB717C18F6E58437EC02 /* Transfer */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		BDF143F938ECC7ACCB0FD22B /* App */ = {
+			isa = PBXGroup;
+			children = (
+				7DFFB7021E8F0B2CCE826E52 /* ConnektaktApp.swift */,
+				36C7D55A49097AD4089807E6 /* ContentView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		C4EF8AE6F6FA70A1BAECBB55 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				1A8FC49648B8478CA3471678 /* Theme.swift */,
+				E87A4F83B7A12013FA013BC7 /* Components */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		E466CDE522E71804C0223C9B /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				35AF121A6E17FD3D22A45CED /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		E87A4F83B7A12013FA013BC7 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				A915367173B99D944147402A /* CKButton.swift */,
+				99145EDEE04D45477DA7900F /* CKHeaderBar.swift */,
+				2F895A52492FE00EA7F8FE67 /* CKStatusBadge.swift */,
+				67393F84B6D8EEEA1B725768 /* CKStorageMeter.swift */,
+				037ACA4D8989D66080F0F6FC /* CKWaveformView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		FD2DE237FF9DC55B3B757909 /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+				8B5E22F7CC4BF80CC5147EA5 /* EditorView.swift */,
+			);
+			path = Editor;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		86C20F155E6735461AAEF5D0 /* Connectakt_macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 93AC521A0E326D6EDFC8BC85 /* Build configuration list for PBXNativeTarget "Connectakt_macOS" */;
+			buildPhases = (
+				67509A70507E0A4A078B13DF /* Sources */,
+				D0C88F82C3C2DAEB1C39A878 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Connectakt_macOS;
+			packageProductDependencies = (
+			);
+			productName = Connectakt_macOS;
+			productReference = 3919E88A9D3F8399A53198B4 /* Connectakt.app */;
+			productType = "com.apple.product-type.application";
+		};
+		9EBFC54A45315A680FDFA655 /* ConnektaktTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8A1A1457A92C69E2231A313D /* Build configuration list for PBXNativeTarget "ConnektaktTests" */;
+			buildPhases = (
+				26A30C8DD2EAD2B13DD69275 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				45C2951501B3FDDCACEA7FF3 /* PBXTargetDependency */,
+			);
+			name = ConnektaktTests;
+			packageProductDependencies = (
+			);
+			productName = ConnektaktTests;
+			productReference = 119846DD553B9520030A3C3B /* ConnektaktTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		AE6450538734C5EEA5CFDB2D /* Connectakt_iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 625744ECC6559EC9CF958AAC /* Build configuration list for PBXNativeTarget "Connectakt_iOS" */;
+			buildPhases = (
+				DF3585BC12BD35FD61FAFADF /* Sources */,
+				6FDAF96FB2FE9E88F57DE0AB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Connectakt_iOS;
+			packageProductDependencies = (
+			);
+			productName = Connectakt_iOS;
+			productReference = 15FA6B96C644C817EBEF488D /* Connectakt.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E3C4DF9D4664822B865F5FC7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					86C20F155E6735461AAEF5D0 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+					AE6450538734C5EEA5CFDB2D = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = E315C83543E8DB3297082F1E /* Build configuration list for PBXProject "Connectakt" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 15AEFE100772980AB4044F63;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 88EFB87F065438F249DA61AF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AE6450538734C5EEA5CFDB2D /* Connectakt_iOS */,
+				86C20F155E6735461AAEF5D0 /* Connectakt_macOS */,
+				9EBFC54A45315A680FDFA655 /* ConnektaktTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6FDAF96FB2FE9E88F57DE0AB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F13A0C35B1C202B38EC6A971 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0C88F82C3C2DAEB1C39A878 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50315435A992AD3E576B3B86 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		26A30C8DD2EAD2B13DD69275 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				322F4C85B2DFE8EE3FFBF115 /* AudioOptimizerTests.swift in Sources */,
+				D524A4708149A119C68E44D4 /* ConnektaktTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		67509A70507E0A4A078B13DF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9CB99158564B7EB6BFBC2C9B /* AudioOptimizer.swift in Sources */,
+				0DD2FFD4AC73F588149D8321 /* BrowserView.swift in Sources */,
+				F98AD62F41E05733122CDF95 /* CKButton.swift in Sources */,
+				E67B3E3D8D00E4FCC159AB52 /* CKHeaderBar.swift in Sources */,
+				2B1AE55CA4B7DA893FF4EA7F /* CKStatusBadge.swift in Sources */,
+				F394F5234353004D93669967 /* CKStorageMeter.swift in Sources */,
+				40C435419F055BAC1B292D61 /* CKWaveformView.swift in Sources */,
+				431607C55BA570F41B5F9A4C /* ConnectionManager.swift in Sources */,
+				A402521C5444EDF2330A9873 /* ConnektaktApp.swift in Sources */,
+				32A53591FC394125252AC743 /* ContentView.swift in Sources */,
+				EED32E39084BE105DF1B6E82 /* DigitaktTransferProtocol.swift in Sources */,
+				3B869D594DC8FD3292D3FA05 /* EditorView.swift in Sources */,
+				78C00AE476BC6A13FB9CDB6C /* ImportCoordinator.swift in Sources */,
+				F4BFD1CB894559E0A7D0CE84 /* OptimizationModels.swift in Sources */,
+				319C7120026500E7D6B03D43 /* OptimizationSheet.swift in Sources */,
+				79FFBF5009A30A1FDD348503 /* RecorderView.swift in Sources */,
+				58F1D03191993E3BD6EE982A /* SettingsView.swift in Sources */,
+				5590AEEE59632FE6DCD79C8B /* Theme.swift in Sources */,
+				D6F5C5AED6CA9FA849F016A3 /* UploadProgressSheet.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DF3585BC12BD35FD61FAFADF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F286FC66F6D51C0E69528455 /* AudioOptimizer.swift in Sources */,
+				7461E93731537325316AD695 /* BrowserView.swift in Sources */,
+				44F4CD508E459A3B7C91BE0D /* CKButton.swift in Sources */,
+				51CB9F3CA36B42450AFF88C6 /* CKHeaderBar.swift in Sources */,
+				083C0E14E8B0E259735E2216 /* CKStatusBadge.swift in Sources */,
+				89282EFCE9F777AA276C5359 /* CKStorageMeter.swift in Sources */,
+				8BCB4266F62BB64AB8145617 /* CKWaveformView.swift in Sources */,
+				9CA58BA51B460E5E34ED5FB5 /* ConnectionManager.swift in Sources */,
+				530C4DCE8C8B775BDE8D3437 /* ConnektaktApp.swift in Sources */,
+				288CB2D6CADE6FFD959ACF79 /* ContentView.swift in Sources */,
+				C46AC52BCA3F26BBE52AC813 /* DigitaktTransferProtocol.swift in Sources */,
+				3C0FC9890B8457915F2A2804 /* EditorView.swift in Sources */,
+				CA6C483CE5A6A3E4AE7A764A /* ImportCoordinator.swift in Sources */,
+				F19CE00F8765D7914E9969A3 /* OptimizationModels.swift in Sources */,
+				65468F9F23E5573D0728A211 /* OptimizationSheet.swift in Sources */,
+				2CEDF8DB48F53CAC946179F7 /* RecorderView.swift in Sources */,
+				C323515DF175D1704B855FBB /* SettingsView.swift in Sources */,
+				42F451F45BC81C4037CF3D27 /* Theme.swift in Sources */,
+				29EFCE77BEA484ADBC528CF0 /* UploadProgressSheet.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		45C2951501B3FDDCACEA7FF3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AE6450538734C5EEA5CFDB2D /* Connectakt_iOS */;
+			targetProxy = 013D5EABBE64FF3D3402A037 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		15A488B99EE7CA201B800FD5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Connectakt/Connectakt.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Connectakt;
+				INFOPLIST_KEY_LSMultipleInstancesProhibited = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ericerwin.connectakt;
+				PRODUCT_NAME = Connectakt;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+		3601505875299AAAD31D331E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		39E899E71C35F8689A9085EA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ericerwin.connectakt.tests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Connectakt.app/Connectakt";
+			};
+			name = Release;
+		};
+		58AA8C76ACA8A5A8B6736111 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ericerwin.connectakt.tests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Connectakt.app/Connectakt";
+			};
+			name = Debug;
+		};
+		82FBF0EA574AA4925BCFB000 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		9B3E2D1D5E5CB00BFB9675D9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Connectakt/Connectakt.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Connectakt;
+				INFOPLIST_KEY_LSMultipleInstancesProhibited = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ericerwin.connectakt;
+				PRODUCT_NAME = Connectakt;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		B7D01FB87993E75EB129ADBF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Connectakt/Connectakt.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Connectakt;
+				INFOPLIST_KEY_LSMultipleInstancesProhibited = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ericerwin.connectakt;
+				PRODUCT_NAME = Connectakt;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+		D074D7CBE6BBA4BB81204E15 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Connectakt/Connectakt.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Connectakt;
+				INFOPLIST_KEY_LSMultipleInstancesProhibited = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ericerwin.connectakt;
+				PRODUCT_NAME = Connectakt;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		625744ECC6559EC9CF958AAC /* Build configuration list for PBXNativeTarget "Connectakt_iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D074D7CBE6BBA4BB81204E15 /* Debug */,
+				9B3E2D1D5E5CB00BFB9675D9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		8A1A1457A92C69E2231A313D /* Build configuration list for PBXNativeTarget "ConnektaktTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				58AA8C76ACA8A5A8B6736111 /* Debug */,
+				39E899E71C35F8689A9085EA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		93AC521A0E326D6EDFC8BC85 /* Build configuration list for PBXNativeTarget "Connectakt_macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				15A488B99EE7CA201B800FD5 /* Debug */,
+				B7D01FB87993E75EB129ADBF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E315C83543E8DB3297082F1E /* Build configuration list for PBXProject "Connectakt" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				82FBF0EA574AA4925BCFB000 /* Debug */,
+				3601505875299AAAD31D331E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E3C4DF9D4664822B865F5FC7 /* Project object */;
+}

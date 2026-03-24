@@ -1,4 +1,5 @@
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct BrowserView: View {
     @Environment(ConnectionManager.self) private var connection
@@ -91,6 +92,7 @@ private struct ConnectPromptView: View {
 private struct SampleListView: View {
     @Environment(ConnectionManager.self) private var connection
     @State private var selectedSample: SampleFile?
+    @State private var importer = ImportCoordinator()
 
     var body: some View {
         VStack(spacing: 0) {
@@ -108,8 +110,10 @@ private struct SampleListView: View {
 
                 Spacer()
 
-                CKButton("UPLOAD", icon: "arrow.up", variant: .primary) {}
-                CKButton("IMPORT", icon: "arrow.down", variant: .secondary) {}
+                CKButton("UPLOAD", icon: "arrow.up", variant: .primary) {
+                    importer.triggerFilePicker()
+                }
+                CKButton("IMPORT", icon: "arrow.down", variant: .secondary) {}  // Phase 3: download
             }
             .padding(.horizontal, ConnektaktTheme.paddingMD)
             .padding(.vertical, ConnektaktTheme.paddingSM)
@@ -134,6 +138,33 @@ private struct SampleListView: View {
                 usedMB: connection.usedStorageMB,
                 totalMB: connection.totalStorageMB
             )
+        }
+        // File picker
+        .fileImporter(
+            isPresented: $importer.isShowingFilePicker,
+            allowedContentTypes: [.audio, .wav, .aiff, .mp3, .mpeg4Audio],
+            allowsMultipleSelection: false
+        ) { result in
+            switch result {
+            case .success(let urls):
+                if let url = urls.first { importer.handleFileSelected(url) }
+            case .failure:
+                break
+            }
+        }
+        // Optimization sheet (analyze → optimize → ready to upload)
+        .sheet(isPresented: Binding(
+            get: { importer.showOptimizationSheet },
+            set: { if !$0 { importer.dismiss() } }
+        )) {
+            OptimizationSheet(coordinator: importer, transfer: connection.transfer)
+        }
+        // Upload progress sheet
+        .sheet(isPresented: Binding(
+            get: { importer.showUploadSheet },
+            set: { if !$0 { importer.dismiss() } }
+        )) {
+            UploadProgressSheet(coordinator: importer)
         }
     }
 }

@@ -55,6 +55,11 @@ final class ConnectionManager {
     var usedStorageMB: Int { Int(usedStorageBytes / 1_048_576) }
     var totalStorageMB: Int { Int(totalStorageBytes / 1_048_576) }
 
+    // MARK: - Phase 2: Transfer Protocol
+
+    /// Active transfer handler — MockDigitaktTransfer in dev, ElektronTransfer in production.
+    var transfer: (any DigitaktTransferProtocol)?
+
     // MARK: - Phase 1: Development Simulation
 
     func simulateConnect() {
@@ -63,6 +68,7 @@ final class ConnectionManager {
             try? await Task.sleep(nanoseconds: 800_000_000)
             await MainActor.run {
                 status = .connected(deviceName: "DIGITAKT")
+                transfer = MockDigitaktTransfer()
                 loadMockSamples()
             }
         }
@@ -72,6 +78,17 @@ final class ConnectionManager {
         status = .disconnected
         samples = []
         usedStorageBytes = 0
+        transfer = nil
+    }
+
+    /// Refresh sample list from device (mock for Phase 2)
+    func refreshSamples() async {
+        guard let transfer else { return }
+        do {
+            let remote = try await transfer.listFiles(remotePath: "SAMPLES/")
+            samples = remote
+            usedStorageBytes = remote.reduce(0) { $0 + $1.size }
+        } catch { /* ignore in mock */ }
     }
 
     private func loadMockSamples() {
