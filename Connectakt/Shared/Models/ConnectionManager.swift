@@ -63,6 +63,15 @@ final class ConnectionManager {
     /// Active transfer handler. MockDigitaktTransfer in sim, ElektronMIDITransfer on hardware.
     var transfer: (any DigitaktTransferProtocol)?
 
+    /// Human-readable label of the active transfer backend (for diagnostics).
+    private(set) var transferLabel: String = "—"
+
+    /// True while a sample listing is in flight.
+    private(set) var isLoadingSamples = false
+
+    /// Non-nil when the last sample listing failed.
+    private(set) var sampleLoadError: String? = nil
+
     // MARK: - USB / MIDI Monitor (Phase 3)
 
     private let usbMonitor = USBDeviceMonitor()
@@ -94,12 +103,29 @@ final class ConnectionManager {
 
     private func connectMIDIDevice(_ device: ElektronDeviceInfo) {
         status = .connected(deviceName: device.name.uppercased())
-        // Use real Elektron MIDI transfer on hardware; fall back to mock if init fails
-        if let real = try? ElektronMIDITransfer(device: device) {
-            transfer = real
+        // On macOS: prefer IOUSBHost bulk transfer (correct path for file management).
+        // On iOS:   use CoreMIDI transfer (no IOUSBHost available on iOS).
+        // Both fall back to mock if the real init fails.
+        #if os(macOS)
+        if let usb = try? ElektronUSBTransfer() {
+            transfer = usb
+            transferLabel = "USB BULK"
+        } else if let midi = try? ElektronMIDITransfer(device: device) {
+            transfer = midi
+            transferLabel = "MIDI SYSEX"
         } else {
             transfer = MockDigitaktTransfer()
+            transferLabel = "SIMULATION"
         }
+        #else
+        if let midi = try? ElektronMIDITransfer(device: device) {
+            transfer = midi
+            transferLabel = "MIDI SYSEX"
+        } else {
+            transfer = MockDigitaktTransfer()
+            transferLabel = "SIMULATION"
+        }
+        #endif
         Task { await refreshSamples() }
     }
 
@@ -126,6 +152,9 @@ final class ConnectionManager {
         samples = []
         usedStorageBytes = 0
         transfer = nil
+        transferLabel = "—"
+        isLoadingSamples = false
+        sampleLoadError = nil
     }
 
     // MARK: - Development Simulation
@@ -144,13 +173,19 @@ final class ConnectionManager {
 
     // MARK: - Sample Refresh
 
-    func refreshSamples() async {
+    func refreshSamples(path: String = "/") async {
         guard let transfer else { return }
+        isLoadingSamples = true
+        sampleLoadError  = nil
         do {
-            let remote = try await transfer.listFiles(remotePath: "SAMPLES/")
-            samples = remote
+            let remote = try await transfer.listFiles(remotePath: path)
+            samples          = remote
             usedStorageBytes = remote.reduce(0) { $0 + $1.size }
-        } catch { /* ignore on mock/error */ }
+            sampleLoadError  = nil
+        } catch {
+            sampleLoadError = error.localizedDescription
+        }
+        isLoadingSamples = false
     }
 
     func loadMockSamples() {

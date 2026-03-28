@@ -145,18 +145,18 @@ final class MIDIMonitor {
 
     /// Sends an Elektron Device Info request to the given destination.
     func sendDeviceInfoRequest(to destination: MIDIEndpointRef) {
-        sendSysEx(ElektronSysEx.build(msgType: .deviceInfoReq), to: destination)
+        sendSysEx(ElektronSysEx.build(seq: 0, msgType: .ping), to: destination)
     }
 
     /// Sends an Elektron Storage Info request to the given destination.
     func sendStorageInfoRequest(to destination: MIDIEndpointRef) {
-        sendSysEx(ElektronSysEx.build(msgType: .storageInfoReq), to: destination)
+        sendSysEx(ElektronSysEx.build(seq: 0, msgType: .storageInfoReq), to: destination)
     }
 
     /// Sends a List Directory request for "SAMPLES/" to the given destination.
     func sendListRequest(to destination: MIDIEndpointRef) {
-        let payload = [UInt8].asciiString("SAMPLES/")
-        sendSysEx(ElektronSysEx.build(msgType: .listDirReq, payload: payload), to: destination)
+        let payload = [UInt8].asciiString("/")
+        sendSysEx(ElektronSysEx.build(seq: 0, msgType: .listDirReq, payload: payload), to: destination)
     }
 
     // MARK: - Private

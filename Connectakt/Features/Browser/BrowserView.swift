@@ -93,27 +93,74 @@ private struct SampleListView: View {
     @Environment(ConnectionManager.self) private var connection
     @State private var selectedSample: SampleFile?
     @State private var importer = ImportCoordinator()
+    @State private var pathStack: [String] = ["/"]
+
+    private var currentPath: String { pathStack.last ?? "/" }
+
+    private func navigate(into folder: SampleFile) {
+        guard folder.isFolder else { return }
+        let next = currentPath == "/" ? "/\(folder.name)" : "\(currentPath)/\(folder.name)"
+        pathStack.append(next)
+        Task { await connection.refreshSamples(path: next) }
+    }
+
+    private func navigateUp() {
+        guard pathStack.count > 1 else { return }
+        pathStack.removeLast()
+        Task { await connection.refreshSamples(path: currentPath) }
+    }
 
     var body: some View {
         VStack(spacing: 0) {
             // Toolbar
             HStack {
-                Text("SAMPLES/")
+                // Back button when inside a subfolder
+                if pathStack.count > 1 {
+                    Button(action: navigateUp) {
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 11, weight: .semibold))
+                            .foregroundStyle(ConnektaktTheme.primary)
+                    }
+                    .buttonStyle(.plain)
+                }
+
+                Text(currentPath.uppercased())
                     .font(ConnektaktTheme.smallFont)
                     .foregroundStyle(ConnektaktTheme.textSecondary)
                     .tracking(1)
+                    .lineLimit(1)
+                    .truncationMode(.middle)
 
-                Text("\(connection.samples.count) FILES")
+                if connection.isLoadingSamples {
+                    ProgressView()
+                        .scaleEffect(0.6)
+                        .tint(ConnektaktTheme.primary)
+                } else {
+                    Text("\(connection.samples.count) FILES")
+                        .font(ConnektaktTheme.smallFont)
+                        .foregroundStyle(ConnektaktTheme.textMuted)
+                        .tracking(1)
+                }
+
+                Spacer()
+
+                // Transfer backend badge (diagnostic)
+                Text(connection.transferLabel)
                     .font(ConnektaktTheme.smallFont)
                     .foregroundStyle(ConnektaktTheme.textMuted)
                     .tracking(1)
-
-                Spacer()
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 2)
+                    .background(ConnektaktTheme.surface)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 3)
+                            .stroke(ConnektaktTheme.primary.opacity(0.3), lineWidth: 1)
+                    )
 
                 CKButton("UPLOAD", icon: "arrow.up", variant: .primary) {
                     importer.triggerFilePicker()
                 }
-                CKButton("IMPORT", icon: "arrow.down", variant: .secondary) {}  // Phase 3: download
+                CKButton("IMPORT", icon: "arrow.down", variant: .secondary) {}
             }
             .padding(.horizontal, ConnektaktTheme.paddingMD)
             .padding(.vertical, ConnektaktTheme.paddingSM)
@@ -123,12 +170,23 @@ private struct SampleListView: View {
                 .fill(ConnektaktTheme.primary.opacity(0.15))
                 .frame(height: 1)
 
-            // File list
-            ScrollView {
-                LazyVStack(spacing: 0) {
-                    ForEach(connection.samples) { sample in
-                        SampleRow(sample: sample, isSelected: selectedSample?.id == sample.id)
-                            .onTapGesture { selectedSample = sample }
+            // File list or error/empty state
+            if let err = connection.sampleLoadError {
+                SampleErrorView(message: err)
+            } else if !connection.isLoadingSamples && connection.samples.isEmpty {
+                SampleEmptyView()
+            } else {
+                ScrollView {
+                    LazyVStack(spacing: 0) {
+                        ForEach(connection.samples) { sample in
+                            SampleRow(sample: sample, isSelected: selectedSample?.id == sample.id)
+                                .onTapGesture(count: 2) {
+                                    if sample.isFolder { navigate(into: sample) }
+                                }
+                                .onTapGesture(count: 1) {
+                                    selectedSample = sample
+                                }
+                        }
                     }
                 }
             }
@@ -210,6 +268,64 @@ private struct SampleRow: View {
         )
         .contentShape(Rectangle())
         .animation(.easeInOut(duration: 0.1), value: isSelected)
+    }
+}
+
+// MARK: - Error / Empty States
+
+private struct SampleErrorView: View {
+    @Environment(ConnectionManager.self) private var connection
+    let message: String
+
+    var body: some View {
+        VStack(spacing: 20) {
+            Spacer()
+            Image(systemName: "exclamationmark.triangle")
+                .font(.system(size: 32, weight: .light))
+                .foregroundStyle(ConnektaktTheme.accent)
+
+            VStack(spacing: 6) {
+                Text("SAMPLE LIST UNAVAILABLE")
+                    .font(ConnektaktTheme.bodyFont)
+                    .foregroundStyle(ConnektaktTheme.textPrimary)
+                    .tracking(2)
+
+                Text(message.uppercased())
+                    .font(ConnektaktTheme.smallFont)
+                    .foregroundStyle(ConnektaktTheme.textSecondary)
+                    .tracking(1)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, ConnektaktTheme.paddingLG)
+            }
+
+            CKButton("RETRY", icon: "arrow.clockwise", variant: .secondary) {
+                Task { await connection.refreshSamples() }
+            }
+            Spacer()
+        }
+    }
+}
+
+private struct SampleEmptyView: View {
+    @Environment(ConnectionManager.self) private var connection
+
+    var body: some View {
+        VStack(spacing: 20) {
+            Spacer()
+            Image(systemName: "tray")
+                .font(.system(size: 32, weight: .light))
+                .foregroundStyle(ConnektaktTheme.textSecondary)
+
+            Text("NO SAMPLES FOUND")
+                .font(ConnektaktTheme.bodyFont)
+                .foregroundStyle(ConnektaktTheme.textSecondary)
+                .tracking(2)
+
+            CKButton("REFRESH", icon: "arrow.clockwise", variant: .secondary) {
+                Task { await connection.refreshSamples() }
+            }
+            Spacer()
+        }
     }
 }
 

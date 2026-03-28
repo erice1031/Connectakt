@@ -8,9 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		083C0E14E8B0E259735E2216 /* CKStatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F895A52492FE00EA7F8FE67 /* CKStatusBadge.swift */; };
+		0A97CE0A7733B02C710C7EFB /* ElektronMailbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = B320195E9A8F340B3072ECAC /* ElektronMailbox.swift */; };
 		0DD2FFD4AC73F588149D8321 /* BrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB00A1625168106BDACEDEB3 /* BrowserView.swift */; };
 		0DFE11774E3C480E1C712ED5 /* AudioRecorderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FE6FD6199BADAD02B0F1F4 /* AudioRecorderTests.swift */; };
 		107B0F51EC0A23113E3ABE40 /* ElektronMIDITransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF0CA517D85FC08AAA1229 /* ElektronMIDITransfer.swift */; };
+		1C98DA90A70C480BD40C0320 /* ElektronUSBTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610979F1637DD8319FEDD276 /* ElektronUSBTransfer.swift */; };
 		288CB2D6CADE6FFD959ACF79 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C7D55A49097AD4089807E6 /* ContentView.swift */; };
 		29EFCE77BEA484ADBC528CF0 /* UploadProgressSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9E1AB6A4153D42605321B4 /* UploadProgressSheet.swift */; };
 		2B1AE55CA4B7DA893FF4EA7F /* CKStatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F895A52492FE00EA7F8FE67 /* CKStatusBadge.swift */; };
@@ -24,6 +26,7 @@
 		3C3A8D6F62D55FCF2989CA67 /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24387D6827FDE0D1673072F0 /* AudioRecorder.swift */; };
 		3D9AD8984FF4C800406509F2 /* ElektronProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78C372A584E2FABD2981087 /* ElektronProtocol.swift */; };
 		40C435419F055BAC1B292D61 /* CKWaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037ACA4D8989D66080F0F6FC /* CKWaveformView.swift */; };
+		428AAA1D38C0CA8A54CF9A4D /* IOUSBHostTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93EFB22A21319A992E32415 /* IOUSBHostTransport.swift */; };
 		42F451F45BC81C4037CF3D27 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8FC49648B8478CA3471678 /* Theme.swift */; };
 		431607C55BA570F41B5F9A4C /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA668168998E55E6D0204E4 /* ConnectionManager.swift */; };
 		4472644C1D015CEBC7427748 /* RecordingSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176DAA41F43626558AECF38B /* RecordingSession.swift */; };
@@ -36,7 +39,9 @@
 		58F1D03191993E3BD6EE982A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35AF121A6E17FD3D22A45CED /* SettingsView.swift */; };
 		5E8EB6F2F17303921C06FD64 /* USBDeviceMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDA1CA181523BCB7CCDA54C /* USBDeviceMonitor.swift */; };
 		6463C7C2F9EC33E755BF37C0 /* ElektronProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78C372A584E2FABD2981087 /* ElektronProtocol.swift */; };
+		650D9FA4AB2741BE73B8C6FA /* ElektronMailbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = B320195E9A8F340B3072ECAC /* ElektronMailbox.swift */; };
 		65468F9F23E5573D0728A211 /* OptimizationSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7260F0651BE1A2E29FB159 /* OptimizationSheet.swift */; };
+		6B91DE461DCA42C76F9A2DF5 /* ElektronUSBTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610979F1637DD8319FEDD276 /* ElektronUSBTransfer.swift */; };
 		71F57F545AE1AFD0698040D6 /* CKLiveWaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD9CEB1C42963084A2D7F5C /* CKLiveWaveformView.swift */; };
 		7461E93731537325316AD695 /* BrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB00A1625168106BDACEDEB3 /* BrowserView.swift */; };
 		78C00AE476BC6A13FB9CDB6C /* ImportCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F36A1861531C2276CA51B9F /* ImportCoordinator.swift */; };
@@ -47,6 +52,7 @@
 		8BCB4266F62BB64AB8145617 /* CKWaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037ACA4D8989D66080F0F6FC /* CKWaveformView.swift */; };
 		8D91C7437095367586CC46D7 /* RecordingHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAD2EAF075738CEA5C26F38 /* RecordingHistoryView.swift */; };
 		90E3C085E9E204D948196886 /* BPMDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 340A3337A1FC628ACA0C8F8F /* BPMDetector.swift */; };
+		928A8377398A22601A27669D /* IOUSBHostTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93EFB22A21319A992E32415 /* IOUSBHostTransport.swift */; };
 		95A17615866536B9133D398E /* MIDIMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7684740174FC5BAA740F6304 /* MIDIMonitor.swift */; };
 		9C67250BD5AC3FFF374C08E8 /* RecordingHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAD2EAF075738CEA5C26F38 /* RecordingHistoryView.swift */; };
 		9CA58BA51B460E5E34ED5FB5 /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA668168998E55E6D0204E4 /* ConnectionManager.swift */; };
@@ -89,7 +95,7 @@
 		037ACA4D8989D66080F0F6FC /* CKWaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKWaveformView.swift; sourceTree = "<group>"; };
 		088C407D0E42E84019136545 /* Connectakt.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Connectakt.entitlements; sourceTree = "<group>"; };
 		119846DD553B9520030A3C3B /* ConnektaktTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = ConnektaktTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		15FA6B96C644C817EBEF488D /* Connectakt.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Connectakt.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		15FA6B96C644C817EBEF488D /* Connectakt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Connectakt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		176DAA41F43626558AECF38B /* RecordingSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingSession.swift; sourceTree = "<group>"; };
 		1A0E26435CBCEB452D132BE4 /* OptimizationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptimizationModels.swift; sourceTree = "<group>"; };
 		1A8FC49648B8478CA3471678 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
@@ -107,6 +113,7 @@
 		4F7260F0651BE1A2E29FB159 /* OptimizationSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptimizationSheet.swift; sourceTree = "<group>"; };
 		54C07060B98BF21F6444C1CE /* ElektronProtocolTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElektronProtocolTests.swift; sourceTree = "<group>"; };
 		5F5FC57F54A4147F031E562D /* RecordingHistoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingHistoryManager.swift; sourceTree = "<group>"; };
+		610979F1637DD8319FEDD276 /* ElektronUSBTransfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElektronUSBTransfer.swift; sourceTree = "<group>"; };
 		67393F84B6D8EEEA1B725768 /* CKStorageMeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKStorageMeter.swift; sourceTree = "<group>"; };
 		73D829A6261210F638E84580 /* MIDIDiagnosticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MIDIDiagnosticsView.swift; sourceTree = "<group>"; };
 		7684740174FC5BAA740F6304 /* MIDIMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MIDIMonitor.swift; sourceTree = "<group>"; };
@@ -118,7 +125,9 @@
 		99145EDEE04D45477DA7900F /* CKHeaderBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKHeaderBar.swift; sourceTree = "<group>"; };
 		A78C372A584E2FABD2981087 /* ElektronProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElektronProtocol.swift; sourceTree = "<group>"; };
 		A915367173B99D944147402A /* CKButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKButton.swift; sourceTree = "<group>"; };
+		A93EFB22A21319A992E32415 /* IOUSBHostTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOUSBHostTransport.swift; sourceTree = "<group>"; };
 		AD1B3AF560CD2681566EC770 /* AudioOptimizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioOptimizerTests.swift; sourceTree = "<group>"; };
+		B320195E9A8F340B3072ECAC /* ElektronMailbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElektronMailbox.swift; sourceTree = "<group>"; };
 		B6EF0CA517D85FC08AAA1229 /* ElektronMIDITransfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElektronMIDITransfer.swift; sourceTree = "<group>"; };
 		BA7C53C9A83183DCD32F0E97 /* DigitaktTransferProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitaktTransferProtocol.swift; sourceTree = "<group>"; };
 		CB00A1625168106BDACEDEB3 /* BrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserView.swift; sourceTree = "<group>"; };
@@ -169,6 +178,7 @@
 		11726739A678A26A035A7A90 /* Connection */ = {
 			isa = PBXGroup;
 			children = (
+				A93EFB22A21319A992E32415 /* IOUSBHostTransport.swift */,
 				1DDA1CA181523BCB7CCDA54C /* USBDeviceMonitor.swift */,
 			);
 			path = Connection;
@@ -196,8 +206,10 @@
 			isa = PBXGroup;
 			children = (
 				BA7C53C9A83183DCD32F0E97 /* DigitaktTransferProtocol.swift */,
+				B320195E9A8F340B3072ECAC /* ElektronMailbox.swift */,
 				B6EF0CA517D85FC08AAA1229 /* ElektronMIDITransfer.swift */,
 				A78C372A584E2FABD2981087 /* ElektronProtocol.swift */,
+				610979F1637DD8319FEDD276 /* ElektronUSBTransfer.swift */,
 			);
 			path = Transfer;
 			sourceTree = "<group>";
@@ -380,7 +392,6 @@
 						ProvisioningStyle = Automatic;
 					};
 					AE6450538734C5EEA5CFDB2D = {
-						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -457,7 +468,10 @@
 				EED32E39084BE105DF1B6E82 /* DigitaktTransferProtocol.swift in Sources */,
 				3B869D594DC8FD3292D3FA05 /* EditorView.swift in Sources */,
 				107B0F51EC0A23113E3ABE40 /* ElektronMIDITransfer.swift in Sources */,
+				650D9FA4AB2741BE73B8C6FA /* ElektronMailbox.swift in Sources */,
 				3D9AD8984FF4C800406509F2 /* ElektronProtocol.swift in Sources */,
+				1C98DA90A70C480BD40C0320 /* ElektronUSBTransfer.swift in Sources */,
+				928A8377398A22601A27669D /* IOUSBHostTransport.swift in Sources */,
 				78C00AE476BC6A13FB9CDB6C /* ImportCoordinator.swift in Sources */,
 				3AE5C060BD8444E82AE69461 /* MIDIDiagnosticsView.swift in Sources */,
 				87E2AF59262A3D06D6C7EA03 /* MIDIMonitor.swift in Sources */,
@@ -494,7 +508,10 @@
 				C46AC52BCA3F26BBE52AC813 /* DigitaktTransferProtocol.swift in Sources */,
 				3C0FC9890B8457915F2A2804 /* EditorView.swift in Sources */,
 				834415FD4F031B86EFF824C7 /* ElektronMIDITransfer.swift in Sources */,
+				0A97CE0A7733B02C710C7EFB /* ElektronMailbox.swift in Sources */,
 				6463C7C2F9EC33E755BF37C0 /* ElektronProtocol.swift in Sources */,
+				6B91DE461DCA42C76F9A2DF5 /* ElektronUSBTransfer.swift in Sources */,
+				428AAA1D38C0CA8A54CF9A4D /* IOUSBHostTransport.swift in Sources */,
 				CA6C483CE5A6A3E4AE7A764A /* ImportCoordinator.swift in Sources */,
 				F6F7E2E8D9E4F2F4A5C86925 /* MIDIDiagnosticsView.swift in Sources */,
 				95A17615866536B9133D398E /* MIDIMonitor.swift in Sources */,
@@ -547,6 +564,11 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				"OTHER_LDFLAGS[sdk=macosx*]" = (
+					"$(inherited)",
+					"-framework",
+					IOUSBHost,
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ericerwin.connectakt;
 				PRODUCT_NAME = Connectakt;
 				SDKROOT = macosx;
@@ -719,7 +741,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = FMDT2KGY3Z;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Connectakt;
@@ -734,6 +756,11 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				"OTHER_LDFLAGS[sdk=macosx*]" = (
+					"$(inherited)",
+					"-framework",
+					IOUSBHost,
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ericerwin.connectakt;
 				PRODUCT_NAME = Connectakt;
 				SDKROOT = iphoneos;
@@ -768,6 +795,11 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				"OTHER_LDFLAGS[sdk=macosx*]" = (
+					"$(inherited)",
+					"-framework",
+					IOUSBHost,
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ericerwin.connectakt;
 				PRODUCT_NAME = Connectakt;
 				SDKROOT = macosx;
@@ -786,7 +818,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = FMDT2KGY3Z;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Connectakt;
@@ -801,6 +833,11 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				"OTHER_LDFLAGS[sdk=macosx*]" = (
+					"$(inherited)",
+					"-framework",
+					IOUSBHost,
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ericerwin.connectakt;
 				PRODUCT_NAME = Connectakt;
 				SDKROOT = iphoneos;
