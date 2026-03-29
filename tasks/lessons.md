@@ -11,3 +11,6 @@ The Digitakt presents itself as a USB Audio Class 2.0 device when used as an aud
 
 ## xcodebuild targets must be run sequentially (2026-03-23)
 Never run multiple xcodebuild commands in parallel. They share derived data directories and will conflict, causing spurious build errors. Always run one target, wait for completion, then run the next.
+
+## AUV3 offline preview must not await buffer scheduling (2026-03-29)
+When using `AVAudioPlayerNode` with an offline `AVAudioEngine` render path, do not switch blindly to the newer async `scheduleBuffer` overload. In the editor's AUV3 preview chain this caused playback to stall before rendering started. Use immediate scheduling in the offline path, then validate on-device with a real AU before treating preview/freeze as stable.

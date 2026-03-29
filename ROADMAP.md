@@ -3,7 +3,7 @@
 > **Handoff note:** This roadmap is kept up-to-date as features land.
 > Check `CLAUDE.md` for architecture details and key file locations.
 > Check `CODEX.md` for detailed agent task handoffs.
-> Last updated: 2026-03-23
+> Last updated: 2026-03-29
 
 ---
 
@@ -16,93 +16,26 @@
 | 2 | AudioOptimizer, DigitaktTransferProtocol, import flow UI, 18 unit tests | bd24c96 |
 | 3 | AudioRecorder, BPMDetector, RecordingSession/History, live waveform, 32 tests | d3ad842 |
 | 3b | ElektronProtocol (SysEx), ElektronMIDITransfer, USBDeviceMonitor (CoreMIDI), 53 tests | TBD |
+| 4 | Sample editor workspace, waveform trim/edit flow, preview/export/upload path, 46 tests in current verified suite | TBD |
 
 ---
 
 ## 🔜 Next Up
 
-### Phase 1 — Foundation & USB Connectivity
-
-The core of the app: establishing a reliable USB communication channel with the Digitakt and building the Elektron-themed UI shell.
-
-- [ ] Xcode project setup (iOS/iPadOS/macOS universal, SwiftUI)
-- [ ] Core project structure (packages, modules, targets)
-- [ ] Elektron-themed UI shell (yellow #F5C400 / black #1A1A1A, monospace font, OLED aesthetic)
-- [ ] USB device detection via CoreUSB / ExternalAccessory framework
-- [ ] MTP/Elektron Transfer protocol research & implementation
-- [ ] Basic project/sample directory browsing (read-only)
-- [ ] Waveform thumbnail rendering for sample list
-
-**Acceptance criteria**
-- [ ] App launches on iPhone 15 Pro simulator
-- [ ] USB connection detected when Digitakt attached
-- [ ] Sample list populates from Digitakt storage
-- [ ] Visual style matches Digitakt screen aesthetic
-
----
-
-### Phase 2 — Sample Transfer & Optimization Engine
-
-- [ ] Sample optimizer: convert any audio to Digitakt-spec WAV (16-bit, 44.1kHz, mono)
-- [ ] Drag-and-drop / Files app integration for importing audio
-- [ ] Upload samples from iPhone → Digitakt with progress indicator
-- [ ] Download samples from Digitakt → iPhone
-- [ ] Batch import/export (folder operations)
-- [ ] Storage usage display (used/total MB on Digitakt)
-
-**Acceptance criteria**
-- [ ] Any audio file (MP3, AAC, WAV stereo, etc.) converts correctly to Digitakt spec
-- [ ] Round-trip transfer verified (upload → Digitakt plays it)
-- [ ] Batch operation completes without corruption
-
----
-
-### Phase 3 — Audio Recording / Resampling Mode
-
-- [ ] USB audio interface mode (record Digitakt output → iPhone)
-- [ ] Live waveform visualization during recording
-- [ ] One-tap: Record → Optimize → Upload workflow
-- [ ] Recording history / session manager
-- [ ] Auto-name with BPM + timestamp
-
-**Acceptance criteria**
-- [ ] Audio recorded from Digitakt at 16-bit/48kHz
-- [ ] Waveform renders in real-time during capture
-- [ ] Full resample loop: record → convert → upload in < 10 taps
-
----
-
-### Phase 4 — Sample Editor
-
-- [ ] Waveform viewer with zoom/scroll
-- [ ] Trim (set start/end points)
-- [ ] Normalize, fade in/out
-- [ ] Reverse
-- [ ] Pitch shift (semitones, fine-tune)
-- [ ] Time stretch (tempo-sync)
-- [ ] BPM detection for loop samples
-- [ ] Key detection for melodic samples
-- [ ] Loop point editor (for sustain loops)
-
-**Acceptance criteria**
-- [ ] All edits render correctly and non-destructively
-- [ ] Preview playback reflects edits in real-time
-- [ ] Exports to Digitakt-optimized WAV
-
----
-
 ### Phase 5 — AUV3 Integration & Processing Chain
 
-- [ ] AUV3 host within the sample editor
-- [ ] Browse/load installed AUV3 effects
-- [ ] Signal chain: Sample → AUV3 effects → Output
-- [ ] Render/freeze AUV3 chain to new sample
-- [ ] Preset save/load for effect chains
+- [x] AUV3 host within the sample editor
+- [x] Browse/load installed AUV3 effects
+- [x] Signal chain: Sample → AUV3 effects → Output
+- [x] Render/freeze AUV3 chain to new sample
+- [x] Preset save/load for effect chains
+- [x] Hosted parameter inspection/editing with persistent parameter snapshots
+- [ ] Third-party App Store AUV3 discovery/runtime validation on-device
 
 **Acceptance criteria**
 - [ ] Third-party AUV3 loads and processes audio
-- [ ] Rendered output is valid Digitakt-spec WAV
-- [ ] Chain presets persist across sessions
+- [x] Rendered output is valid Digitakt-spec WAV
+- [x] Chain presets persist across sessions
 
 ---
 

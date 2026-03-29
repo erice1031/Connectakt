@@ -1,6 +1,19 @@
 # Connectakt — Task Tracker
 
-## Current Task: Project Bootstrap
+## Current Task: Phase 5 — AUV3 Integration & Processing Chain
+
+## In Progress — Phase 5 AUV3 integration
+- [x] Discover installed AUV3 effect components from the editor
+- [x] Add chain-building UI with insert, bypass, reorder, and remove actions
+- [x] Route preview renders through the active AUV3 chain
+- [x] Add freeze action to bake the current chain into a new editable sample
+- [x] Add effect-chain preset save/load/delete support
+- [x] Add hosted-parameter inspection and editing UI with parameter snapshot persistence
+- [x] Add unit tests for effect-chain state serialization and preset persistence
+- [x] Verify iOS simulator build and test pass after the Phase 5 slice
+- [x] Verify macOS build still succeeds with shared editor code
+- [x] Validate runtime loading, preview, freeze, render/share, and preset persistence with Apple built-in AU effects on-device
+- [ ] Diagnose why purchased third-party AUV3 effects are still missing from the discovery list on-device
 
 ### ✅ Done
 - Project brief defined
@@ -47,17 +60,33 @@
 - ElektronProtocolTests: 21 new tests (SysEx build/parse, nibble round-trip, payload helpers)
 - 53 unit tests total — all passing
 
+### ✅ Done — Phase 4 sample editor (commit TBD)
+- `EditorView`: import-driven sample editor workspace with analysis, waveform, trim handles, edit controls, preview, export, and optimize + upload
+- `EditorScreenModel`: editor state machine with non-destructive settings, rendered preview invalidation, and transfer flow integration
+- `SampleEditorProcessor`: waveform peak generation, trim/fade/reverse processing, preview/export WAV rendering, and simple key estimation
+- BPM analysis wired through `AudioAnalyzer`
+- Editor helper coverage added in `ConnektaktTests`
+- `AudioOptimizerTests` updated for thread-safe progress callback assertions
+- `ElektronProtocolTests` refreshed to match the current SysEx/7-bit implementation
+- Verified locally: macOS build succeeded with `xcodebuild -project Connectakt.xcodeproj -scheme Connectakt_macOS -derivedDataPath /tmp/ConnectaktDerived build`
+- Verified locally: iOS simulator build succeeded with `xcodebuild -project Connectakt.xcodeproj -scheme Connectakt_iOS -destination 'platform=iOS Simulator,name=iPhone 17 Pro' -derivedDataPath /tmp/ConnectaktDerived build`
+- Verified locally: iOS tests succeeded with `xcodebuild -project Connectakt.xcodeproj -scheme Connectakt_iOS -destination 'platform=iOS Simulator,name=iPhone 17 Pro' -derivedDataPath /tmp/ConnectaktDerived test` (`46 tests` across `9 suites`)
+
+### ✅ Done — Phase 5 slice 1 (commit TBD)
+- AUV3 discovery UI in `EditorView` with chain management, bypass, reorder, and clear signal-path messaging
+- Preview, freeze, render/share, and optimize/upload paths route through the active AUV3 chain
+- Hosted parameter inspection/editing with parameter snapshot persistence per chain item
+- Effect-chain preset save/load/delete persists across app relaunches
+- On-device validation completed with Apple built-in AU effects: preview playback, parameter editing, freeze, render/share, and preset reload all succeeded
+- Verified locally: iOS simulator build succeeded with `xcodebuild -project Connectakt.xcodeproj -scheme Connectakt_iOS -destination 'platform=iOS Simulator,name=iPhone 17 Pro' -derivedDataPath /tmp/ConnectaktDerived build`
+- Verified locally: macOS build succeeded with `xcodebuild -project Connectakt.xcodeproj -scheme Connectakt_macOS -derivedDataPath /tmp/ConnectaktDerived build`
+- Verified locally: iOS tests succeeded with `xcodebuild -project Connectakt.xcodeproj -scheme Connectakt_iOS -destination 'platform=iOS Simulator,name=iPhone 17 Pro' -derivedDataPath /tmp/ConnectaktDerived test` (`48 tests` across `10 suites`)
+
 ### Backlog (hardware-dependent)
 - [ ] Verify ElektronMsgType command byte values against real Digitakt hardware
 - [ ] Stress-test chunked file upload/download with large samples
 
 ### Backlog
-- USB connection manager (CoreUSB / ExternalAccessory)
-- Audio optimizer (AVFoundation)
-- Sample browser UI
-- Recording mode
-- Sample editor
-- AUV3 host
 - AUV3 plugin target
 - StoreKit 2 monetization
 - iCloud backup

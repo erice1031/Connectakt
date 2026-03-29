@@ -181,12 +181,14 @@ struct AudioOptimizerTests {
         let inputURL = try Self.makeWAV(sampleRate: 48000, channels: 2, duration: 0.3)
         defer { try? FileManager.default.removeItem(at: inputURL) }
 
-        var lastProgress = 0.0
+        let progressBox = ProgressBox()
         let optimizer = AudioOptimizer()
-        let result = try await optimizer.optimize(url: inputURL) { p in lastProgress = p }
+        let result = try await optimizer.optimize(url: inputURL) { p in
+            progressBox.set(p)
+        }
         defer { try? FileManager.default.removeItem(at: result.outputURL) }
 
-        #expect(lastProgress == 1.0)
+        #expect(progressBox.value == 1.0)
     }
 
     @Test("analyzeFormat returns correct metadata for stereo 48kHz")
@@ -218,5 +220,22 @@ private extension Data {
     }
     func u32(at offset: Int) -> UInt32 {
         withUnsafeBytes { $0.load(fromByteOffset: offset, as: UInt32.self) }
+    }
+}
+
+private final class ProgressBox: @unchecked Sendable {
+    private let lock = NSLock()
+    private var storage = 0.0
+
+    var value: Double {
+        lock.lock()
+        defer { lock.unlock() }
+        return storage
+    }
+
+    func set(_ newValue: Double) {
+        lock.lock()
+        storage = newValue
+        lock.unlock()
     }
 }

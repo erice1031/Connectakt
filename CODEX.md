@@ -1,181 +1,129 @@
 # Connectakt — Codex Task Handoff
 
-> This file is for AI coding agents (Codex, Claude, etc.).
-> Each task is self-contained with specific files, function signatures, and acceptance criteria.
-> **Verify**: read the referenced files before making changes to confirm signatures match.
-> Mark tasks complete with commit hash when done.
+> This file is for AI coding agents working in the repo.
+> Read `AGENTS.md`, `CLAUDE.md`, `tasks/lessons.md`, `tasks/todo.md`, and `WORKFLOW_ORCHESTRATION.md` before changing code.
+> Verify current file signatures before editing; this project has moved quickly.
 
 ---
 
-## Build & Run
+## Build & Verify
 
 ```bash
-# Build (iOS Simulator)
-xcodebuild -workspace Connectakt.xcworkspace \
-  -scheme Connectakt \
-  -destination 'platform=iOS Simulator,name=iPhone 16 Pro' \
+# Build macOS target
+xcodebuild -project Connectakt.xcodeproj \
+  -scheme Connectakt_macOS \
+  -derivedDataPath /tmp/ConnectaktDerived \
   build
 
-# Run tests
-xcodebuild -workspace Connectakt.xcworkspace \
-  -scheme ConnektaktTests \
-  -destination 'platform=iOS Simulator,name=iPhone 16 Pro' \
+# Build iOS simulator target
+xcodebuild -project Connectakt.xcodeproj \
+  -scheme Connectakt_iOS \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro' \
+  -derivedDataPath /tmp/ConnectaktDerived \
+  build
+
+# Run iOS tests
+xcodebuild -project Connectakt.xcodeproj \
+  -scheme Connectakt_iOS \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro' \
+  -derivedDataPath /tmp/ConnectaktDerived \
   test
 ```
 
-**Important**: Build one target at a time. Do not run multiple xcodebuild commands in parallel.
+Build one target at a time. Do not run multiple `xcodebuild` commands in parallel.
 
 ---
 
-## Task 1 — Xcode Project Bootstrap & Theme Foundation
+## Current Verified Status
 
-### What exists
+- macOS build succeeds with `Connectakt_macOS`
+- iOS simulator build succeeds with `Connectakt_iOS`
+- iOS test suite succeeds: `48 tests` across `10 suites`
+
+---
+
+## Task 1 — Project Bootstrap & Theme Foundation [✅ DONE]
+
+> Completed: 2026-03-23
+> Commit: 5d8346d
+> Notes: Project shell, theme, tab navigation, and initial mock connection flow are in place.
+
+## Task 2 — Sample Transfer & Optimization [✅ DONE]
+
+> Completed: 2026-03-23
+> Commit: bd24c96
+> Notes: Audio optimization, import workflow UI, and transfer abstractions landed.
+
+## Task 3 — Recording Workflow [✅ DONE]
+
+> Completed: 2026-03-23
+> Commit: d3ad842
+> Notes: Recorder flow, waveform capture, BPM detection, session history, and optimize-upload workflow are in place.
+
+## Task 4 — MIDI Transfer / SysEx Foundation [✅ DONE]
+
+> Completed: 2026-03-23
+> Commit: TBD
+> Notes: `ElektronProtocol`, `ElektronMIDITransfer`, and `USBDeviceMonitor` replaced the earlier stub transfer path. Real-hardware validation is still pending.
+
+## Task 5 — Sample Editor Workspace [✅ DONE]
+
+> Completed: 2026-03-29
+> Commit: TBD
+> Notes: `EditorView` is now an import-driven editor with waveform trim, destructive edits, BPM/key analysis, preview/export rendering, and optimize-upload integration. Loop-point editing is still outstanding.
+
+### Key files
 | File | Description |
 |------|-------------|
-| *(nothing yet)* | Project has not been created in Xcode |
-
-### Step-by-step
-
-**Step 1 — Create Xcode project**
-
-- New project → Multiplatform App (Swift, SwiftUI)
-- Product Name: `Connectakt`
-- Bundle ID: `com.ericerwin.connectakt`
-- Minimum deployment: iOS 17.0, macOS 14.0
-
-**Step 2 — Set up folder structure**
-
-```
-Connectakt/
-├── App/
-│   ├── ConnektaktApp.swift
-│   └── ContentView.swift
-├── Features/
-│   ├── Connection/
-│   ├── Browser/
-│   ├── Optimizer/
-│   ├── Recorder/
-│   ├── Editor/
-│   ├── Backup/
-│   └── Store/
-├── Shared/
-│   ├── UI/
-│   │   ├── Theme.swift
-│   │   └── Components/
-│   ├── Audio/
-│   └── Models/
-└── Resources/
-    └── Assets.xcassets
-```
-
-**Step 3 — Implement Theme.swift**
-
-File: `Connectakt/Shared/UI/Theme.swift`
-
-```swift
-import SwiftUI
-
-enum ConnektaktTheme {
-    // Digitakt color palette
-    static let primary = Color(hex: "#F5C400")      // Digitakt yellow
-    static let background = Color(hex: "#0D0D0D")   // Deep black (OLED)
-    static let surface = Color(hex: "#1A1A1A")      // Slightly lighter black
-    static let surfaceElevated = Color(hex: "#242424")
-    static let textPrimary = Color(hex: "#F5C400")  // Yellow text
-    static let textSecondary = Color(hex: "#8A7A3A") // Dimmed yellow
-    static let accent = Color(hex: "#FF6B00")        // Orange accent
-    static let waveformGreen = Color(hex: "#39FF14") // Neon green (VU meters)
-
-    // Typography — monospace to mimic Digitakt screen
-    static let fontMono = Font.system(.body, design: .monospaced)
-    static let fontMonoSm = Font.system(.caption, design: .monospaced)
-    static let fontMonoLg = Font.system(.title3, design: .monospaced)
-    static let fontMonoXl = Font.system(.title, design: .monospaced, weight: .bold)
-}
-
-extension Color {
-    init(hex: String) {
-        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
-        var int: UInt64 = 0
-        Scanner(string: hex).scanHexInt64(&int)
-        let a, r, g, b: UInt64
-        switch hex.count {
-        case 3: (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
-        case 6: (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
-        case 8: (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
-        default: (a, r, g, b) = (255, 0, 0, 0)
-        }
-        self.init(.sRGB, red: Double(r) / 255, green: Double(g) / 255, blue: Double(b) / 255, opacity: Double(a) / 255)
-    }
-}
-```
-
-**Step 4 — Main app shell (ContentView)**
-
-File: `Connectakt/App/ContentView.swift`
-
-```swift
-import SwiftUI
-
-struct ContentView: View {
-    var body: some View {
-        TabView {
-            BrowserView()
-                .tabItem { Label("SAMPLES", systemImage: "waveform") }
-            RecorderView()
-                .tabItem { Label("RECORD", systemImage: "record.circle") }
-            EditorView()
-                .tabItem { Label("EDITOR", systemImage: "slider.horizontal.3") }
-            SettingsView()
-                .tabItem { Label("SETTINGS", systemImage: "gear") }
-        }
-        .tint(ConnektaktTheme.primary)
-        .background(ConnektaktTheme.background)
-        .preferredColorScheme(.dark)
-    }
-}
-```
+| `Connectakt/Features/Editor/EditorView.swift` | Editor UI plus `EditorScreenModel` and processing pipeline |
+| `ConnektaktTests/ConnektaktTests.swift` | Sample editor helper coverage |
+| `ConnektaktTests/AudioOptimizerTests.swift` | Thread-safe optimizer progress assertions |
+| `ConnektaktTests/ElektronProtocolTests.swift` | Updated current-protocol coverage |
 
 ### Acceptance criteria
-- [ ] App builds for iOS 17+ simulator with zero errors
-- [ ] App launches and shows 4-tab navigation
-- [ ] Background is deep black, accents are Digitakt yellow (#F5C400)
-- [ ] Monospace font used throughout
-- [ ] Folder structure matches spec above
+- [x] Waveform viewer with zoom/trim controls
+- [x] Normalize, fade in/out, and reverse controls
+- [x] Pitch shift and time-stretch controls with offline preview rendering
+- [x] BPM detection for imported samples
+- [x] Key estimation for melodic material
+- [x] Export path produces Digitakt-optimized WAV
+- [ ] Loop point editor for sustain loops
 
 ---
 
-## Task 2 — USB Connection Manager
+## Task 6 — AUV3 Integration & Processing Chain
 
-*(Pending Task 1 completion)*
+This task is in progress.
 
-### What will be needed
-- `ExternalAccessory` framework for MFi accessories
-- `CoreUSB` (iOS 16+) for USB device enumeration
-- Research into Elektron Transfer protocol (USB bulk transfer)
+### Read first
+- `Connectakt/Features/Editor/EditorView.swift`
+- `Connectakt/Features/Optimizer/OptimizationModels.swift`
+- `Connectakt/Features/Transfer/DigitaktTransferProtocol.swift`
+- `tasks/todo.md`
+- `tasks/lessons.md`
 
-### Acceptance criteria (TBD)
-- [ ] App detects when Digitakt is connected via USB
-- [ ] Connection status shown in UI (connected/disconnected)
-- [ ] USB device vendor/product ID confirmed: Elektron VID = 0x1935
+### Goal
+Add an AUV3 effect chain to the sample editor so imported audio can be previewed and rendered through third-party effects before export or upload.
 
----
+### Suggested implementation order
+1. Introduce an editor-safe effect chain model that can persist selected AU components plus parameter snapshots.
+2. Build a lightweight AUV3 host service that can discover installed audio effects and instantiate one effect at a time reliably.
+3. Add editor UI for browsing/loading effects and reordering or removing items from the chain.
+4. Route editor preview rendering through the hosted AUV3 chain.
+5. Add freeze/render support so processed output becomes a new export/upload source.
+6. Add preset save/load for effect chains if time permits in the same slice.
 
-## Task 3 — Audio Optimizer
+### Acceptance criteria
+- [x] Installed AUV3 effects can be discovered from the editor
+- [x] A selected effect can be inserted into a chain and previewed
+- [x] Offline render path includes the active AUV3 chain
+- [x] Frozen/rendered output remains Digitakt-compatible WAV
+- [x] Tests cover effect-chain state serialization or other non-UI core logic
+- [ ] Third-party App Store AUV3 effects appear in the discovery list on-device
+- [ ] Third-party AUV3 loading/preview is validated on-device
 
-*(Pending Task 1 completion)*
-
-### What will be needed
-- `AVFoundation` for audio file reading/writing
-- `AVAudioConverter` for sample rate and bit depth conversion
-- Mono downmix (stereo L+R → mono)
-- Output: WAV, 16-bit, 44.1kHz, mono
-
-### Acceptance criteria (TBD)
-- [ ] MP3 → Digitakt WAV conversion works
-- [ ] Stereo WAV → mono WAV conversion works
-- [ ] Output is exactly: 16-bit PCM, 44100 Hz, 1 channel
-
----
-
-*More tasks will be added as phases are completed.*
+### Notes
+- Keep shared code compatible with both iOS and macOS targets.
+- Avoid introducing an iOS-only audio unit API into shared compile paths.
+- Apple built-in AU effects have been validated on-device: preview, parameter editing, freeze, render/share, and preset reload all worked.
+- Current known blocker: purchased third-party AUV3 effects are still missing from the discovery list on-device.

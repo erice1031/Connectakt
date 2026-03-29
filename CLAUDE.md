@@ -41,42 +41,36 @@ Connectakt/
 │   ├── ConnektaktApp.swift        # App entry point
 │   └── ContentView.swift          # Root navigation (TabView)
 ├── Features/
-│   ├── Connection/
-│   │   ├── DigitaktConnection.swift    # USB session manager
-│   │   └── ElektronTransfer.swift      # Elektron Transfer protocol
 │   ├── Browser/
-│   │   ├── BrowserView.swift           # Sample/project list UI
-│   │   └── BrowserViewModel.swift      # File listing logic
-│   ├── Optimizer/
-│   │   ├── AudioOptimizer.swift        # Convert → Digitakt WAV spec
-│   │   └── BatchOptimizer.swift        # Batch conversion
-│   ├── Recorder/
-│   │   ├── RecorderView.swift          # Record UI
-│   │   └── USBAudioRecorder.swift      # AVCaptureSession USB audio
+│   │   ├── BrowserView.swift           # Sample browser and import entry point
+│   │   ├── ImportCoordinator.swift     # Analyze/optimize/upload workflow state
+│   │   └── OptimizationSheet.swift     # Import optimization UI
 │   ├── Editor/
-│   │   ├── EditorView.swift            # Waveform editor UI
-│   │   ├── WaveformRenderer.swift      # GPU waveform drawing (Metal)
-│   │   └── AUV3Host.swift             # AUV3 plugin hosting
-│   ├── Backup/
-│   │   ├── SysExDumper.swift           # Digitakt SysEx backup
-│   │   └── ProjectArchiver.swift       # ZIP export/import
-│   └── Store/
-│       └── PurchaseManager.swift       # StoreKit 2 IAP
+│   │   └── EditorView.swift            # Import-driven sample editor, analysis, preview, export/upload
+│   ├── Recorder/
+│   │   ├── RecorderView.swift          # Record UI with history and upload actions
+│   │   ├── AudioRecorder.swift         # AVAudioEngine capture pipeline
+│   │   ├── AudioAnalyzer.swift         # BPM/onset analysis helpers
+│   │   └── RecordingSession.swift      # Persisted session model/history support
+│   └── Settings/
+│       └── SettingsView.swift          # App settings and status
 ├── Shared/
-│   ├── UI/
-│   │   ├── Theme.swift                 # Elektron color palette + typography
-│   │   └── Components/                 # Reusable UI components
-│   ├── Audio/
-│   │   └── AudioFileUtils.swift        # Shared audio utilities
-│   └── Models/
-│       ├── Sample.swift                # Sample domain model
-│       ├── Project.swift               # Digitakt project model
-│       └── DeviceState.swift           # USB connection state
-├── ConnektaktAU/                        # AUV3 extension target
-│   ├── ConnektaktAUExtension.swift
-│   └── ConnektaktAUUI.swift
-└── ConnektaktTests/
-    └── OptimizerTests.swift
+│   ├── Models/
+│   │   ├── ConnectionManager.swift     # USB/MIDI connection lifecycle
+│   │   ├── DigitaktTransferProtocol.swift # Transfer abstraction and mock transport
+│   │   ├── ElektronMIDITransfer.swift  # CoreMIDI transport for Digitakt transfers
+│   │   ├── ElektronProtocol.swift      # SysEx framing, 7-bit encoding, payload helpers
+│   │   ├── OptimizationModels.swift    # Audio optimizer domain models
+│   │   ├── RecordingHistoryManager.swift # JSON-backed recorder history store
+│   │   └── SampleFile.swift            # Sample metadata model
+│   └── UI/
+│       ├── Theme.swift                 # Elektron color palette + typography
+│       └── Components/                 # Shared controls, waveform, badges, meters
+├── ConnektaktTests/
+│   ├── AudioOptimizerTests.swift       # Optimizer coverage + progress callback assertions
+│   ├── ConnektaktTests.swift           # UI/model tests + sample editor helper tests
+│   └── ElektronProtocolTests.swift     # SysEx, payload, and file-list parsing tests
+└── Connectakt.xcodeproj
 ```
 
 ---
@@ -88,9 +82,9 @@ Connectakt/
 | SwiftUI | All UI (universal: iOS, iPadOS, macOS) |
 | AVFoundation | Audio file reading, conversion, recording |
 | AVAudioConverter | Sample rate / bit depth conversion |
-| CoreUSB (iOS 16+) | USB device discovery |
-| ExternalAccessory | MFi accessory communication |
-| Metal | GPU-accelerated waveform rendering |
+| CoreMIDI | Current USB MIDI-class Digitakt discovery and transport path |
+| CoreUSB (iOS 16+) | Future direct USB device discovery path |
+| ExternalAccessory | Future MFi accessory communication fallback |
 | AudioUnit v3 | AUV3 plugin hosting + plugin target |
 | StoreKit 2 | In-app purchases |
 | CloudKit | iCloud project backup |
@@ -131,12 +125,17 @@ The UI mimics the Digitakt's hardware screen: dark OLED background, yellow text/
 4. **AUV3 requires entitlements** — Separate target, specific App Store entitlements required.
 5. **CoreUSB vs ExternalAccessory** — CoreUSB (iOS 16+) is preferred for non-MFi USB; ExternalAccessory requires MFi certification from Elektron.
 6. **xcodebuild parallel builds** — Always build one target at a time; shared derived data causes conflicts.
+7. **Current verified build entry points** — This repo currently builds via `Connectakt.xcodeproj` with `Connectakt_iOS` and `Connectakt_macOS` schemes, not the older `Connectakt.xcworkspace` instructions.
+8. **Editor preview path is offline-rendered** — `EditorView` currently uses `AVAudioEngine` manual rendering plus `AVAudioUnitTimePitch` and chained AUV3 effects for preview/export/freeze.
 
 ---
 
 ## Known Bugs / TODOs
 
-*(Empty — project just started)*
+- Phase 4 editor still lacks loop point editing.
+- Phase 5 AUV3 chain browsing/hosting plus parameter editing is implemented in the editor; Apple built-in AU validation succeeded on-device, but purchased third-party AUV3 discovery/runtime validation is still pending.
+- Real hardware validation is still needed for `ElektronMsgType` command bytes and large transfer chunking.
+- `EditorView` currently builds with a small number of AVFoundation deprecation warnings that should be cleaned up in a follow-up pass.
 
 ---
 
