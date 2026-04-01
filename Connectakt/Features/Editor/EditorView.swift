@@ -1,5 +1,6 @@
 import AVFoundation
 import AudioToolbox
+import ExtensionFoundation
 import Observation
 import SwiftUI
 import UniformTypeIdentifiers
@@ -141,6 +142,7 @@ private struct EditorEmptyView: View {
 }
 
 private struct EditorWorkspaceView: View {
+    @Environment(\.scenePhase) private var scenePhase
     @Bindable var model: EditorScreenModel
     let connection: ConnectionManager
 
@@ -167,6 +169,10 @@ private struct EditorWorkspaceView: View {
         }
         .task {
             model.primeEffectBrowser()
+        }
+        .onChange(of: scenePhase) { _, newPhase in
+            guard newPhase == .active else { return }
+            model.refreshAvailableEffects()
         }
     }
 
@@ -572,6 +578,25 @@ private struct EditorWorkspaceView: View {
                 .foregroundStyle(ConnektaktTheme.textSecondary)
                 .tracking(1)
 
+            if model.discoveredAudioUnits.count != model.availableEffects.count {
+                Text("\(model.discoveredAudioUnits.count) TOTAL AUDIO UNITS DISCOVERED • \(model.availableEffects.count) SUPPORTED FOR THE SAMPLE CHAIN")
+                    .font(ConnektaktTheme.smallFont)
+                    .foregroundStyle(ConnektaktTheme.textMuted)
+                    .tracking(1)
+            }
+
+            if let extensionSummary = model.audioUnitExtensionSummary {
+                Text(extensionSummary)
+                    .font(ConnektaktTheme.smallFont)
+                    .foregroundStyle(ConnektaktTheme.textMuted)
+                    .tracking(1)
+            }
+
+            Text("IF A PURCHASED AU IS MISSING, OPEN ITS MAIN APP ON THIS DEVICE ONCE, RETURN TO CONNECTAKT, AND REFRESH FX.")
+                .font(ConnektaktTheme.smallFont)
+                .foregroundStyle(ConnektaktTheme.textMuted)
+                .tracking(1)
+
             if model.availableEffects.isEmpty {
                 Text("NO AUDIO UNITS DISCOVERED YET")
                     .font(ConnektaktTheme.smallFont)
@@ -611,6 +636,14 @@ private struct EditorWorkspaceView: View {
                         effectRow(item: item, index: index)
                     }
                 }
+            }
+
+            if !model.unsupportedDiscoveredAudioUnits.isEmpty {
+                unsupportedUnitsSection
+            }
+
+            if !model.audioUnitExtensionIdentities.isEmpty {
+                extensionIdentitySection
             }
 
             if !model.effectChainState.items.isEmpty {
@@ -775,6 +808,62 @@ private struct EditorWorkspaceView: View {
         .clipShape(RoundedRectangle(cornerRadius: 6))
     }
 
+    private var unsupportedUnitsSection: some View {
+        VStack(alignment: .leading, spacing: ConnektaktTheme.paddingSM) {
+            Text("OTHER DISCOVERED AUDIO UNITS")
+                .font(ConnektaktTheme.smallFont)
+                .foregroundStyle(ConnektaktTheme.textMuted)
+                .tracking(1)
+
+            Text("These units are installed, but they are not currently treated as insertable sample-chain effects.")
+                .font(ConnektaktTheme.smallFont)
+                .foregroundStyle(ConnektaktTheme.textSecondary)
+                .tracking(1)
+
+            ForEach(model.unsupportedDiscoveredAudioUnits.prefix(8)) { unit in
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(unit.menuLabel)
+                        .font(ConnektaktTheme.smallFont)
+                        .foregroundStyle(ConnektaktTheme.textSecondary)
+                    Text(unit.typeSummary)
+                        .font(ConnektaktTheme.smallFont)
+                        .foregroundStyle(ConnektaktTheme.textMuted)
+                }
+            }
+        }
+        .padding(ConnektaktTheme.paddingMD)
+        .background(ConnektaktTheme.surfaceHigh)
+        .clipShape(RoundedRectangle(cornerRadius: 6))
+    }
+
+    private var extensionIdentitySection: some View {
+        VStack(alignment: .leading, spacing: ConnektaktTheme.paddingSM) {
+            Text("REGISTERED AUDIO UNIT EXTENSIONS")
+                .font(ConnektaktTheme.smallFont)
+                .foregroundStyle(ConnektaktTheme.textMuted)
+                .tracking(1)
+
+            Text("This comes from the iOS extension registry rather than the audio component picker.")
+                .font(ConnektaktTheme.smallFont)
+                .foregroundStyle(ConnektaktTheme.textSecondary)
+                .tracking(1)
+
+            ForEach(model.audioUnitExtensionIdentities.prefix(12)) { identity in
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(identity.localizedName.uppercased())
+                        .font(ConnektaktTheme.smallFont)
+                        .foregroundStyle(ConnektaktTheme.textSecondary)
+                    Text("\(identity.bundleIdentifier) • \(identity.extensionPointIdentifier)")
+                        .font(ConnektaktTheme.smallFont)
+                        .foregroundStyle(ConnektaktTheme.textMuted)
+                }
+            }
+        }
+        .padding(ConnektaktTheme.paddingMD)
+        .background(ConnektaktTheme.surfaceHigh)
+        .clipShape(RoundedRectangle(cornerRadius: 6))
+    }
+
     private func parameterRow(_ parameter: EditorEffectParameterDescriptor) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
@@ -859,7 +948,9 @@ final class EditorScreenModel {
     var waveformPeaks: [Float] = []
     var formatInfo: AudioFormatInfo?
     var analysis: EditorAnalysisSummary?
+    var discoveredAudioUnits: [EditorEffectDescriptor] = []
     var availableEffects: [EditorEffectDescriptor] = []
+    var audioUnitExtensionIdentities: [EditorAudioUnitExtensionIdentity] = []
     var selectedAvailableEffectID: String?
     var selectedChainEffectID: UUID?
     var selectedEffectParameters: [EditorEffectParameterDescriptor] = []
@@ -1049,10 +1140,16 @@ final class EditorScreenModel {
         guard !isScanningEffects else { return }
         isScanningEffects = true
         Task {
-            let effects = await SampleEditorProcessor.discoverAudioUnits()
-            availableEffects = effects
-            if selectedAvailableEffectID == nil || !effects.contains(where: { $0.id == selectedAvailableEffectID }) {
-                selectedAvailableEffectID = effects.first?.id
+            async let discoveredTask = SampleEditorProcessor.discoverAudioUnits()
+            async let extensionTask = SampleEditorProcessor.discoverAudioUnitExtensions()
+            let discovered = await discoveredTask
+            let extensionIdentities = await extensionTask
+            discoveredAudioUnits = discovered
+            audioUnitExtensionIdentities = extensionIdentities
+            let supported = discovered.filter(\.isSupportedEffectType)
+            availableEffects = supported
+            if selectedAvailableEffectID == nil || !supported.contains(where: { $0.id == selectedAvailableEffectID }) {
+                selectedAvailableEffectID = supported.first?.id
             }
             isScanningEffects = false
         }
@@ -1199,6 +1296,15 @@ final class EditorScreenModel {
     var selectedEffectSummary: String {
         guard let selectedAvailableEffect else { return "SELECT AN INSTALLED AUDIO UNIT EFFECT" }
         return "\(selectedAvailableEffect.name.uppercased()) • \(selectedAvailableEffect.manufacturerDisplay)"
+    }
+
+    var unsupportedDiscoveredAudioUnits: [EditorEffectDescriptor] {
+        discoveredAudioUnits.filter { !$0.isSupportedEffectType }
+    }
+
+    var audioUnitExtensionSummary: String? {
+        guard !audioUnitExtensionIdentities.isEmpty else { return nil }
+        return "\(audioUnitExtensionIdentities.count) AUDIO UNIT EXTENSIONS REGISTERED WITH IOS"
     }
 
     var selectedChainEffectName: String {
@@ -1746,19 +1852,137 @@ enum SampleEditorProcessor {
 
     static func discoverAudioUnits() async -> [EditorEffectDescriptor] {
         await Task.detached(priority: .utility) {
-            let manager = AVAudioUnitComponentManager.shared()
-            let allowedTypes: Set<OSType> = [kAudioUnitType_Effect, kAudioUnitType_MusicEffect]
-            let components = manager.components { component, _ in
-                allowedTypes.contains(component.audioComponentDescription.componentType)
+            var descriptorsByID: [String: EditorEffectDescriptor] = [:]
+            let managerDescriptors = AVAudioUnitComponentManager.shared()
+                .components { _, _ in true }
+                .map(EditorEffectDescriptor.init(component:))
+
+            let registryDescriptors = discoverAudioUnitsFromRegistry()
+
+            for descriptor in managerDescriptors + registryDescriptors {
+                descriptorsByID[descriptor.id] = descriptorsByID[descriptor.id].map {
+                    $0.merging(with: descriptor)
+                } ?? descriptor
             }
 
-            var seen = Set<String>()
-            let descriptors = components.compactMap { component -> EditorEffectDescriptor? in
-                let descriptor = EditorEffectDescriptor(component: component)
-                guard seen.insert(descriptor.id).inserted else { return nil }
-                return descriptor
+            return descriptorsByID.values.sorted { lhs, rhs in
+                if lhs.insertionPriority == rhs.insertionPriority {
+                    return lhs.menuLabel < rhs.menuLabel
+                }
+                return lhs.insertionPriority > rhs.insertionPriority
             }
-            return descriptors.sorted { $0.menuLabel < $1.menuLabel }
+        }.value
+    }
+
+    private static func discoverAudioUnitsFromRegistry() -> [EditorEffectDescriptor] {
+        var searchDescription = AudioComponentDescription(
+            componentType: 0,
+            componentSubType: 0,
+            componentManufacturer: 0,
+            componentFlags: 0,
+            componentFlagsMask: 0
+        )
+
+        var results: [EditorEffectDescriptor] = []
+        var current = AudioComponentFindNext(nil, &searchDescription)
+        while let component = current {
+            var description = AudioComponentDescription()
+            AudioComponentGetDescription(component, &description)
+
+            var unmanagedName: Unmanaged<CFString>?
+            let componentNameStatus = AudioComponentCopyName(component, &unmanagedName)
+            let componentName = if componentNameStatus == noErr, let unmanagedName {
+                unmanagedName.takeRetainedValue() as String
+            } else {
+                EditorEffectDescriptor.fourCC(description.componentSubType)
+            }
+            let parsedName = parseComponentName(componentName)
+            let configuration = configurationInfo(for: component)
+            results.append(
+                EditorEffectDescriptor(
+                    name: parsedName.name,
+                    manufacturerName: parsedName.manufacturer,
+                    componentType: description.componentType,
+                    componentSubType: description.componentSubType,
+                    componentManufacturer: description.componentManufacturer,
+                    componentFlags: description.componentFlags,
+                    discoverySource: .audioComponentRegistry,
+                    initialInputCount: configuration?.initialInputCount,
+                    initialOutputCount: configuration?.initialOutputCount,
+                    hasCustomView: configuration?.hasCustomView
+                )
+            )
+
+            current = AudioComponentFindNext(component, &searchDescription)
+        }
+
+        return results
+    }
+
+    private static func parseComponentName(_ rawName: String) -> (name: String, manufacturer: String) {
+        let separators = [" : ", ": ", ":", " / "]
+        for separator in separators {
+            if let range = rawName.range(of: separator) {
+                let manufacturer = String(rawName[..<range.lowerBound]).trimmingCharacters(in: .whitespacesAndNewlines)
+                let name = String(rawName[range.upperBound...]).trimmingCharacters(in: .whitespacesAndNewlines)
+                if !manufacturer.isEmpty, !name.isEmpty {
+                    return (name, manufacturer)
+                }
+            }
+        }
+
+        let normalized = rawName.trimmingCharacters(in: .whitespacesAndNewlines)
+        return (normalized.isEmpty ? "UNKNOWN AUDIO UNIT" : normalized, "UNKNOWN")
+    }
+
+    private static func configurationInfo(for component: AudioComponent) -> EditorEffectConfigurationSummary? {
+        var unmanagedInfo: Unmanaged<CFDictionary>?
+        let status = AudioComponentCopyConfigurationInfo(component, &unmanagedInfo)
+        guard status == noErr,
+              let info = unmanagedInfo?.takeRetainedValue() as? [String: Any] else { return nil }
+
+        return EditorEffectConfigurationSummary(
+            initialInputCount: parseConfigurationCount(info["InitialInputs"]),
+            initialOutputCount: parseConfigurationCount(info["InitialOutputs"]),
+            hasCustomView: info["HasCustomView"] as? Bool
+        )
+    }
+
+    private static func parseConfigurationCount(_ value: Any?) -> Int? {
+        switch value {
+        case let number as NSNumber:
+            return number.intValue
+        case let string as String:
+            return Int(string)
+        default:
+            return nil
+        }
+    }
+
+    static func discoverAudioUnitExtensions() async -> [EditorAudioUnitExtensionIdentity] {
+        guard #available(iOS 26.0, macOS 26.0, *) else { return [] }
+
+        return await Task.detached(priority: .utility) {
+            do {
+                let monitor = AppExtensionPoint.Monitor()
+                let audioUnitPoint = try AppExtensionPoint(identifier: "com.apple.AudioUnit")
+                let audioUnitUIPoint = try AppExtensionPoint(identifier: "com.apple.AudioUnit-UI")
+                try await monitor.addAppExtensionPoint(audioUnitPoint)
+                try await monitor.addAppExtensionPoint(audioUnitUIPoint)
+
+                return monitor.identities
+                    .map {
+                        EditorAudioUnitExtensionIdentity(
+                            id: $0.id,
+                            bundleIdentifier: $0.bundleIdentifier,
+                            localizedName: $0.localizedName,
+                            extensionPointIdentifier: $0.extensionPointIdentifier
+                        )
+                    }
+                    .sorted { $0.localizedName < $1.localizedName }
+            } catch {
+                return []
+            }
         }.value
     }
 
@@ -1878,7 +2102,11 @@ struct EditorEffectDescriptor: Identifiable, Codable, Equatable {
     let componentType: UInt32
     let componentSubType: UInt32
     let componentManufacturer: UInt32
-    let version: UInt32
+    let componentFlags: UInt32
+    let discoverySource: EditorEffectDiscoverySource
+    let initialInputCount: Int?
+    let initialOutputCount: Int?
+    let hasCustomView: Bool?
 
     init(component: AVAudioUnitComponent) {
         let description = component.audioComponentDescription
@@ -1887,8 +2115,16 @@ struct EditorEffectDescriptor: Identifiable, Codable, Equatable {
         componentType = description.componentType
         componentSubType = description.componentSubType
         componentManufacturer = description.componentManufacturer
-        version = description.componentFlags
-        id = "\(componentType)-\(componentSubType)-\(componentManufacturer)-\(name.uppercased())"
+        componentFlags = description.componentFlags
+        discoverySource = .componentManager
+        initialInputCount = nil
+        initialOutputCount = nil
+        hasCustomView = nil
+        id = Self.makeID(
+            componentType: componentType,
+            componentSubType: componentSubType,
+            componentManufacturer: componentManufacturer
+        )
     }
 
     init(
@@ -1898,15 +2134,27 @@ struct EditorEffectDescriptor: Identifiable, Codable, Equatable {
         componentType: UInt32,
         componentSubType: UInt32,
         componentManufacturer: UInt32,
-        version: UInt32 = 0
+        componentFlags: UInt32 = 0,
+        discoverySource: EditorEffectDiscoverySource = .componentManager,
+        initialInputCount: Int? = nil,
+        initialOutputCount: Int? = nil,
+        hasCustomView: Bool? = nil
     ) {
         self.name = name
         self.manufacturerName = manufacturerName
         self.componentType = componentType
         self.componentSubType = componentSubType
         self.componentManufacturer = componentManufacturer
-        self.version = version
-        self.id = id ?? "\(componentType)-\(componentSubType)-\(componentManufacturer)-\(name.uppercased())"
+        self.componentFlags = componentFlags
+        self.discoverySource = discoverySource
+        self.initialInputCount = initialInputCount
+        self.initialOutputCount = initialOutputCount
+        self.hasCustomView = hasCustomView
+        self.id = id ?? Self.makeID(
+            componentType: componentType,
+            componentSubType: componentSubType,
+            componentManufacturer: componentManufacturer
+        )
     }
 
     var componentDescription: AudioComponentDescription {
@@ -1926,6 +2174,143 @@ struct EditorEffectDescriptor: Identifiable, Codable, Equatable {
     var menuLabel: String {
         "\(name.uppercased()) • \(manufacturerDisplay)"
     }
+
+    var isSupportedEffectType: Bool {
+        [
+            kAudioUnitType_Effect,
+            kAudioUnitType_MusicEffect,
+            kAudioUnitType_Panner,
+            kAudioUnitType_FormatConverter,
+            kAudioUnitType_Mixer
+        ].contains(componentType)
+    }
+
+    var insertionPriority: Int {
+        isSupportedEffectType ? 1 : 0
+    }
+
+    var typeSummary: String {
+        "\(componentTypeCode) • \(typeDisplayName) • \(discoverySource.label) • \(ioSummary)"
+    }
+
+    var ioSummary: String {
+        let inputs = initialInputCount.map(String.init) ?? "?"
+        let outputs = initialOutputCount.map(String.init) ?? "?"
+        let view = hasCustomView == true ? "VIEW" : "NO VIEW"
+        return "IN \(inputs) / OUT \(outputs) / \(view)"
+    }
+
+    private var typeDisplayName: String {
+        switch componentType {
+        case kAudioUnitType_Effect:
+            return "EFFECT"
+        case kAudioUnitType_MusicEffect:
+            return "MUSIC EFFECT"
+        case kAudioUnitType_Panner:
+            return "PANNER"
+        case kAudioUnitType_FormatConverter:
+            return "FORMAT CONVERTER"
+        case kAudioUnitType_Mixer:
+            return "MIXER"
+        case kAudioUnitType_Generator:
+            return "GENERATOR"
+        case kAudioUnitType_MusicDevice:
+            return "MUSIC DEVICE"
+        case kAudioUnitType_MIDIProcessor:
+            return "MIDI PROCESSOR"
+        case kAudioUnitType_Output:
+            return "OUTPUT"
+        default:
+            return "OTHER"
+        }
+    }
+
+    private var componentTypeCode: String {
+        Self.fourCC(componentType)
+    }
+
+    private static func makeID(componentType: UInt32, componentSubType: UInt32, componentManufacturer: UInt32) -> String {
+        "\(componentType)-\(componentSubType)-\(componentManufacturer)"
+    }
+
+    func merging(with other: EditorEffectDescriptor) -> EditorEffectDescriptor {
+        EditorEffectDescriptor(
+            id: id,
+            name: preferred(name, over: other.name),
+            manufacturerName: preferred(manufacturerName, over: other.manufacturerName),
+            componentType: componentType,
+            componentSubType: componentSubType,
+            componentManufacturer: componentManufacturer,
+            componentFlags: componentFlags | other.componentFlags,
+            discoverySource: discoverySource.merging(with: other.discoverySource),
+            initialInputCount: initialInputCount ?? other.initialInputCount,
+            initialOutputCount: initialOutputCount ?? other.initialOutputCount,
+            hasCustomView: hasCustomView ?? other.hasCustomView
+        )
+    }
+
+    private func preferred(_ current: String, over other: String) -> String {
+        if current == "UNKNOWN", other != "UNKNOWN" {
+            return other
+        }
+        if current.count < other.count, !other.isEmpty {
+            return other
+        }
+        return current
+    }
+
+    static func fourCC(_ value: UInt32) -> String {
+        let bytes: [UInt8] = [
+            UInt8((value >> 24) & 0xFF),
+            UInt8((value >> 16) & 0xFF),
+            UInt8((value >> 8) & 0xFF),
+            UInt8(value & 0xFF)
+        ]
+        let chars = bytes.map { byte -> Character in
+            if (32...126).contains(byte) {
+                return Character(UnicodeScalar(byte))
+            }
+            return "."
+        }
+        return String(chars)
+    }
+}
+
+enum EditorEffectDiscoverySource: String, Codable, Equatable {
+    case componentManager
+    case audioComponentRegistry
+    case componentManagerAndRegistry
+
+    var label: String {
+        switch self {
+        case .componentManager:
+            return "MANAGER"
+        case .audioComponentRegistry:
+            return "REGISTRY"
+        case .componentManagerAndRegistry:
+            return "MANAGER+REGISTRY"
+        }
+    }
+
+    func merging(with other: EditorEffectDiscoverySource) -> EditorEffectDiscoverySource {
+        if self == other {
+            return self
+        }
+        return .componentManagerAndRegistry
+    }
+}
+
+struct EditorEffectConfigurationSummary {
+    let initialInputCount: Int?
+    let initialOutputCount: Int?
+    let hasCustomView: Bool?
+}
+
+struct EditorAudioUnitExtensionIdentity: Identifiable, Equatable {
+    let id: String
+    let bundleIdentifier: String
+    let localizedName: String
+    let extensionPointIdentifier: String
 }
 
 struct EditorEffectPreset: Identifiable, Codable, Equatable {
