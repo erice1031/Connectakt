@@ -1,19 +1,12 @@
 # Connectakt — Task Tracker
 
-## Current Task: Phase 5 — AUV3 Integration & Processing Chain
+## Current Task: Phase 6 — AUV3 App Extension
 
-## In Progress — Phase 5 AUV3 integration
-- [x] Discover installed AUV3 effect components from the editor
-- [x] Add chain-building UI with insert, bypass, reorder, and remove actions
-- [x] Route preview renders through the active AUV3 chain
-- [x] Add freeze action to bake the current chain into a new editable sample
-- [x] Add effect-chain preset save/load/delete support
-- [x] Add hosted-parameter inspection and editing UI with parameter snapshot persistence
-- [x] Add unit tests for effect-chain state serialization and preset persistence
-- [x] Verify iOS simulator build and test pass after the Phase 5 slice
-- [x] Verify macOS build still succeeds with shared editor code
-- [x] Validate runtime loading, preview, freeze, render/share, and preset persistence with Apple built-in AU effects on-device
-- [ ] Diagnose why purchased third-party AUV3 effects are still missing from the discovery list on-device
+## In Progress — Phase 6 planning / setup
+- [ ] Create `ConnektaktAU` app extension target
+- [ ] Decide first plugin scope: effect vs instrument vs utility browser shell
+- [ ] Reuse editor/transfer code safely inside extension sandbox
+- [ ] Validate extension entitlements, bundle structure, and host loading in Logic Pro for iPad or AUM
 
 ### ✅ Done
 - Project brief defined
@@ -72,15 +65,20 @@
 - Verified locally: iOS simulator build succeeded with `xcodebuild -project Connectakt.xcodeproj -scheme Connectakt_iOS -destination 'platform=iOS Simulator,name=iPhone 17 Pro' -derivedDataPath /tmp/ConnectaktDerived build`
 - Verified locally: iOS tests succeeded with `xcodebuild -project Connectakt.xcodeproj -scheme Connectakt_iOS -destination 'platform=iOS Simulator,name=iPhone 17 Pro' -derivedDataPath /tmp/ConnectaktDerived test` (`46 tests` across `9 suites`)
 
-### ✅ Done — Phase 5 slice 1 (commit TBD)
+### ✅ Done — Phase 5 slice 1 (commit 64e8bc6)
 - AUV3 discovery UI in `EditorView` with chain management, bypass, reorder, and clear signal-path messaging
 - Preview, freeze, render/share, and optimize/upload paths route through the active AUV3 chain
 - Hosted parameter inspection/editing with parameter snapshot persistence per chain item
 - Effect-chain preset save/load/delete persists across app relaunches
 - On-device validation completed with Apple built-in AU effects: preview playback, parameter editing, freeze, render/share, and preset reload all succeeded
+- Host entitlements split by platform: iOS now signs with `Connectakt_iOS.entitlements` and includes `inter-app-audio`; macOS continues using the sandbox entitlement file
+- On-device validation completed with third-party App Store AUV3 effects: the full device plugin catalog now appears in the discovery list and third-party effects can be inserted
 - Verified locally: iOS simulator build succeeded with `xcodebuild -project Connectakt.xcodeproj -scheme Connectakt_iOS -destination 'platform=iOS Simulator,name=iPhone 17 Pro' -derivedDataPath /tmp/ConnectaktDerived build`
 - Verified locally: macOS build succeeded with `xcodebuild -project Connectakt.xcodeproj -scheme Connectakt_macOS -derivedDataPath /tmp/ConnectaktDerived build`
 - Verified locally: iOS tests succeeded with `xcodebuild -project Connectakt.xcodeproj -scheme Connectakt_iOS -destination 'platform=iOS Simulator,name=iPhone 17 Pro' -derivedDataPath /tmp/ConnectaktDerived test` (`48 tests` across `10 suites`)
+
+### Follow-up
+- [ ] Improve on-device AUV3 discovery performance; the full effect list now loads correctly but can take a noticeable amount of time to populate
 
 ### Backlog (hardware-dependent)
 - [ ] Verify ElektronMsgType command byte values against real Digitakt hardware

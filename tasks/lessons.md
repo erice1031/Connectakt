@@ -14,3 +14,6 @@ Never run multiple xcodebuild commands in parallel. They share derived data dire
 
 ## AUV3 offline preview must not await buffer scheduling (2026-03-29)
 When using `AVAudioPlayerNode` with an offline `AVAudioEngine` render path, do not switch blindly to the newer async `scheduleBuffer` overload. In the editor's AUV3 preview chain this caused playback to stall before rendering started. Use immediate scheduling in the offline path, then validate on-device with a real AU before treating preview/freeze as stable.
+
+## iOS AUV3 hosts need iOS-specific entitlements, not the macOS sandbox file (2026-03-31)
+If third-party Audio Units are missing on-device while Apple built-in units still appear, do not keep expanding picker or registry diagnostics first. Check the signed iPhone app entitlements. Connectakt was using the macOS entitlement file for both platforms, which stripped down to a minimal iOS signing set and left the host without the `inter-app-audio` entitlement that Apple's own Audio Unit app template still includes for the containing iOS app. Split iOS and macOS entitlements so the phone build carries `inter-app-audio`, then retest discovery on real hardware.

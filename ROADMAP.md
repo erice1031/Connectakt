@@ -3,7 +3,7 @@
 > **Handoff note:** This roadmap is kept up-to-date as features land.
 > Check `CLAUDE.md` for architecture details and key file locations.
 > Check `CODEX.md` for detailed agent task handoffs.
-> Last updated: 2026-03-29
+> Last updated: 2026-03-31
 
 ---
 
@@ -17,27 +17,11 @@
 | 3 | AudioRecorder, BPMDetector, RecordingSession/History, live waveform, 32 tests | d3ad842 |
 | 3b | ElektronProtocol (SysEx), ElektronMIDITransfer, USBDeviceMonitor (CoreMIDI), 53 tests | TBD |
 | 4 | Sample editor workspace, waveform trim/edit flow, preview/export/upload path, 46 tests in current verified suite | TBD |
+| 5 | AUV3 editor host, chain presets, parameter editing, freeze/render/share path, and third-party on-device validation | 64e8bc6 |
 
 ---
 
 ## 🔜 Next Up
-
-### Phase 5 — AUV3 Integration & Processing Chain
-
-- [x] AUV3 host within the sample editor
-- [x] Browse/load installed AUV3 effects
-- [x] Signal chain: Sample → AUV3 effects → Output
-- [x] Render/freeze AUV3 chain to new sample
-- [x] Preset save/load for effect chains
-- [x] Hosted parameter inspection/editing with persistent parameter snapshots
-- [ ] Third-party App Store AUV3 discovery/runtime validation on-device
-
-**Acceptance criteria**
-- [ ] Third-party AUV3 loads and processes audio
-- [x] Rendered output is valid Digitakt-spec WAV
-- [x] Chain presets persist across sessions
-
----
 
 ### Phase 6 — AUV3 App Extension
 

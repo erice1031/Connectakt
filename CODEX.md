@@ -91,9 +91,11 @@ Build one target at a time. Do not run multiple `xcodebuild` commands in paralle
 
 ---
 
-## Task 6 — AUV3 Integration & Processing Chain
+## Task 6 — AUV3 Integration & Processing Chain [✅ DONE]
 
-This task is in progress.
+> Completed: 2026-03-31
+> Commit: 64e8bc6
+> Notes: Third-party App Store AUV3 discovery and on-device loading/preview validation are now working after splitting iOS/macOS entitlements and adding `inter-app-audio` to the iOS host build. The remaining follow-up is performance tuning for the initial discovery list load on-device.
 
 ### Read first
 - `Connectakt/Features/Editor/EditorView.swift`
@@ -119,11 +121,12 @@ Add an AUV3 effect chain to the sample editor so imported audio can be previewed
 - [x] Offline render path includes the active AUV3 chain
 - [x] Frozen/rendered output remains Digitakt-compatible WAV
 - [x] Tests cover effect-chain state serialization or other non-UI core logic
-- [ ] Third-party App Store AUV3 effects appear in the discovery list on-device
-- [ ] Third-party AUV3 loading/preview is validated on-device
+- [x] Third-party App Store AUV3 effects appear in the discovery list on-device
+- [x] Third-party AUV3 loading/preview is validated on-device
 
 ### Notes
 - Keep shared code compatible with both iOS and macOS targets.
 - Avoid introducing an iOS-only audio unit API into shared compile paths.
 - Apple built-in AU effects have been validated on-device: preview, parameter editing, freeze, render/share, and preset reload all worked.
-- Current known blocker: purchased third-party AUV3 effects are still missing from the discovery list on-device.
+- Third-party App Store AU effects now enumerate on-device as well; a user-reported device check surfaced roughly 140 effects in the list.
+- Discovery is currently correct but can take a noticeable amount of time on-device before the full list appears.

@@ -70,6 +70,9 @@ Connectakt/
 │   ├── AudioOptimizerTests.swift       # Optimizer coverage + progress callback assertions
 │   ├── ConnektaktTests.swift           # UI/model tests + sample editor helper tests
 │   └── ElektronProtocolTests.swift     # SysEx, payload, and file-list parsing tests
+├── Connectakt/
+│   ├── Connectakt.entitlements         # macOS sandbox entitlements
+│   └── Connectakt_iOS.entitlements     # iOS host entitlements including inter-app-audio
 └── Connectakt.xcodeproj
 ```
 
@@ -133,7 +136,8 @@ The UI mimics the Digitakt's hardware screen: dark OLED background, yellow text/
 ## Known Bugs / TODOs
 
 - Phase 4 editor still lacks loop point editing.
-- Phase 5 AUV3 chain browsing/hosting plus parameter editing is implemented in the editor; Apple built-in AU validation succeeded on-device, but purchased third-party AUV3 discovery/runtime validation is still pending.
+- Phase 5 AUV3 chain browsing/hosting plus parameter editing is complete; Apple built-in and third-party App Store AUV3 discovery/runtime validation both succeeded on-device.
+- Initial on-device AUV3 discovery can take a noticeable amount of time before the full effect list appears; treat this as a performance follow-up rather than a correctness blocker.
 - Real hardware validation is still needed for `ElektronMsgType` command bytes and large transfer chunking.
 - `EditorView` currently builds with a small number of AVFoundation deprecation warnings that should be cleaned up in a follow-up pass.
 
