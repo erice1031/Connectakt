@@ -92,7 +92,7 @@
 - Verified locally: iPhoneOS build succeeded with `xcodebuild -project Connectakt.xcodeproj -scheme Connectakt_iOS -destination 'generic/platform=iOS' -derivedDataPath /tmp/ConnectaktDeviceDerived build`
 - Verified locally: iOS tests succeeded with `xcodebuild -project Connectakt.xcodeproj -scheme Connectakt_iOS -destination 'platform=iOS Simulator,name=iPhone 17 Pro' -derivedDataPath /tmp/ConnectaktDerived test` (`48 tests` across `10 suites`)
 
-### ✅ Done — Phase 6 slice 2 (commit TBD)
+### ✅ Done — Phase 6 slice 2 (commit e249e92)
 - `ConnectaktAUView` now renders a real plugin-side browser shell instead of a static status card
 - `ConnectaktAULibraryModel` adds searchable seeded sample data, category filtering, favorites, and selection state for the plugin UI
 - Wide and compact AU layouts now show a browser panel plus selected-sample detail panel inside the host

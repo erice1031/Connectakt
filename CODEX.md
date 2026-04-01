@@ -136,7 +136,7 @@ Add an AUV3 effect chain to the sample editor so imported audio can be previewed
 ## Task 7 — AUV3 App Extension [✅ SLICE 2 DONE]
 
 > Completed: 2026-03-31
-> Commit: TBD
+> Commit: e249e92
 > Notes: `ConnektaktAU` now has a real in-plugin sample-browser shell in addition to the pass-through effect scaffold. The browser UI is validated in Ableton Live; the next slice should connect selection state to transfer or shared-app handoff.
 
 ### Read first
