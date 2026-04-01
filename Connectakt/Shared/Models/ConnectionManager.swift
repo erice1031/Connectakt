@@ -48,7 +48,7 @@ final class ConnectionManager {
     var status: ConnectionStatus = .disconnected
     var samples: [SampleFile] = []
     var usedStorageBytes: Int64 = 0
-    var totalStorageBytes: Int64 = 734_003_200  // ~700 MB
+    var totalStorageBytes: Int64 = 0
 
     var storagePercent: Double {
         guard totalStorageBytes > 0 else { return 0 }
@@ -179,13 +179,29 @@ final class ConnectionManager {
         sampleLoadError  = nil
         do {
             let remote = try await transfer.listFiles(remotePath: path)
-            samples          = remote
-            usedStorageBytes = remote.reduce(0) { $0 + $1.size }
-            sampleLoadError  = nil
+            samples         = remote
+            sampleLoadError = nil
+            if let info = try? await transfer.getStorageInfo() {
+                usedStorageBytes  = info.usedBytes
+                totalStorageBytes = info.totalBytes
+            } else {
+                usedStorageBytes = remote.reduce(0) { $0 + $1.size }
+            }
         } catch {
             sampleLoadError = error.localizedDescription
         }
         isLoadingSamples = false
+    }
+
+    func deleteFile(at path: String) async {
+        guard let transfer else { return }
+        do {
+            try await transfer.deleteFile(remotePath: path)
+            let filename = URL(fileURLWithPath: path).lastPathComponent
+            samples.removeAll { $0.name == filename }
+        } catch {
+            sampleLoadError = error.localizedDescription
+        }
     }
 
     func loadMockSamples() {

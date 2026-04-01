@@ -17,3 +17,6 @@ When using `AVAudioPlayerNode` with an offline `AVAudioEngine` render path, do n
 
 ## iOS AUV3 hosts need iOS-specific entitlements, not the macOS sandbox file (2026-03-31)
 If third-party Audio Units are missing on-device while Apple built-in units still appear, do not keep expanding picker or registry diagnostics first. Check the signed iPhone app entitlements. Connectakt was using the macOS entitlement file for both platforms, which stripped down to a minimal iOS signing set and left the host without the `inter-app-audio` entitlement that Apple's own Audio Unit app template still includes for the containing iOS app. Split iOS and macOS entitlements so the phone build carries `inter-app-audio`, then retest discovery on real hardware.
+
+## Regenerating the Xcode project can silently drop local source files from the build graph (2026-03-31)
+If `xcodegen generate` is run while local source files are temporarily moved out of the tree, the regenerated `project.pbxproj` will stop including them and later builds can fail with missing-type errors even though the Swift files still exist on disk. This happened with `MusicalGrid.swift` and related recorder files. After regenerating, always confirm that newly referenced local files are still part of the target graph before trusting the next build result.

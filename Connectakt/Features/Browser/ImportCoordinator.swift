@@ -120,13 +120,14 @@ final class ImportCoordinator {
         }
     }
 
-    func beginUpload(using transfer: (any DigitaktTransferProtocol)?) {
+    func beginUpload(using transfer: (any DigitaktTransferProtocol)?, destinationFolder: String = "SAMPLES") {
         guard case .readyToUpload(let result) = phase, let transfer else { return }
         phase = .uploading(0)
 
         Task {
             do {
-                let remotePath = "SAMPLES/\(result.outputURL.lastPathComponent)"
+                let folderPath = destinationFolder == "/" ? "" : destinationFolder
+                let remotePath = "\(folderPath)/\(result.outputURL.lastPathComponent)"
                 try await transfer.uploadSample(
                     localURL: result.outputURL,
                     remotePath: remotePath

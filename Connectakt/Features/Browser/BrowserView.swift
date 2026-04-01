@@ -93,6 +93,7 @@ private struct SampleListView: View {
     @Environment(ConnectionManager.self) private var connection
     @State private var selectedSample: SampleFile?
     @State private var importer = ImportCoordinator()
+    @State private var downloader = DownloadCoordinator()
     @State private var pathStack: [String] = ["/"]
 
     private var currentPath: String { pathStack.last ?? "/" }
@@ -108,6 +109,16 @@ private struct SampleListView: View {
         guard pathStack.count > 1 else { return }
         pathStack.removeLast()
         Task { await connection.refreshSamples(path: currentPath) }
+    }
+
+    private func startDownload(_ sample: SampleFile) {
+        guard let transfer = connection.transfer else { return }
+        let remotePath = currentPath == "/" ? "/\(sample.name)" : "\(currentPath)/\(sample.name)"
+        downloader.start(remotePath: remotePath, transfer: transfer)
+    }
+
+    private func deletePath(for sample: SampleFile) -> String {
+        currentPath == "/" ? "/\(sample.name)" : "\(currentPath)/\(sample.name)"
     }
 
     var body: some View {
@@ -160,11 +171,49 @@ private struct SampleListView: View {
                 CKButton("UPLOAD", icon: "arrow.up", variant: .primary) {
                     importer.triggerFilePicker()
                 }
-                CKButton("IMPORT", icon: "arrow.down", variant: .secondary) {}
+
+                let canImport = selectedSample != nil && selectedSample?.isFolder == false
+                CKButton("IMPORT", icon: "arrow.down", variant: .secondary) {
+                    if let sample = selectedSample, !sample.isFolder {
+                        startDownload(sample)
+                    }
+                }
+                .disabled(!canImport)
+                .opacity(canImport ? 1.0 : 0.35)
             }
             .padding(.horizontal, ConnektaktTheme.paddingMD)
             .padding(.vertical, ConnektaktTheme.paddingSM)
             .background(ConnektaktTheme.surface)
+
+            // Selection status bar
+            if let sel = selectedSample {
+                HStack(spacing: 6) {
+                    Image(systemName: sel.isFolder ? "folder" : "waveform")
+                        .font(.system(size: 10))
+                        .foregroundStyle(ConnektaktTheme.primary)
+                    Text(sel.name)
+                        .font(ConnektaktTheme.smallFont)
+                        .foregroundStyle(ConnektaktTheme.primary)
+                        .tracking(1)
+                        .lineLimit(1)
+                    Text("—")
+                        .font(ConnektaktTheme.smallFont)
+                        .foregroundStyle(ConnektaktTheme.textMuted)
+                    Text(sel.sizeString)
+                        .font(ConnektaktTheme.smallFont)
+                        .foregroundStyle(ConnektaktTheme.textMuted)
+                        .tracking(1)
+                    Spacer()
+                    Text("TAP IMPORT TO DOWNLOAD")
+                        .font(ConnektaktTheme.smallFont)
+                        .foregroundStyle(ConnektaktTheme.textMuted)
+                        .tracking(1)
+                        .opacity(sel.isFolder ? 0 : 1)
+                }
+                .padding(.horizontal, ConnektaktTheme.paddingMD)
+                .padding(.vertical, 5)
+                .background(ConnektaktTheme.primary.opacity(0.08))
+            }
 
             Rectangle()
                 .fill(ConnektaktTheme.primary.opacity(0.15))
@@ -181,21 +230,41 @@ private struct SampleListView: View {
                         ForEach(connection.samples) { sample in
                             SampleRow(sample: sample, isSelected: selectedSample?.id == sample.id)
                                 .onTapGesture(count: 2) {
-                                    if sample.isFolder { navigate(into: sample) }
+                                    if sample.isFolder {
+                                        navigate(into: sample)
+                                    } else {
+                                        selectedSample = sample
+                                        startDownload(sample)
+                                    }
                                 }
                                 .onTapGesture(count: 1) {
                                     selectedSample = sample
+                                }
+                                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                                    if !sample.isFolder {
+                                        Button(role: .destructive) {
+                                            Task { await connection.deleteFile(at: deletePath(for: sample)) }
+                                        } label: {
+                                            Label("DELETE", systemImage: "trash")
+                                        }
+                                    }
                                 }
                         }
                     }
                 }
             }
 
-            // Storage meter
-            CKStorageMeter(
-                usedMB: connection.usedStorageMB,
-                totalMB: connection.totalStorageMB
-            )
+            // Storage meter — only show when we have a known total
+            if connection.totalStorageMB > 0 {
+                CKStorageMeter(
+                    usedMB: connection.usedStorageMB,
+                    totalMB: connection.totalStorageMB
+                )
+            }
+        }
+        // Reset navigation on disconnect
+        .onChange(of: connection.status) { _, newValue in
+            if !newValue.isConnected { pathStack = ["/"] }
         }
         // File picker
         .fileImporter(
@@ -215,7 +284,7 @@ private struct SampleListView: View {
             get: { importer.showOptimizationSheet },
             set: { if !$0 { importer.dismiss() } }
         )) {
-            OptimizationSheet(coordinator: importer, transfer: connection.transfer)
+            OptimizationSheet(coordinator: importer, transfer: connection.transfer, destinationFolder: currentPath)
         }
         // Upload progress sheet
         .sheet(isPresented: Binding(
@@ -223,6 +292,13 @@ private struct SampleListView: View {
             set: { if !$0 { importer.dismiss() } }
         )) {
             UploadProgressSheet(coordinator: importer)
+        }
+        // Download progress sheet
+        .sheet(isPresented: Binding(
+            get: { downloader.isActive },
+            set: { if !$0 { downloader.dismiss() } }
+        )) {
+            DownloadSheet(coordinator: downloader)
         }
     }
 }
@@ -325,6 +401,182 @@ private struct SampleEmptyView: View {
                 Task { await connection.refreshSamples() }
             }
             Spacer()
+        }
+    }
+}
+
+// MARK: - Download Coordinator
+
+@Observable
+@MainActor
+private final class DownloadCoordinator {
+    enum Phase: Equatable {
+        case idle
+        case downloading(Double)
+        case done(URL)
+        case failed(String)
+
+        static func == (lhs: Phase, rhs: Phase) -> Bool {
+            switch (lhs, rhs) {
+            case (.idle, .idle): return true
+            case (.downloading(let a), .downloading(let b)): return a == b
+            case (.done(let a), .done(let b)): return a == b
+            case (.failed(let a), .failed(let b)): return a == b
+            default: return false
+            }
+        }
+    }
+
+    var phase: Phase = .idle
+
+    var isActive: Bool {
+        if case .idle = phase { return false }
+        return true
+    }
+
+    func start(remotePath: String, transfer: any DigitaktTransferProtocol) {
+        phase = .downloading(0)
+        Task {
+            do {
+                let url = try await transfer.downloadSample(remotePath: remotePath) { [weak self] prog in
+                    Task { @MainActor [weak self] in
+                        if case .downloading = self?.phase {
+                            self?.phase = .downloading(prog.fraction)
+                        }
+                    }
+                }
+                phase = .done(url)
+            } catch {
+                phase = .failed(error.localizedDescription.uppercased())
+            }
+        }
+    }
+
+    func dismiss() { phase = .idle }
+}
+
+// MARK: - Download Sheet
+
+private struct DownloadSheet: View {
+    var coordinator: DownloadCoordinator
+
+    var body: some View {
+        VStack(spacing: 0) {
+            CKHeaderBar(title: headerTitle, status: .connected(deviceName: "DIGITAKT"))
+
+            VStack(spacing: ConnektaktTheme.paddingXL) {
+                Spacer(minLength: 20)
+
+                switch coordinator.phase {
+                case .downloading(let p):
+                    downloadingContent(progress: p)
+                case .done(let url):
+                    doneContent(url: url)
+                case .failed(let msg):
+                    failedContent(message: msg)
+                default:
+                    EmptyView()
+                }
+
+                Spacer(minLength: 20)
+            }
+            .padding(ConnektaktTheme.paddingLG)
+        }
+        .background(ConnektaktTheme.background)
+        .presentationDetents([.medium])
+        .presentationBackground(ConnektaktTheme.background)
+    }
+
+    private var headerTitle: String {
+        switch coordinator.phase {
+        case .done:   return "DOWNLOAD COMPLETE"
+        case .failed: return "DOWNLOAD FAILED"
+        default:      return "DOWNLOADING..."
+        }
+    }
+
+    @ViewBuilder
+    private func downloadingContent(progress: Double) -> some View {
+        VStack(spacing: ConnektaktTheme.paddingLG) {
+            ProgressView()
+                .scaleEffect(1.4)
+                .tint(ConnektaktTheme.primary)
+
+            Text("RECEIVING FROM DIGITAKT")
+                .font(ConnektaktTheme.titleFont)
+                .foregroundStyle(ConnektaktTheme.textPrimary)
+                .tracking(2)
+
+            CKProgressBar(progress: progress)
+
+            Text(String(format: "%.0f%%", progress * 100))
+                .font(.system(size: 32, weight: .bold, design: .monospaced))
+                .foregroundStyle(ConnektaktTheme.primary)
+                .monospacedDigit()
+        }
+    }
+
+    @ViewBuilder
+    private func doneContent(url: URL) -> some View {
+        VStack(spacing: ConnektaktTheme.paddingLG) {
+            Image(systemName: "checkmark.circle.fill")
+                .font(.system(size: 56, weight: .light))
+                .foregroundStyle(ConnektaktTheme.waveformGreen)
+
+            VStack(spacing: ConnektaktTheme.paddingXS) {
+                Text("READY TO SAVE")
+                    .font(ConnektaktTheme.largeFont)
+                    .foregroundStyle(ConnektaktTheme.waveformGreen)
+                    .tracking(2)
+
+                Text(url.lastPathComponent)
+                    .font(ConnektaktTheme.bodyFont)
+                    .foregroundStyle(ConnektaktTheme.textSecondary)
+                    .tracking(1)
+            }
+
+            ShareLink(item: url) {
+                HStack(spacing: 6) {
+                    Image(systemName: "square.and.arrow.up")
+                        .font(.system(size: 12, weight: .semibold))
+                    Text("SHARE / SAVE TO FILES")
+                        .font(ConnektaktTheme.bodyFont)
+                        .tracking(1)
+                }
+                .foregroundStyle(ConnektaktTheme.background)
+                .padding(.horizontal, ConnektaktTheme.paddingMD)
+                .padding(.vertical, ConnektaktTheme.paddingSM)
+                .background(ConnektaktTheme.primary)
+                .clipShape(RoundedRectangle(cornerRadius: 6))
+            }
+
+            CKButton("DONE", icon: "checkmark", variant: .ghost) {
+                coordinator.dismiss()
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func failedContent(message: String) -> some View {
+        VStack(spacing: ConnektaktTheme.paddingLG) {
+            Image(systemName: "exclamationmark.triangle")
+                .font(.system(size: 40, weight: .light))
+                .foregroundStyle(ConnektaktTheme.accent)
+
+            Text("DOWNLOAD FAILED")
+                .font(ConnektaktTheme.largeFont)
+                .foregroundStyle(ConnektaktTheme.accent)
+                .tracking(2)
+
+            Text(message)
+                .font(ConnektaktTheme.smallFont)
+                .foregroundStyle(ConnektaktTheme.textSecondary)
+                .tracking(1)
+                .multilineTextAlignment(.center)
+
+            CKButton("DISMISS", icon: "xmark", variant: .ghost) {
+                coordinator.dismiss()
+            }
         }
     }
 }

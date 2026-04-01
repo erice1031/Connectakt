@@ -74,7 +74,8 @@ Connectakt/
 │   ├── Info.plist                      # AUv3 extension registration metadata
 │   ├── ConnectaktAudioUnit.swift       # Minimal pass-through AUAudioUnit effect
 │   ├── AudioUnitViewController.swift   # AU host-facing UI controller + factory
-│   └── ConnectaktAUView.swift          # SwiftUI shell shown inside AU hosts
+│   ├── ConnectaktAUView.swift          # SwiftUI browser shell shown inside AU hosts
+│   └── ConnectaktAULibrary.swift       # Plugin-side sample browser state and seeded library data
 ├── Connectakt/
 │   ├── Connectakt.entitlements         # macOS sandbox entitlements
 │   └── Connectakt_iOS.entitlements     # iOS host entitlements including inter-app-audio
@@ -143,7 +144,8 @@ The UI mimics the Digitakt's hardware screen: dark OLED background, yellow text/
 - Phase 4 editor still lacks loop point editing.
 - Phase 5 AUV3 chain browsing/hosting plus parameter editing is complete; Apple built-in and third-party App Store AUV3 discovery/runtime validation both succeeded on-device.
 - Initial on-device AUV3 discovery can take a noticeable amount of time before the full effect list appears; treat this as a performance follow-up rather than a correctness blocker.
-- Phase 6 now has a minimal `ConnektaktAU` iOS app-extension scaffold: the target builds, embeds in the iOS app, and exposes a pass-through effect with a basic SwiftUI shell UI. Real host validation succeeded in Ableton Live, where the plugin appears and loads as an Audio Unit pass-through effect.
+- Phase 6 now has a validated `ConnektaktAU` iOS app-extension scaffold plus a plugin-side browser shell: the target builds, embeds in the iOS app, appears in Ableton Live, and now renders a searchable sample-browser UI inside the host while audio still passes through unchanged.
+- The plugin-side browser currently uses seeded mock sample data inside `ConnectaktAULibraryModel`; real transfer or shared-library integration is the next slice.
 - Real hardware validation is still needed for `ElektronMsgType` command bytes and large transfer chunking.
 - `EditorView` currently builds with a small number of AVFoundation deprecation warnings that should be cleaned up in a follow-up pass.
 

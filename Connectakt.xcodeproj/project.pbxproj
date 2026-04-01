@@ -16,6 +16,7 @@
 		288CB2D6CADE6FFD959ACF79 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C7D55A49097AD4089807E6 /* ContentView.swift */; };
 		29EFCE77BEA484ADBC528CF0 /* UploadProgressSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9E1AB6A4153D42605321B4 /* UploadProgressSheet.swift */; };
 		2B1AE55CA4B7DA893FF4EA7F /* CKStatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F895A52492FE00EA7F8FE67 /* CKStatusBadge.swift */; };
+		2CD077E8D7B730F82F5C3E8A /* MusicalGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E1E6AC1D1C3505759080D1 /* MusicalGrid.swift */; };
 		2CEDF8DB48F53CAC946179F7 /* RecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C97EF19A5E6494B0827C773 /* RecorderView.swift */; };
 		319C7120026500E7D6B03D43 /* OptimizationSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7260F0651BE1A2E29FB159 /* OptimizationSheet.swift */; };
 		322F4C85B2DFE8EE3FFBF115 /* AudioOptimizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1B3AF560CD2681566EC770 /* AudioOptimizerTests.swift */; };
@@ -31,6 +32,7 @@
 		431607C55BA570F41B5F9A4C /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA668168998E55E6D0204E4 /* ConnectionManager.swift */; };
 		4472644C1D015CEBC7427748 /* RecordingSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176DAA41F43626558AECF38B /* RecordingSession.swift */; };
 		44F4CD508E459A3B7C91BE0D /* CKButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A915367173B99D944147402A /* CKButton.swift */; };
+		47E08680A41BB1CFC1DC38F8 /* MIDIClockReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C46883FB8D895BC3B484BD5 /* MIDIClockReceiver.swift */; };
 		4F1800BC1CFF4B031C8274DB /* ConnectaktAudioUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435609AABA25BBF2FEF9977F /* ConnectaktAudioUnit.swift */; };
 		50315435A992AD3E576B3B86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 89413AAE77EADED746853E47 /* Assets.xcassets */; };
 		51CB9F3CA36B42450AFF88C6 /* CKHeaderBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99145EDEE04D45477DA7900F /* CKHeaderBar.swift */; };
@@ -49,6 +51,8 @@
 		78C00AE476BC6A13FB9CDB6C /* ImportCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F36A1861531C2276CA51B9F /* ImportCoordinator.swift */; };
 		79FFBF5009A30A1FDD348503 /* RecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C97EF19A5E6494B0827C773 /* RecorderView.swift */; };
 		834415FD4F031B86EFF824C7 /* ElektronMIDITransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF0CA517D85FC08AAA1229 /* ElektronMIDITransfer.swift */; };
+		85359D910E6284E5BC9875F3 /* MIDIClockReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C46883FB8D895BC3B484BD5 /* MIDIClockReceiver.swift */; };
+		860C55D69771FF72180C1BA8 /* AudioAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0DF0A4C7855A74F3E80D47 /* AudioAnalyzer.swift */; };
 		87E2AF59262A3D06D6C7EA03 /* MIDIMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7684740174FC5BAA740F6304 /* MIDIMonitor.swift */; };
 		89282EFCE9F777AA276C5359 /* CKStorageMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67393F84B6D8EEEA1B725768 /* CKStorageMeter.swift */; };
 		8BCB4266F62BB64AB8145617 /* CKWaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037ACA4D8989D66080F0F6FC /* CKWaveformView.swift */; };
@@ -60,12 +64,16 @@
 		9C67250BD5AC3FFF374C08E8 /* RecordingHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAD2EAF075738CEA5C26F38 /* RecordingHistoryView.swift */; };
 		9CA58BA51B460E5E34ED5FB5 /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA668168998E55E6D0204E4 /* ConnectionManager.swift */; };
 		9CB99158564B7EB6BFBC2C9B /* AudioOptimizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A27E2C67542316DBB64E24E /* AudioOptimizer.swift */; };
+		9D33CA59434E1A05977FDC85 /* ConnectaktAULibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = E047291C2E8870C22C519112 /* ConnectaktAULibrary.swift */; };
 		A402521C5444EDF2330A9873 /* ConnektaktApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFFB7021E8F0B2CCE826E52 /* ConnektaktApp.swift */; };
 		A51A0C8C7CF6AC518DCCFA28 /* ConnektaktAU.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 0CC1339B7BC2921C4E67B395 /* ConnektaktAU.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A84DA47663BAA1DEB3A462BD /* AudioAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0DF0A4C7855A74F3E80D47 /* AudioAnalyzer.swift */; };
+		B55CCA16DCB713215E8F6B92 /* RecordingTrimEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598BEE8840F4F491EBF235FB /* RecordingTrimEditor.swift */; };
 		B76DEB856D748DA8017CE5B3 /* USBDeviceMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDA1CA181523BCB7CCDA54C /* USBDeviceMonitor.swift */; };
 		B81CB901712FAF49FA62D7D8 /* CKLiveWaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD9CEB1C42963084A2D7F5C /* CKLiveWaveformView.swift */; };
 		BCD1CA53E72287916CAC20A3 /* BPMDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 340A3337A1FC628ACA0C8F8F /* BPMDetector.swift */; };
 		C323515DF175D1704B855FBB /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35AF121A6E17FD3D22A45CED /* SettingsView.swift */; };
+		C435EC9306447AB880620F85 /* RecordingTrimEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598BEE8840F4F491EBF235FB /* RecordingTrimEditor.swift */; };
 		C46AC52BCA3F26BBE52AC813 /* DigitaktTransferProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7C53C9A83183DCD32F0E97 /* DigitaktTransferProtocol.swift */; };
 		CA6C483CE5A6A3E4AE7A764A /* ImportCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F36A1861531C2276CA51B9F /* ImportCoordinator.swift */; };
 		CD83E237F4B239F9C7CEDA46 /* RecordingSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176DAA41F43626558AECF38B /* RecordingSession.swift */; };
@@ -82,6 +90,7 @@
 		F4BFD1CB894559E0A7D0CE84 /* OptimizationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0E26435CBCEB452D132BE4 /* OptimizationModels.swift */; };
 		F53AF62C6C265D0D9ABCC92E /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24387D6827FDE0D1673072F0 /* AudioRecorder.swift */; };
 		F6F7E2E8D9E4F2F4A5C86925 /* MIDIDiagnosticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D829A6261210F638E84580 /* MIDIDiagnosticsView.swift */; };
+		F96DFACAA790DD59D00450E0 /* MusicalGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E1E6AC1D1C3505759080D1 /* MusicalGrid.swift */; };
 		F98AD62F41E05733122CDF95 /* CKButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A915367173B99D944147402A /* CKButton.swift */; };
 		FCDA4B5409F39C88FFDF3A92 /* ElektronProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C07060B98BF21F6444C1CE /* ElektronProtocolTests.swift */; };
 /* End PBXBuildFile section */
@@ -158,6 +167,7 @@
 		4A27E2C67542316DBB64E24E /* AudioOptimizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioOptimizer.swift; sourceTree = "<group>"; };
 		4F7260F0651BE1A2E29FB159 /* OptimizationSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptimizationSheet.swift; sourceTree = "<group>"; };
 		54C07060B98BF21F6444C1CE /* ElektronProtocolTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElektronProtocolTests.swift; sourceTree = "<group>"; };
+		598BEE8840F4F491EBF235FB /* RecordingTrimEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingTrimEditor.swift; sourceTree = "<group>"; };
 		5F5FC57F54A4147F031E562D /* RecordingHistoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingHistoryManager.swift; sourceTree = "<group>"; };
 		610979F1637DD8319FEDD276 /* ElektronUSBTransfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElektronUSBTransfer.swift; sourceTree = "<group>"; };
 		67393F84B6D8EEEA1B725768 /* CKStorageMeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKStorageMeter.swift; sourceTree = "<group>"; };
@@ -166,6 +176,7 @@
 		7DFFB7021E8F0B2CCE826E52 /* ConnektaktApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnektaktApp.swift; sourceTree = "<group>"; };
 		89413AAE77EADED746853E47 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8B5E22F7CC4BF80CC5147EA5 /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; };
+		8C46883FB8D895BC3B484BD5 /* MIDIClockReceiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MIDIClockReceiver.swift; sourceTree = "<group>"; };
 		8C97EF19A5E6494B0827C773 /* RecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderView.swift; sourceTree = "<group>"; };
 		8D9E1AB6A4153D42605321B4 /* UploadProgressSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadProgressSheet.swift; sourceTree = "<group>"; };
 		979A0858C52261D46E8707F9 /* AudioUnitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnitViewController.swift; sourceTree = "<group>"; };
@@ -178,10 +189,13 @@
 		B320195E9A8F340B3072ECAC /* ElektronMailbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElektronMailbox.swift; sourceTree = "<group>"; };
 		B6EF0CA517D85FC08AAA1229 /* ElektronMIDITransfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElektronMIDITransfer.swift; sourceTree = "<group>"; };
 		BA7C53C9A83183DCD32F0E97 /* DigitaktTransferProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitaktTransferProtocol.swift; sourceTree = "<group>"; };
+		BF0DF0A4C7855A74F3E80D47 /* AudioAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioAnalyzer.swift; sourceTree = "<group>"; };
 		C3D8586DEF8BF8B4E932CDA2 /* Connectakt_iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Connectakt_iOS.entitlements; sourceTree = "<group>"; };
 		CB00A1625168106BDACEDEB3 /* BrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserView.swift; sourceTree = "<group>"; };
 		DFAD2EAF075738CEA5C26F38 /* RecordingHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingHistoryView.swift; sourceTree = "<group>"; };
+		E047291C2E8870C22C519112 /* ConnectaktAULibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectaktAULibrary.swift; sourceTree = "<group>"; };
 		E7CE098A1F59F9A78824FA31 /* ConnektaktTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnektaktTests.swift; sourceTree = "<group>"; };
+		E8E1E6AC1D1C3505759080D1 /* MusicalGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicalGrid.swift; sourceTree = "<group>"; };
 		F6FE6FD6199BADAD02B0F1F4 /* AudioRecorderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -190,6 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				3EA668168998E55E6D0204E4 /* ConnectionManager.swift */,
+				E8E1E6AC1D1C3505759080D1 /* MusicalGrid.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -197,12 +212,15 @@
 		07B5747EDE4A793234883CF0 /* Recorder */ = {
 			isa = PBXGroup;
 			children = (
+				BF0DF0A4C7855A74F3E80D47 /* AudioAnalyzer.swift */,
 				24387D6827FDE0D1673072F0 /* AudioRecorder.swift */,
 				340A3337A1FC628ACA0C8F8F /* BPMDetector.swift */,
+				8C46883FB8D895BC3B484BD5 /* MIDIClockReceiver.swift */,
 				8C97EF19A5E6494B0827C773 /* RecorderView.swift */,
 				5F5FC57F54A4147F031E562D /* RecordingHistoryManager.swift */,
 				DFAD2EAF075738CEA5C26F38 /* RecordingHistoryView.swift */,
 				176DAA41F43626558AECF38B /* RecordingSession.swift */,
+				598BEE8840F4F491EBF235FB /* RecordingTrimEditor.swift */,
 			);
 			path = Recorder;
 			sourceTree = "<group>";
@@ -293,6 +311,7 @@
 			children = (
 				979A0858C52261D46E8707F9 /* AudioUnitViewController.swift */,
 				435609AABA25BBF2FEF9977F /* ConnectaktAudioUnit.swift */,
+				E047291C2E8870C22C519112 /* ConnectaktAULibrary.swift */,
 				9A87C70A0159587B0E68B190 /* ConnectaktAUView.swift */,
 			);
 			path = ConnektaktAU;
@@ -541,6 +560,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				860C55D69771FF72180C1BA8 /* AudioAnalyzer.swift in Sources */,
 				9CB99158564B7EB6BFBC2C9B /* AudioOptimizer.swift in Sources */,
 				3C3A8D6F62D55FCF2989CA67 /* AudioRecorder.swift in Sources */,
 				BCD1CA53E72287916CAC20A3 /* BPMDetector.swift in Sources */,
@@ -562,14 +582,17 @@
 				1C98DA90A70C480BD40C0320 /* ElektronUSBTransfer.swift in Sources */,
 				928A8377398A22601A27669D /* IOUSBHostTransport.swift in Sources */,
 				78C00AE476BC6A13FB9CDB6C /* ImportCoordinator.swift in Sources */,
+				47E08680A41BB1CFC1DC38F8 /* MIDIClockReceiver.swift in Sources */,
 				3AE5C060BD8444E82AE69461 /* MIDIDiagnosticsView.swift in Sources */,
 				87E2AF59262A3D06D6C7EA03 /* MIDIMonitor.swift in Sources */,
+				2CD077E8D7B730F82F5C3E8A /* MusicalGrid.swift in Sources */,
 				F4BFD1CB894559E0A7D0CE84 /* OptimizationModels.swift in Sources */,
 				319C7120026500E7D6B03D43 /* OptimizationSheet.swift in Sources */,
 				79FFBF5009A30A1FDD348503 /* RecorderView.swift in Sources */,
 				567798845F5618C9AA901400 /* RecordingHistoryManager.swift in Sources */,
 				9C67250BD5AC3FFF374C08E8 /* RecordingHistoryView.swift in Sources */,
 				4472644C1D015CEBC7427748 /* RecordingSession.swift in Sources */,
+				B55CCA16DCB713215E8F6B92 /* RecordingTrimEditor.swift in Sources */,
 				58F1D03191993E3BD6EE982A /* SettingsView.swift in Sources */,
 				5590AEEE59632FE6DCD79C8B /* Theme.swift in Sources */,
 				5E8EB6F2F17303921C06FD64 /* USBDeviceMonitor.swift in Sources */,
@@ -582,6 +605,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				74CEA7E149F8C106D06C6DEA /* AudioUnitViewController.swift in Sources */,
+				9D33CA59434E1A05977FDC85 /* ConnectaktAULibrary.swift in Sources */,
 				8FDAE9C8B17256AFD6EA1197 /* ConnectaktAUView.swift in Sources */,
 				4F1800BC1CFF4B031C8274DB /* ConnectaktAudioUnit.swift in Sources */,
 			);
@@ -591,6 +615,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A84DA47663BAA1DEB3A462BD /* AudioAnalyzer.swift in Sources */,
 				F286FC66F6D51C0E69528455 /* AudioOptimizer.swift in Sources */,
 				F53AF62C6C265D0D9ABCC92E /* AudioRecorder.swift in Sources */,
 				90E3C085E9E204D948196886 /* BPMDetector.swift in Sources */,
@@ -612,14 +637,17 @@
 				6B91DE461DCA42C76F9A2DF5 /* ElektronUSBTransfer.swift in Sources */,
 				428AAA1D38C0CA8A54CF9A4D /* IOUSBHostTransport.swift in Sources */,
 				CA6C483CE5A6A3E4AE7A764A /* ImportCoordinator.swift in Sources */,
+				85359D910E6284E5BC9875F3 /* MIDIClockReceiver.swift in Sources */,
 				F6F7E2E8D9E4F2F4A5C86925 /* MIDIDiagnosticsView.swift in Sources */,
 				95A17615866536B9133D398E /* MIDIMonitor.swift in Sources */,
+				F96DFACAA790DD59D00450E0 /* MusicalGrid.swift in Sources */,
 				F19CE00F8765D7914E9969A3 /* OptimizationModels.swift in Sources */,
 				65468F9F23E5573D0728A211 /* OptimizationSheet.swift in Sources */,
 				2CEDF8DB48F53CAC946179F7 /* RecorderView.swift in Sources */,
 				D06DF783A4AF79659B5106D4 /* RecordingHistoryManager.swift in Sources */,
 				8D91C7437095367586CC46D7 /* RecordingHistoryView.swift in Sources */,
 				CD83E237F4B239F9C7CEDA46 /* RecordingSession.swift in Sources */,
+				C435EC9306447AB880620F85 /* RecordingTrimEditor.swift in Sources */,
 				C323515DF175D1704B855FBB /* SettingsView.swift in Sources */,
 				42F451F45BC81C4037CF3D27 /* Theme.swift in Sources */,
 				B76DEB856D748DA8017CE5B3 /* USBDeviceMonitor.swift in Sources */,

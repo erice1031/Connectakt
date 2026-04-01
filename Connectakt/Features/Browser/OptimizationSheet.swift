@@ -7,6 +7,7 @@ import UniformTypeIdentifiers
 struct OptimizationSheet: View {
     @Bindable var coordinator: ImportCoordinator
     let transfer: (any DigitaktTransferProtocol)?
+    let destinationFolder: String
 
     var body: some View {
         VStack(spacing: 0) {
@@ -70,7 +71,7 @@ struct OptimizationSheet: View {
             CKButton("CANCEL", variant: .ghost) { coordinator.dismiss() }
             Spacer()
             CKButton("UPLOAD TO DIGITAKT", icon: "arrow.up.circle.fill", variant: .primary) {
-                coordinator.beginUpload(using: transfer)
+                coordinator.beginUpload(using: transfer, destinationFolder: destinationFolder)
             }
         }
     }

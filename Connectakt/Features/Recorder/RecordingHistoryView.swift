@@ -4,6 +4,9 @@ struct RecordingHistoryView: View {
     @Environment(RecordingHistoryManager.self) private var history
     @Environment(ConnectionManager.self) private var connection
 
+    /// Called when the user taps TRIM on a session row.
+    var onTrim: ((RecordingSession) -> Void)? = nil
+
     var body: some View {
         VStack(spacing: 0) {
             // Header
@@ -35,7 +38,7 @@ struct RecordingHistoryView: View {
                 .padding(.vertical, ConnektaktTheme.paddingLG)
             } else {
                 ForEach(history.sessions) { session in
-                    SessionRow(session: session)
+                    SessionRow(session: session, onTrim: onTrim)
                 }
             }
         }
@@ -46,6 +49,8 @@ struct RecordingHistoryView: View {
 
 private struct SessionRow: View {
     let session: RecordingSession
+    var onTrim: ((RecordingSession) -> Void)? = nil
+
     @Environment(RecordingHistoryManager.self) private var history
     @Environment(ConnectionManager.self) private var connection
 
@@ -64,7 +69,13 @@ private struct SessionRow: View {
 
                 HStack(spacing: 8) {
                     Text(session.durationString)
-                    if let bpm = session.bpm { Text("• \(bpm) BPM") }
+                    if let bpm = session.bpm {
+                        HStack(spacing: 3) {
+                            Text("•")
+                            Text("\(bpm) BPM")
+                                .foregroundStyle(ConnektaktTheme.primary)
+                        }
+                    }
                     Text("• \(session.sizeString)")
                 }
                 .font(ConnektaktTheme.smallFont)
@@ -73,6 +84,20 @@ private struct SessionRow: View {
 
             Spacer()
 
+            // TRIM button — only available when BPM is known
+            if session.bpm != nil, let onTrim {
+                Button {
+                    onTrim(session)
+                } label: {
+                    Image(systemName: "scissors")
+                        .font(.system(size: 12))
+                        .foregroundStyle(ConnektaktTheme.primary)
+                }
+                .buttonStyle(.plain)
+                .help("Open trim editor")
+            }
+
+            // Delete
             Button {
                 history.remove(id: session.id)
             } label: {
