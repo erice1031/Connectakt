@@ -31,6 +31,7 @@
 		431607C55BA570F41B5F9A4C /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA668168998E55E6D0204E4 /* ConnectionManager.swift */; };
 		4472644C1D015CEBC7427748 /* RecordingSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176DAA41F43626558AECF38B /* RecordingSession.swift */; };
 		44F4CD508E459A3B7C91BE0D /* CKButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A915367173B99D944147402A /* CKButton.swift */; };
+		4F1800BC1CFF4B031C8274DB /* ConnectaktAudioUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435609AABA25BBF2FEF9977F /* ConnectaktAudioUnit.swift */; };
 		50315435A992AD3E576B3B86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 89413AAE77EADED746853E47 /* Assets.xcassets */; };
 		51CB9F3CA36B42450AFF88C6 /* CKHeaderBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99145EDEE04D45477DA7900F /* CKHeaderBar.swift */; };
 		530C4DCE8C8B775BDE8D3437 /* ConnektaktApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFFB7021E8F0B2CCE826E52 /* ConnektaktApp.swift */; };
@@ -44,6 +45,7 @@
 		6B91DE461DCA42C76F9A2DF5 /* ElektronUSBTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610979F1637DD8319FEDD276 /* ElektronUSBTransfer.swift */; };
 		71F57F545AE1AFD0698040D6 /* CKLiveWaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD9CEB1C42963084A2D7F5C /* CKLiveWaveformView.swift */; };
 		7461E93731537325316AD695 /* BrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB00A1625168106BDACEDEB3 /* BrowserView.swift */; };
+		74CEA7E149F8C106D06C6DEA /* AudioUnitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979A0858C52261D46E8707F9 /* AudioUnitViewController.swift */; };
 		78C00AE476BC6A13FB9CDB6C /* ImportCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F36A1861531C2276CA51B9F /* ImportCoordinator.swift */; };
 		79FFBF5009A30A1FDD348503 /* RecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C97EF19A5E6494B0827C773 /* RecorderView.swift */; };
 		834415FD4F031B86EFF824C7 /* ElektronMIDITransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF0CA517D85FC08AAA1229 /* ElektronMIDITransfer.swift */; };
@@ -51,6 +53,7 @@
 		89282EFCE9F777AA276C5359 /* CKStorageMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67393F84B6D8EEEA1B725768 /* CKStorageMeter.swift */; };
 		8BCB4266F62BB64AB8145617 /* CKWaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037ACA4D8989D66080F0F6FC /* CKWaveformView.swift */; };
 		8D91C7437095367586CC46D7 /* RecordingHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAD2EAF075738CEA5C26F38 /* RecordingHistoryView.swift */; };
+		8FDAE9C8B17256AFD6EA1197 /* ConnectaktAUView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A87C70A0159587B0E68B190 /* ConnectaktAUView.swift */; };
 		90E3C085E9E204D948196886 /* BPMDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 340A3337A1FC628ACA0C8F8F /* BPMDetector.swift */; };
 		928A8377398A22601A27669D /* IOUSBHostTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93EFB22A21319A992E32415 /* IOUSBHostTransport.swift */; };
 		95A17615866536B9133D398E /* MIDIMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7684740174FC5BAA740F6304 /* MIDIMonitor.swift */; };
@@ -58,6 +61,7 @@
 		9CA58BA51B460E5E34ED5FB5 /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA668168998E55E6D0204E4 /* ConnectionManager.swift */; };
 		9CB99158564B7EB6BFBC2C9B /* AudioOptimizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A27E2C67542316DBB64E24E /* AudioOptimizer.swift */; };
 		A402521C5444EDF2330A9873 /* ConnektaktApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFFB7021E8F0B2CCE826E52 /* ConnektaktApp.swift */; };
+		A51A0C8C7CF6AC518DCCFA28 /* ConnektaktAU.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 0CC1339B7BC2921C4E67B395 /* ConnektaktAU.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B76DEB856D748DA8017CE5B3 /* USBDeviceMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDA1CA181523BCB7CCDA54C /* USBDeviceMonitor.swift */; };
 		B81CB901712FAF49FA62D7D8 /* CKLiveWaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD9CEB1C42963084A2D7F5C /* CKLiveWaveformView.swift */; };
 		BCD1CA53E72287916CAC20A3 /* BPMDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 340A3337A1FC628ACA0C8F8F /* BPMDetector.swift */; };
@@ -68,6 +72,7 @@
 		D06DF783A4AF79659B5106D4 /* RecordingHistoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5FC57F54A4147F031E562D /* RecordingHistoryManager.swift */; };
 		D524A4708149A119C68E44D4 /* ConnektaktTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CE098A1F59F9A78824FA31 /* ConnektaktTests.swift */; };
 		D6F5C5AED6CA9FA849F016A3 /* UploadProgressSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9E1AB6A4153D42605321B4 /* UploadProgressSheet.swift */; };
+		D6FA0BAB328E38D3B1FAB50A /* ConnektaktAU.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 0CC1339B7BC2921C4E67B395 /* ConnektaktAU.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E67B3E3D8D00E4FCC159AB52 /* CKHeaderBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99145EDEE04D45477DA7900F /* CKHeaderBar.swift */; };
 		EED32E39084BE105DF1B6E82 /* DigitaktTransferProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7C53C9A83183DCD32F0E97 /* DigitaktTransferProtocol.swift */; };
 		F13A0C35B1C202B38EC6A971 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 89413AAE77EADED746853E47 /* Assets.xcassets */; };
@@ -89,13 +94,53 @@
 			remoteGlobalIDString = AE6450538734C5EEA5CFDB2D;
 			remoteInfo = Connectakt_iOS;
 		};
+		15BA021C7FEE61E08E4C4FD0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E3C4DF9D4664822B865F5FC7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5B260C9104C6E3B084F2068C;
+			remoteInfo = ConnektaktAU;
+		};
+		D7DD6FB3859BB676683DE6A6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E3C4DF9D4664822B865F5FC7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5B260C9104C6E3B084F2068C;
+			remoteInfo = ConnektaktAU;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		30FC002EA55184D00807FD46 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A51A0C8C7CF6AC518DCCFA28 /* ConnektaktAU.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		632A33085ABDB0BA20C66565 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				D6FA0BAB328E38D3B1FAB50A /* ConnektaktAU.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		037ACA4D8989D66080F0F6FC /* CKWaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKWaveformView.swift; sourceTree = "<group>"; };
 		088C407D0E42E84019136545 /* Connectakt.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Connectakt.entitlements; sourceTree = "<group>"; };
+		0CC1339B7BC2921C4E67B395 /* ConnektaktAU.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = ConnektaktAU.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		119846DD553B9520030A3C3B /* ConnektaktTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = ConnektaktTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		15FA6B96C644C817EBEF488D /* Connectakt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Connectakt.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		15FA6B96C644C817EBEF488D /* Connectakt.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Connectakt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		176DAA41F43626558AECF38B /* RecordingSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingSession.swift; sourceTree = "<group>"; };
 		1A0E26435CBCEB452D132BE4 /* OptimizationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptimizationModels.swift; sourceTree = "<group>"; };
 		1A8FC49648B8478CA3471678 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
@@ -109,6 +154,7 @@
 		36C7D55A49097AD4089807E6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3919E88A9D3F8399A53198B4 /* Connectakt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Connectakt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EA668168998E55E6D0204E4 /* ConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
+		435609AABA25BBF2FEF9977F /* ConnectaktAudioUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectaktAudioUnit.swift; sourceTree = "<group>"; };
 		4A27E2C67542316DBB64E24E /* AudioOptimizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioOptimizer.swift; sourceTree = "<group>"; };
 		4F7260F0651BE1A2E29FB159 /* OptimizationSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptimizationSheet.swift; sourceTree = "<group>"; };
 		54C07060B98BF21F6444C1CE /* ElektronProtocolTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElektronProtocolTests.swift; sourceTree = "<group>"; };
@@ -122,7 +168,9 @@
 		8B5E22F7CC4BF80CC5147EA5 /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; };
 		8C97EF19A5E6494B0827C773 /* RecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderView.swift; sourceTree = "<group>"; };
 		8D9E1AB6A4153D42605321B4 /* UploadProgressSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadProgressSheet.swift; sourceTree = "<group>"; };
+		979A0858C52261D46E8707F9 /* AudioUnitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnitViewController.swift; sourceTree = "<group>"; };
 		99145EDEE04D45477DA7900F /* CKHeaderBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKHeaderBar.swift; sourceTree = "<group>"; };
+		9A87C70A0159587B0E68B190 /* ConnectaktAUView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectaktAUView.swift; sourceTree = "<group>"; };
 		A78C372A584E2FABD2981087 /* ElektronProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElektronProtocol.swift; sourceTree = "<group>"; };
 		A915367173B99D944147402A /* CKButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKButton.swift; sourceTree = "<group>"; };
 		A93EFB22A21319A992E32415 /* IOUSBHostTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOUSBHostTransport.swift; sourceTree = "<group>"; };
@@ -130,6 +178,7 @@
 		B320195E9A8F340B3072ECAC /* ElektronMailbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElektronMailbox.swift; sourceTree = "<group>"; };
 		B6EF0CA517D85FC08AAA1229 /* ElektronMIDITransfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElektronMIDITransfer.swift; sourceTree = "<group>"; };
 		BA7C53C9A83183DCD32F0E97 /* DigitaktTransferProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitaktTransferProtocol.swift; sourceTree = "<group>"; };
+		C3D8586DEF8BF8B4E932CDA2 /* Connectakt_iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Connectakt_iOS.entitlements; sourceTree = "<group>"; };
 		CB00A1625168106BDACEDEB3 /* BrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserView.swift; sourceTree = "<group>"; };
 		DFAD2EAF075738CEA5C26F38 /* RecordingHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingHistoryView.swift; sourceTree = "<group>"; };
 		E7CE098A1F59F9A78824FA31 /* ConnektaktTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnektaktTests.swift; sourceTree = "<group>"; };
@@ -197,6 +246,7 @@
 			isa = PBXGroup;
 			children = (
 				6A6DCAC0F2FA5ECA7E3B40F9 /* Connectakt */,
+				79A3EDC3A69B3CDF8F78D67B /* ConnektaktAU */,
 				53E8105CBEA2460BB33BA9AA /* ConnektaktTests */,
 				88EFB87F065438F249DA61AF /* Products */,
 			);
@@ -228,6 +278,7 @@
 		6A6DCAC0F2FA5ECA7E3B40F9 /* Connectakt */ = {
 			isa = PBXGroup;
 			children = (
+				C3D8586DEF8BF8B4E932CDA2 /* Connectakt_iOS.entitlements */,
 				088C407D0E42E84019136545 /* Connectakt.entitlements */,
 				BDF143F938ECC7ACCB0FD22B /* App */,
 				9E857255612D8B14F3D5C88D /* Features */,
@@ -235,6 +286,16 @@
 				1291D1B75640FA0D6D4481BA /* Shared */,
 			);
 			path = Connectakt;
+			sourceTree = "<group>";
+		};
+		79A3EDC3A69B3CDF8F78D67B /* ConnektaktAU */ = {
+			isa = PBXGroup;
+			children = (
+				979A0858C52261D46E8707F9 /* AudioUnitViewController.swift */,
+				435609AABA25BBF2FEF9977F /* ConnectaktAudioUnit.swift */,
+				9A87C70A0159587B0E68B190 /* ConnectaktAUView.swift */,
+			);
+			path = ConnektaktAU;
 			sourceTree = "<group>";
 		};
 		800AF527B2BECBB0BBC8B552 /* Browser */ = {
@@ -253,6 +314,7 @@
 			children = (
 				15FA6B96C644C817EBEF488D /* Connectakt.app */,
 				3919E88A9D3F8399A53198B4 /* Connectakt.app */,
+				0CC1339B7BC2921C4E67B395 /* ConnektaktAU.appex */,
 				119846DD553B9520030A3C3B /* ConnektaktTests.xctest */,
 			);
 			name = Products;
@@ -324,16 +386,35 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		5B260C9104C6E3B084F2068C /* ConnektaktAU */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A0D5C9739D991287DBDEEDE6 /* Build configuration list for PBXNativeTarget "ConnektaktAU" */;
+			buildPhases = (
+				901E1466EF2534DEECFE48A4 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ConnektaktAU;
+			packageProductDependencies = (
+			);
+			productName = ConnektaktAU;
+			productReference = 0CC1339B7BC2921C4E67B395 /* ConnektaktAU.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		86C20F155E6735461AAEF5D0 /* Connectakt_macOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 93AC521A0E326D6EDFC8BC85 /* Build configuration list for PBXNativeTarget "Connectakt_macOS" */;
 			buildPhases = (
 				67509A70507E0A4A078B13DF /* Sources */,
 				D0C88F82C3C2DAEB1C39A878 /* Resources */,
+				30FC002EA55184D00807FD46 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				83EACCFBCAA53A9838309618 /* PBXTargetDependency */,
 			);
 			name = Connectakt_macOS;
 			packageProductDependencies = (
@@ -366,10 +447,12 @@
 			buildPhases = (
 				DF3585BC12BD35FD61FAFADF /* Sources */,
 				6FDAF96FB2FE9E88F57DE0AB /* Resources */,
+				632A33085ABDB0BA20C66565 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				FBECE86E87A8DC1E6CED1972 /* PBXTargetDependency */,
 			);
 			name = Connectakt_iOS;
 			packageProductDependencies = (
@@ -387,11 +470,16 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
+					5B260C9104C6E3B084F2068C = {
+						DevelopmentTeam = FMDT2KGY3Z;
+						ProvisioningStyle = Automatic;
+					};
 					86C20F155E6735461AAEF5D0 = {
-						DevelopmentTeam = "";
+						DevelopmentTeam = FMDT2KGY3Z;
 						ProvisioningStyle = Automatic;
 					};
 					AE6450538734C5EEA5CFDB2D = {
+						DevelopmentTeam = FMDT2KGY3Z;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -412,6 +500,7 @@
 			targets = (
 				AE6450538734C5EEA5CFDB2D /* Connectakt_iOS */,
 				86C20F155E6735461AAEF5D0 /* Connectakt_macOS */,
+				5B260C9104C6E3B084F2068C /* ConnektaktAU */,
 				9EBFC54A45315A680FDFA655 /* ConnektaktTests */,
 			);
 		};
@@ -488,6 +577,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		901E1466EF2534DEECFE48A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74CEA7E149F8C106D06C6DEA /* AudioUnitViewController.swift in Sources */,
+				8FDAE9C8B17256AFD6EA1197 /* ConnectaktAUView.swift in Sources */,
+				4F1800BC1CFF4B031C8274DB /* ConnectaktAudioUnit.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DF3585BC12BD35FD61FAFADF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -536,6 +635,18 @@
 			target = AE6450538734C5EEA5CFDB2D /* Connectakt_iOS */;
 			targetProxy = 013D5EABBE64FF3D3402A037 /* PBXContainerItemProxy */;
 		};
+		83EACCFBCAA53A9838309618 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = ios;
+			target = 5B260C9104C6E3B084F2068C /* ConnektaktAU */;
+			targetProxy = 15BA021C7FEE61E08E4C4FD0 /* PBXContainerItemProxy */;
+		};
+		FBECE86E87A8DC1E6CED1972 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = ios;
+			target = 5B260C9104C6E3B084F2068C /* ConnektaktAU */;
+			targetProxy = D7DD6FB3859BB676683DE6A6 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -544,12 +655,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Connectakt/Connectakt.entitlements;
+				"CODE_SIGN_ENTITLEMENTS[sdk=iphoneos*]" = Connectakt/Connectakt_iOS.entitlements;
+				"CODE_SIGN_ENTITLEMENTS[sdk=iphonesimulator*]" = Connectakt/Connectakt_iOS.entitlements;
+				"CODE_SIGN_ENTITLEMENTS[sdk=macosx*]" = Connectakt/Connectakt.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = FMDT2KGY3Z;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Connectakt;
@@ -564,17 +676,32 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				"OTHER_LDFLAGS[sdk=macosx*]" = (
-					"$(inherited)",
-					"-framework",
-					IOUSBHost,
-				);
+				"OTHER_LDFLAGS[sdk=macosx*]" = "$(inherited) -framework IOUSBHost";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ericerwin.connectakt;
 				PRODUCT_NAME = Connectakt;
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5.9;
 			};
 			name = Debug;
+		};
+		3265D6B86A270104ECD85C92 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FMDT2KGY3Z;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ConnektaktAU/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ericerwin.connectakt.au;
+				PRODUCT_NAME = ConnektaktAU;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
 		};
 		3601505875299AAAD31D331E /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -668,6 +795,25 @@
 			};
 			name = Debug;
 		};
+		764A4EAD079661750DC6741F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FMDT2KGY3Z;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ConnektaktAU/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ericerwin.connectakt.au;
+				PRODUCT_NAME = ConnektaktAU;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
 		82FBF0EA574AA4925BCFB000 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -736,11 +882,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Connectakt/Connectakt.entitlements;
+				"CODE_SIGN_ENTITLEMENTS[sdk=iphoneos*]" = Connectakt/Connectakt_iOS.entitlements;
+				"CODE_SIGN_ENTITLEMENTS[sdk=iphonesimulator*]" = Connectakt/Connectakt_iOS.entitlements;
+				"CODE_SIGN_ENTITLEMENTS[sdk=macosx*]" = Connectakt/Connectakt.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = FMDT2KGY3Z;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -756,15 +903,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				"OTHER_LDFLAGS[sdk=macosx*]" = (
-					"$(inherited)",
-					"-framework",
-					IOUSBHost,
-				);
+				"OTHER_LDFLAGS[sdk=macosx*]" = "$(inherited) -framework IOUSBHost";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ericerwin.connectakt;
 				PRODUCT_NAME = Connectakt;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.9;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -775,12 +917,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Connectakt/Connectakt_iOS.entitlements;
+				"CODE_SIGN_ENTITLEMENTS[sdk=iphoneos*]" = Connectakt/Connectakt_iOS.entitlements;
+				"CODE_SIGN_ENTITLEMENTS[sdk=iphonesimulator*]" = Connectakt/Connectakt_iOS.entitlements;
+				"CODE_SIGN_ENTITLEMENTS[sdk=macosx*]" = Connectakt/Connectakt.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = FMDT2KGY3Z;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Connectakt;
@@ -795,15 +938,10 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				"OTHER_LDFLAGS[sdk=macosx*]" = (
-					"$(inherited)",
-					"-framework",
-					IOUSBHost,
-				);
+				"OTHER_LDFLAGS[sdk=macosx*]" = "$(inherited) -framework IOUSBHost";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ericerwin.connectakt;
 				PRODUCT_NAME = Connectakt;
 				SDKROOT = macosx;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.9;
 			};
 			name = Release;
@@ -813,11 +951,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Connectakt/Connectakt_iOS.entitlements;
+				"CODE_SIGN_ENTITLEMENTS[sdk=iphoneos*]" = Connectakt/Connectakt_iOS.entitlements;
+				"CODE_SIGN_ENTITLEMENTS[sdk=iphonesimulator*]" = Connectakt/Connectakt_iOS.entitlements;
+				"CODE_SIGN_ENTITLEMENTS[sdk=macosx*]" = Connectakt/Connectakt.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = FMDT2KGY3Z;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -833,11 +972,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				"OTHER_LDFLAGS[sdk=macosx*]" = (
-					"$(inherited)",
-					"-framework",
-					IOUSBHost,
-				);
+				"OTHER_LDFLAGS[sdk=macosx*]" = "$(inherited) -framework IOUSBHost";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ericerwin.connectakt;
 				PRODUCT_NAME = Connectakt;
 				SDKROOT = iphoneos;
@@ -872,6 +1007,15 @@
 			buildConfigurations = (
 				15A488B99EE7CA201B800FD5 /* Debug */,
 				B7D01FB87993E75EB129ADBF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		A0D5C9739D991287DBDEEDE6 /* Build configuration list for PBXNativeTarget "ConnektaktAU" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				764A4EAD079661750DC6741F /* Debug */,
+				3265D6B86A270104ECD85C92 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

@@ -36,7 +36,7 @@ targets:
         INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
         INFOPLIST_KEY_NSMicrophoneUsageDescription: "Connectakt records audio from your Digitakt via USB to capture samples."
         CODE_SIGN_STYLE: Automatic
-        DEVELOPMENT_TEAM: ""
+        DEVELOPMENT_TEAM: FMDT2KGY3Z
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         "CODE_SIGN_ENTITLEMENTS[sdk=iphoneos*]": Connectakt/Connectakt_iOS.entitlements
@@ -44,12 +44,39 @@ targets:
         "CODE_SIGN_ENTITLEMENTS[sdk=macosx*]": Connectakt/Connectakt.entitlements
         # IOUSBHost.framework is macOS-only; iOS builds ignore this flag
         "OTHER_LDFLAGS[sdk=macosx*]": "$(inherited) -framework IOUSBHost"
-      configs:
-        Debug:
-          DEBUG_INFORMATION_FORMAT: dwarf
-        Release:
-          DEBUG_INFORMATION_FORMAT: dwarf-with-dsym
-          SWIFT_OPTIMIZATION_LEVEL: "-O"
+    dependencies:
+      - target: ConnektaktAU
+        embed: true
+        platformFilter: iOS
+    configs:
+      Debug:
+        DEBUG_INFORMATION_FORMAT: dwarf
+      Release:
+        DEBUG_INFORMATION_FORMAT: dwarf-with-dsym
+        SWIFT_OPTIMIZATION_LEVEL: "-O"
+
+  ConnektaktAU:
+    type: app-extension
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: ConnektaktAU
+        excludes:
+          - "**/*.md"
+          - "Info.plist"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.ericerwin.connectakt.au
+        PRODUCT_NAME: ConnektaktAU
+        SWIFT_VERSION: "5.9"
+        GENERATE_INFOPLIST_FILE: NO
+        INFOPLIST_FILE: ConnektaktAU/Info.plist
+        APPLICATION_EXTENSION_API_ONLY: YES
+        DEVELOPMENT_TEAM: FMDT2KGY3Z
+        CODE_SIGN_STYLE: Automatic
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks"
+        SKIP_INSTALL: YES
+
   ConnektaktTests:
     type: bundle.unit-test
     platform: iOS
