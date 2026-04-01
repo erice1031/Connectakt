@@ -3,10 +3,12 @@
 ## Current Task: Phase 6 — AUV3 App Extension
 
 ## In Progress — Phase 6 planning / setup
-- [ ] Create `ConnektaktAU` app extension target
-- [ ] Decide first plugin scope: effect vs instrument vs utility browser shell
+- [x] Create `ConnektaktAU` app extension target
+- [x] Decide first plugin scope: effect shell with pass-through audio and Connectakt-branded UI
+- [x] Validate extension bundle structure and embedding in the iOS app
+- [x] Validate host loading in a real AU host (Ableton Live)
 - [ ] Reuse editor/transfer code safely inside extension sandbox
-- [ ] Validate extension entitlements, bundle structure, and host loading in Logic Pro for iPad or AUM
+- [ ] Decide whether the second slice should add plugin-side browsing first or transfer actions first
 
 ### ✅ Done
 - Project brief defined
@@ -77,8 +79,21 @@
 - Verified locally: macOS build succeeded with `xcodebuild -project Connectakt.xcodeproj -scheme Connectakt_macOS -derivedDataPath /tmp/ConnectaktDerived build`
 - Verified locally: iOS tests succeeded with `xcodebuild -project Connectakt.xcodeproj -scheme Connectakt_iOS -destination 'platform=iOS Simulator,name=iPhone 17 Pro' -derivedDataPath /tmp/ConnectaktDerived test` (`48 tests` across `10 suites`)
 
+### ✅ Done — Phase 6 slice 1 (commit bca5b4e)
+- `ConnektaktAU` iOS app-extension target scaffold added
+- Minimal pass-through `ConnectaktAudioUnit` effect implementation added
+- `AudioUnitViewController` + `ConnectaktAUView` provide a branded AU host UI shell
+- `ConnektaktAU` embeds in the iOS app only; macOS build excludes the iOS extension correctly
+- User validation completed: `ConnektaktAU` appears and loads in Ableton Live as an Audio Unit pass-through effect
+- Verified locally: macOS build succeeded with `xcodebuild -project Connectakt.xcodeproj -scheme Connectakt_macOS -derivedDataPath /tmp/ConnectaktDerived build`
+- Verified locally: iOS simulator build succeeded with `xcodebuild -project Connectakt.xcodeproj -scheme Connectakt_iOS -destination 'platform=iOS Simulator,name=iPhone 17 Pro' -derivedDataPath /tmp/ConnectaktDerived build`
+- Verified locally: iPhoneOS build succeeded with `xcodebuild -project Connectakt.xcodeproj -scheme Connectakt_iOS -destination 'generic/platform=iOS' -derivedDataPath /tmp/ConnectaktDeviceDerived build`
+- Verified locally: iOS tests succeeded with `xcodebuild -project Connectakt.xcodeproj -scheme Connectakt_iOS -destination 'platform=iOS Simulator,name=iPhone 17 Pro' -derivedDataPath /tmp/ConnectaktDerived test` (`48 tests` across `10 suites`)
+
 ### Follow-up
 - [ ] Improve on-device AUV3 discovery performance; the full effect list now loads correctly but can take a noticeable amount of time to populate
+- [ ] Validate the new `ConnektaktAU` extension in Logic Pro for iPad and AUM after the initial Ableton Live confirmation
+- [ ] Add plugin parameters or a small functional control surface once host loading is confirmed
 
 ### Backlog (hardware-dependent)
 - [ ] Verify ElektronMsgType command byte values against real Digitakt hardware

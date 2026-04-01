@@ -25,13 +25,14 @@
 
 ### Phase 6 — AUV3 App Extension
 
-- [ ] Connectakt AUV3 plugin target (instrument/effect)
+- [x] Connectakt AUV3 effect extension scaffold compiles and embeds in the iOS app
 - [ ] Plugin exposes sample browser + Digitakt transfer within a DAW
+- [x] Initial real-host validation: loads in Ableton Live as an AU pass-through effect
 - [ ] Logic Pro for iPad integration testing
 - [ ] AUM / Audiobus compatibility
 
 **Acceptance criteria**
-- [ ] Plugin appears in Logic Pro for iPad's AU browser
+- [x] Plugin appears in at least one real AU host
 - [ ] Transfer functions work from within the plugin
 - [ ] No sandbox/entitlement issues in App Store build
 

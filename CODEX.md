@@ -130,3 +130,42 @@ Add an AUV3 effect chain to the sample editor so imported audio can be previewed
 - Apple built-in AU effects have been validated on-device: preview, parameter editing, freeze, render/share, and preset reload all worked.
 - Third-party App Store AU effects now enumerate on-device as well; a user-reported device check surfaced roughly 140 effects in the list.
 - Discovery is currently correct but can take a noticeable amount of time on-device before the full list appears.
+
+---
+
+## Task 7 — AUV3 App Extension [✅ SLICE 1 DONE]
+
+> Completed: 2026-03-31
+> Commit: bca5b4e
+> Notes: The first extension slice is validated in a real AU host. `ConnektaktAU` appears and loads in Ableton Live as a pass-through Audio Unit. The next slice should add actual plugin-side functionality rather than more registration work.
+
+### Read first
+- `project.yml`
+- `ConnektaktAU/Info.plist`
+- `ConnektaktAU/ConnectaktAudioUnit.swift`
+- `ConnektaktAU/AudioUnitViewController.swift`
+- `tasks/todo.md`
+
+### Goal
+Create a minimal AUv3 effect extension that embeds in the iOS app, appears as a valid host-loadable plugin, and provides a small Connectakt-branded UI shell that we can expand in later slices.
+
+### Suggested implementation order
+1. Add a dedicated `ConnektaktAU` iOS app-extension target and embed it in the iOS app only.
+2. Register the extension as an AU effect with a stable component type/subtype/manufacturer.
+3. Implement a minimal pass-through `AUAudioUnit` render path so hosts can instantiate the plugin safely.
+4. Add a lightweight `AUViewController` and SwiftUI shell UI.
+5. Verify macOS app build still excludes the iOS extension, then verify iOS simulator and device-style builds.
+6. Validate host loading in a real AU host such as Ableton Live, Logic Pro for iPad, or AUM.
+
+### Acceptance criteria
+- [x] `ConnektaktAU` target compiles as an iOS app extension
+- [x] iOS app embeds the AU extension successfully
+- [x] AU extension exposes a minimal Connectakt UI shell
+- [x] The extension render path loads as a pass-through effect without custom DSP yet
+- [x] Extension appears in a real AU host such as Ableton Live, Logic Pro for iPad, or AUM
+- [ ] Plugin-side sample browser / transfer workflow is implemented
+
+### Notes
+- This first slice intentionally uses a pass-through effect implementation so we can verify registration and hosting before adding real DSP or transfer UI.
+- The iOS app target depends on the extension with an iOS-only platform filter; embedding it in the macOS app is not allowed.
+- User validation confirmed that `ConnektaktAU` appears and loads in Ableton Live as an Audio Unit pass-through effect.
