@@ -42,16 +42,29 @@ struct MIDILogEntry: Identifiable {
     var isSysEx: Bool { bytes.first == 0xF0 }
 
     var parsedDescription: String {
-        guard isSysEx,
-              bytes.count >= 6,
+        guard isSysEx, bytes.count > 7, bytes.last == 0xF7,
               bytes[1] == 0x00, bytes[2] == 0x20, bytes[3] == 0x3C else {
             return "NON-ELEKTRON MIDI"
         }
         let deviceID = bytes[4]
-        let msgByte  = bytes[5]
-        let msgType  = ElektronMsgType(rawValue: msgByte)
-        let typeStr  = msgType.map { "\($0)" } ?? String(format: "0x%02X (UNKNOWN)", msgByte)
-        return String(format: "ELEKTRON SYSEX  DEV=0x%02X  TYPE=%@  LEN=%d", deviceID, typeStr, bytes.count)
+        // 7-bit encoded body starts at byte 6 (after 6-byte header), ends before F7
+        let encoded = Array(bytes[6..<bytes.count - 1])
+        let decoded = ElektronSysEx.decode7bit(encoded)
+        guard decoded.count >= 5 else {
+            return String(format: "ELEKTRON SYSEX  DEV=0x%02X  LEN=%d (TOO SHORT)", deviceID, bytes.count)
+        }
+        let seq     = (UInt16(decoded[0]) << 8) | UInt16(decoded[1])
+        let cmdByte = decoded[4]
+        let isResp  = cmdByte & 0x80 != 0
+        let msgType = ElektronMsgType(rawValue: cmdByte)
+        let typeStr = msgType.map { "\($0)" } ?? String(format: "0x%02X?", cmdByte)
+        var desc = String(format: "ELEKTRON  DEV=0x%02X  SEQ=%d  %@",
+                          deviceID, seq, typeStr)
+        if isResp, decoded.count >= 6 {
+            desc += String(format: "  STATUS=%d", decoded[5])
+        }
+        desc += String(format: "  RAW=%dB", bytes.count)
+        return desc
     }
 }
 
@@ -157,6 +170,12 @@ final class MIDIMonitor {
     func sendListRequest(to destination: MIDIEndpointRef) {
         let payload = [UInt8].asciiString("/")
         sendSysEx(ElektronSysEx.build(seq: 0, msgType: .listDirReq, payload: payload), to: destination)
+    }
+
+    /// Sends an Open Reader request for `path` — lets you probe whether a specific path is readable.
+    func sendOpenReaderRequest(path: String, to destination: MIDIEndpointRef) {
+        let payload = [UInt8].asciiString(path)
+        sendSysEx(ElektronSysEx.build(seq: 99, msgType: .openReaderReq, payload: payload), to: destination)
     }
 
     // MARK: - Private

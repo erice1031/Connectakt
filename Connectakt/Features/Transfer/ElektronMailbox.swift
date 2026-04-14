@@ -61,6 +61,19 @@ actor ElektronMailbox {
         multiWaiters.removeAll()
         buffer.removeAll()
     }
+
+    /// Fails only the waiter(s) waiting for `type`, leaving all others intact.
+    /// Use this for device-error responses so an unexpected response from a
+    /// diagnostic test doesn't abort unrelated in-flight operations.
+    func fail(type: MsgType, with error: Error) {
+        let raw = type.rawValue
+        if let idx = waiters.firstIndex(where: { $0.0 == raw }) {
+            waiters.remove(at: idx).1.resume(throwing: error)
+        }
+        if let idx = multiWaiters.firstIndex(where: { $0.0.contains(raw) }) {
+            multiWaiters.remove(at: idx).1.resume(throwing: error)
+        }
+    }
 }
 
 // MARK: - Timeout helper

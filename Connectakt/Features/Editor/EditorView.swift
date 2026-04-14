@@ -41,6 +41,11 @@ struct EditorView: View {
         } message: {
             Text(model.errorMessage ?? "UNKNOWN ERROR")
         }
+        .onChange(of: connection.pendingEditorURL) { _, url in
+            guard let url else { return }
+            model.load(url: url)
+            connection.pendingEditorURL = nil
+        }
     }
 
     private var headerStatus: ConnectionStatus {

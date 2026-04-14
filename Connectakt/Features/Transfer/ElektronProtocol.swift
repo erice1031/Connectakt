@@ -97,6 +97,9 @@ enum ElektronSysEx {
         let msgType: ElektronMsgType
         let status: UInt8      // 1 = success, 0 = error (responses only)
         let payload: [UInt8]   // everything after the status byte
+
+        /// True for response messages (high bit set in cmd byte).
+        var isResponse: Bool { msgType.rawValue & 0x80 != 0 }
     }
 
     static func parse(_ data: Data) -> ParsedMessage? {
@@ -108,14 +111,30 @@ enum ElektronSysEx {
         let encoded = Array(bytes[header.count ..< bytes.count - 1])
         let decoded = decode7bit(encoded)
 
-        guard decoded.count >= 6 else { return nil }
+        guard decoded.count >= 5 else { return nil }
 
-        let seq     = (UInt16(decoded[0]) << 8) | UInt16(decoded[1])
-        let rawCmd  = decoded[4]
-        let status  = decoded[5]
+        let seq    = (UInt16(decoded[0]) << 8) | UInt16(decoded[1])
+        let rawCmd = decoded[4]
 
         guard let msgType = ElektronMsgType(rawValue: rawCmd) else { return nil }
-        let payload = decoded.count > 6 ? Array(decoded[6...]) : []
+
+        // Data responses (listDirRes, readChunkRes) carry raw bytes starting at decoded[5]
+        // with no status byte.  All other responses have a status byte at decoded[5]
+        // (0x01 = success, 0x00 = error/rejected) with payload starting at decoded[6].
+        // Hardware-confirmed: these responses carry data at decoded[5], not a 0/1 status code.
+        let noStatusByte: Set<ElektronMsgType> = [.listDirRes, .readChunkRes,
+                                                  .storageInfoRes,
+                                                  .pingRes, .deviceUIDRes]
+        let status: UInt8
+        let payload: [UInt8]
+        if noStatusByte.contains(msgType) {
+            status  = 0   // not meaningful for data responses
+            payload = decoded.count > 5 ? Array(decoded[5...]) : []
+        } else {
+            guard decoded.count >= 6 else { return nil }
+            status  = decoded[5]
+            payload = decoded.count > 6 ? Array(decoded[6...]) : []
+        }
 
         return ParsedMessage(seq: seq, msgType: msgType, status: status, payload: payload)
     }
@@ -148,11 +167,14 @@ enum ElektronMsgType: UInt8 {
 
     /// Open a file for writing. Payload: fileSize(4 BE) + null-terminated path string.
     case openWriterReq   = 0x40
+    /// Close the open writer (finalize the file on device).
+    case closeWriterReq  = 0x41
     /// Write a chunk. Payload: offset(4 BE) + chunkSize(4 BE) + reserved(4) + data bytes.
     case writeChunkReq   = 0x42
 
     // ---- Responses (request | 0x80) ----
     case pingRes         = 0x81
+    case deviceUIDRes    = 0x83
     case storageInfoRes  = 0x85
 
     /// List directory response. Payload: repeated entries — see parseFileListing.
@@ -168,6 +190,8 @@ enum ElektronMsgType: UInt8 {
 
     /// Open writer response (device ready to receive).
     case openWriterRes   = 0xC0
+    /// Close writer ack (file finalized on device).
+    case closeWriterRes  = 0xC1
     /// Write chunk ack.
     case writeChunkRes   = 0xC2
 
@@ -202,9 +226,10 @@ extension ElektronSysEx {
             guard pos < payload.count else { break }
             pos += 1
 
-            // item_type (1 byte): 0 = file, non-zero = directory
+            // item_type (1 byte) — 0x44 ('D') = directory, 0x46 ('F') = file.
             guard pos < payload.count else { break }
-            let isFolder = payload[pos] != 0
+            let itemType = payload[pos]
+            let isFolder = itemType == 0x44
             pos += 1
 
             // null-terminated name
@@ -212,7 +237,7 @@ extension ElektronSysEx {
                   !name.isEmpty else { break }
             pos = afterName
 
-            files.append(SampleFile(name: name, size: Int64(size), isFolder: isFolder))
+            files.append(SampleFile(name: name, size: Int64(size), isFolder: isFolder, itemType: itemType))
         }
         return files
     }

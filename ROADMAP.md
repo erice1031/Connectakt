@@ -23,25 +23,7 @@
 
 ## 🔜 Next Up
 
-### Phase 6 — AUV3 App Extension
-
-- [x] Connectakt AUV3 effect extension scaffold compiles and embeds in the iOS app
-- [x] Plugin exposes an initial in-host sample browser shell within a DAW
-- [ ] Plugin-side sample selection triggers transfer or shared-app handoff
-- [x] Initial real-host validation: loads in Ableton Live as an AU pass-through effect
-- [x] Browser-shell validation: renders correctly in Ableton Live
-- [ ] Logic Pro for iPad integration testing
-- [ ] AUM / Audiobus compatibility
-
-**Acceptance criteria**
-- [x] Plugin appears in at least one real AU host
-- [x] Plugin browser shell is usable inside at least one real AU host
-- [ ] Transfer functions work from within the plugin
-- [ ] No sandbox/entitlement issues in App Store build
-
----
-
-### Phase 7 — Project Management & Backup
+### Phase 6 — Project Management & Backup
 
 - [ ] Full Digitakt project backup to iPhone (SysEx dump)
 - [ ] Project restore from backup
@@ -55,7 +37,7 @@
 
 ---
 
-### Phase 8 — Polish, Monetization & App Store
+### Phase 7 — Polish, Monetization & App Store
 
 - [ ] StoreKit 2 monetization ($7.99 / intro 60% off = ~$3.19)
 - [ ] Free tier: browse + single sample transfer
@@ -101,7 +83,6 @@ Connectakt/
 │   ├── UI/                   # Elektron theme components
 │   ├── Audio/                # Core audio utilities
 │   └── Models/               # Domain models
-└── ConnektaktAU/             # AUV3 extension target
 ```
 
 ### Key Files

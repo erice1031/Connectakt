@@ -2,9 +2,12 @@ import SwiftUI
 import CoreMIDI
 
 struct MIDIDiagnosticsView: View {
-    @State private var monitor = MIDIMonitor()
     @Environment(ConnectionManager.self) private var connection
+    @Environment(\.dismiss) private var dismiss
     @State private var selectedEntry: MIDILogEntry?
+    @State private var testPath: String = ""
+
+    private var monitor: MIDIMonitor { connection.midiMonitor }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -24,8 +27,6 @@ struct MIDIDiagnosticsView: View {
         .sheet(item: $selectedEntry) { entry in
             LogDetailView(entry: entry)
         }
-        .onAppear { monitor.start() }
-        .onDisappear { monitor.stop() }
     }
 
     // MARK: - Header
@@ -46,6 +47,8 @@ struct MIDIDiagnosticsView: View {
                     .foregroundStyle(ConnektaktTheme.textMuted)
                     .tracking(1)
             }
+            CKButton("CLOSE", icon: "xmark", variant: .ghost) { dismiss() }
+                .padding(.leading, ConnektaktTheme.paddingSM)
         }
         .padding(.horizontal, ConnektaktTheme.paddingMD)
         .padding(.vertical, ConnektaktTheme.paddingSM)
@@ -123,12 +126,37 @@ struct MIDIDiagnosticsView: View {
                         CKButton("STORAGE", icon: "internaldrive", variant: .secondary) {
                             monitor.sendStorageInfoRequest(to: dst.ref)
                         }
-                        CKButton("LIST FILES", icon: "list.bullet", variant: .secondary) {
+                        CKButton("LIST /", icon: "list.bullet", variant: .secondary) {
                             monitor.sendListRequest(to: dst.ref)
                         }
                     }
                     .padding(.horizontal, ConnektaktTheme.paddingMD)
-                    .padding(.vertical, ConnektaktTheme.paddingSM)
+                    .padding(.top, ConnektaktTheme.paddingSM)
+
+                    // Open-reader probe: lets you test whether a specific path is readable
+                    HStack(spacing: ConnektaktTheme.paddingSM) {
+                        TextField("PATH TO TEST (e.g. /FOLDER/FILE.wav)", text: $testPath)
+                            .font(ConnektaktTheme.smallFont)
+                            .foregroundStyle(ConnektaktTheme.textPrimary)
+                            .textFieldStyle(.plain)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 6)
+                            .background(ConnektaktTheme.background)
+                            .overlay(RoundedRectangle(cornerRadius: 4)
+                                .stroke(ConnektaktTheme.primary.opacity(0.4), lineWidth: 1))
+                            #if os(iOS)
+                            .autocorrectionDisabled()
+                            .textInputAutocapitalization(.never)
+                            #endif
+
+                        CKButton("OPEN READER", icon: "doc.badge.arrow.up", variant: .secondary) {
+                            monitor.sendOpenReaderRequest(path: testPath, to: dst.ref)
+                        }
+                        .disabled(testPath.isEmpty)
+                        .opacity(testPath.isEmpty ? 0.35 : 1)
+                    }
+                    .padding(.horizontal, ConnektaktTheme.paddingMD)
+                    .padding(.bottom, ConnektaktTheme.paddingSM)
                 }
             } else {
                 HStack(spacing: 6) {
@@ -393,37 +421,78 @@ private struct LogDetailView: View {
     private var frameBreakdown: some View {
         let bytes = entry.bytes
         return VStack(alignment: .leading, spacing: 4) {
-            Text("ELEKTRON FRAME")
+            // Raw header
+            Text("ELEKTRON FRAME  (RAW BYTES)")
                 .font(ConnektaktTheme.smallFont)
                 .foregroundStyle(ConnektaktTheme.textMuted)
                 .tracking(2)
                 .padding(.bottom, 4)
 
-            if bytes.count >= 6 {
-                frameRow("F0",        "SysEx start",          bytes[0])
-                frameRow("MFR[0]",    "Manufacturer ID",      bytes[1])
-                frameRow("MFR[1]",    "Manufacturer ID",      bytes[2])
-                frameRow("MFR[2]",    "Manufacturer ID",      bytes[3])
-                frameRow("DEVICE",    "Device type",          bytes[4],
-                         note: bytes[4] == 0x0E ? "✓ DIGITAKT" : "⚠ UNKNOWN")
-                frameRow("MSG TYPE",  "Command",              bytes[5],
-                         note: ElektronMsgType(rawValue: bytes[5]).map { "\($0)" }
-                              ?? "⚠ UNKNOWN — REPORT THIS")
+            if bytes.count >= 8 {
+                let devFamily = bytes[4]
+                frameRow("F0",       "SysEx start",           bytes[0])
+                frameRow("MFR[0]",   "Elektron ID byte 1",    bytes[1])
+                frameRow("MFR[1]",   "Elektron ID byte 2",    bytes[2])
+                frameRow("MFR[2]",   "Elektron ID byte 3",    bytes[3])
+                frameRow("FAMILY",   "Device family",         devFamily,
+                         note: devFamily == 0x10 ? "✓ NEW-GEN (DIGITAKT)" : "⚠ UNKNOWN")
+                frameRow("RESERVED", "Reserved (always 0x00)", bytes[5])
+                let encodedLen = bytes.count - 7   // minus header(6) + F7(1)
+                frameRow("BODY",     "7-bit encoded body",
+                         note: "\(encodedLen) encoded bytes → ~\(encodedLen * 7 / 8) decoded")
+                frameRow("F7",       "SysEx end",             bytes[bytes.count - 1])
 
-                if bytes.count > 7 {
-                    let payloadEnd = bytes.count - 2
-                    let nibbleCount = max(0, payloadEnd - 6)
-                    frameRow("PAYLOAD", "\(nibbleCount) nibbles → \(nibbleCount/2) bytes",
-                             note: "\(nibbleCount) nibble bytes")
-                }
-                if bytes.count >= 2 {
-                    frameRow("CHK",    "Checksum",             bytes[bytes.count - 2])
-                    frameRow("F7",     "SysEx end",            bytes[bytes.count - 1])
+                // Decoded body
+                Divider().background(ConnektaktTheme.primary.opacity(0.2)).padding(.vertical, 4)
+
+                Text("DECODED BODY  (AFTER 7-BIT DECODE)")
+                    .font(ConnektaktTheme.smallFont)
+                    .foregroundStyle(ConnektaktTheme.textMuted)
+                    .tracking(2)
+                    .padding(.bottom, 4)
+
+                let encoded = Array(bytes[6..<bytes.count - 1])
+                let decoded = ElektronSysEx.decode7bit(encoded)
+
+                if decoded.count >= 5 {
+                    let seq    = (UInt16(decoded[0]) << 8) | UInt16(decoded[1])
+                    let cmdByte = decoded[4]
+                    let isResp  = cmdByte & 0x80 != 0
+                    let cmdName = ElektronMsgType(rawValue: cmdByte).map { "\($0)" }
+                              ?? String(format: "0x%02X (UNKNOWN)", cmdByte)
+
+                    frameRow("SEQ",   "Sequence number",
+                             note: "\(seq)")
+                    frameRow("CMD",   "Command byte",          cmdByte,
+                             note: cmdName)
+
+                    if isResp, decoded.count >= 6 {
+                        let status = decoded[5]
+                        frameRow("STATUS", "Response status",   status,
+                                 note: status == 1 ? "✓ SUCCESS" : "✗ ERROR/REJECTED")
+                        if decoded.count > 6 {
+                            let payloadBytes = Array(decoded[6...])
+                            let hex = payloadBytes.prefix(16).map { String(format: "%02X", $0) }.joined(separator: " ")
+                            let suffix = payloadBytes.count > 16 ? " …" : ""
+                            frameRow("PAYLOAD", "\(payloadBytes.count) bytes",
+                                     note: hex + suffix)
+                        }
+                    } else if !isResp, decoded.count > 5 {
+                        let payloadBytes = Array(decoded[5...])
+                        let hex = payloadBytes.prefix(16).map { String(format: "%02X", $0) }.joined(separator: " ")
+                        let suffix = payloadBytes.count > 16 ? " …" : ""
+                        frameRow("PAYLOAD", "\(payloadBytes.count) bytes",
+                                 note: hex + suffix)
+                    }
+                } else {
+                    Text("DECODED BODY TOO SHORT")
+                        .font(ConnektaktTheme.smallFont)
+                        .foregroundStyle(ConnektaktTheme.accent)
                 }
             } else {
                 Text("TOO SHORT TO PARSE")
                     .font(ConnektaktTheme.smallFont)
-                    .foregroundStyle(ConnektaktTheme.danger)
+                    .foregroundStyle(ConnektaktTheme.accent)
             }
         }
         .padding(ConnektaktTheme.paddingMD)

@@ -324,6 +324,10 @@ private struct SampleRow: View {
 
             Spacer()
 
+            Text(String(format: "T:%02X", sample.itemType))
+                .font(.system(size: 9, design: .monospaced))
+                .foregroundStyle(isSelected ? ConnektaktTheme.background.opacity(0.5) : ConnektaktTheme.textMuted)
+
             Text(sample.sizeString)
                 .font(ConnektaktTheme.smallFont)
                 .foregroundStyle(isSelected ? ConnektaktTheme.background.opacity(0.7) : ConnektaktTheme.textSecondary)
@@ -458,6 +462,7 @@ private final class DownloadCoordinator {
 // MARK: - Download Sheet
 
 private struct DownloadSheet: View {
+    @Environment(ConnectionManager.self) private var connection
     var coordinator: DownloadCoordinator
 
     var body: some View {
@@ -535,6 +540,18 @@ private struct DownloadSheet: View {
                     .tracking(1)
             }
 
+            #if os(macOS)
+            CKButton("SAVE TO DISK...", icon: "arrow.down.circle") {
+                let panel = NSSavePanel()
+                panel.nameFieldStringValue = url.lastPathComponent
+                panel.allowedContentTypes = [UTType.audio]
+                panel.canCreateDirectories = true
+                if panel.runModal() == .OK, let dest = panel.url,
+                   let data = try? Data(contentsOf: url) {
+                    try? data.write(to: dest)
+                }
+            }
+            #else
             ShareLink(item: url) {
                 HStack(spacing: 6) {
                     Image(systemName: "square.and.arrow.up")
@@ -548,6 +565,12 @@ private struct DownloadSheet: View {
                 .padding(.vertical, ConnektaktTheme.paddingSM)
                 .background(ConnektaktTheme.primary)
                 .clipShape(RoundedRectangle(cornerRadius: 6))
+            }
+            #endif
+
+            CKButton("OPEN IN EDITOR", icon: "slider.horizontal.3") {
+                connection.pendingEditorURL = url
+                coordinator.dismiss()
             }
 
             CKButton("DONE", icon: "checkmark", variant: .ghost) {

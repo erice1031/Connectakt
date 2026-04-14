@@ -32,6 +32,14 @@ struct SampleFile: Identifiable, Equatable {
     let name: String
     let size: Int64    // bytes
     let isFolder: Bool
+    let itemType: UInt8   // raw item_type byte from device listing (debug)
+
+    init(name: String, size: Int64, isFolder: Bool, itemType: UInt8 = 0) {
+        self.name = name
+        self.size = size
+        self.isFolder = isFolder
+        self.itemType = itemType
+    }
 
     var sizeString: String {
         let mb = Double(size) / 1_048_576
@@ -63,6 +71,9 @@ final class ConnectionManager {
     /// Active transfer handler. MockDigitaktTransfer in sim, ElektronMIDITransfer on hardware.
     var transfer: (any DigitaktTransferProtocol)?
 
+    /// Set to open a downloaded file directly in the Editor tab.
+    var pendingEditorURL: URL?
+
     /// Human-readable label of the active transfer backend (for diagnostics).
     private(set) var transferLabel: String = "—"
 
@@ -76,7 +87,12 @@ final class ConnectionManager {
 
     private let usbMonitor = USBDeviceMonitor()
 
+    /// Persistent MIDI diagnostic monitor — survives tab switches.
+    let midiMonitor = MIDIMonitor()
+
     func startUSBMonitoring() {
+        midiMonitor.start()
+
         // MIDI-based detection (iOS + macOS, no entitlements required)
         usbMonitor.onDeviceConnected = { [weak self] device in
             self?.connectMIDIDevice(device)
@@ -103,21 +119,6 @@ final class ConnectionManager {
 
     private func connectMIDIDevice(_ device: ElektronDeviceInfo) {
         status = .connected(deviceName: device.name.uppercased())
-        // On macOS: prefer IOUSBHost bulk transfer (correct path for file management).
-        // On iOS:   use CoreMIDI transfer (no IOUSBHost available on iOS).
-        // Both fall back to mock if the real init fails.
-        #if os(macOS)
-        if let usb = try? ElektronUSBTransfer() {
-            transfer = usb
-            transferLabel = "USB BULK"
-        } else if let midi = try? ElektronMIDITransfer(device: device) {
-            transfer = midi
-            transferLabel = "MIDI SYSEX"
-        } else {
-            transfer = MockDigitaktTransfer()
-            transferLabel = "SIMULATION"
-        }
-        #else
         if let midi = try? ElektronMIDITransfer(device: device) {
             transfer = midi
             transferLabel = "MIDI SYSEX"
@@ -125,7 +126,6 @@ final class ConnectionManager {
             transfer = MockDigitaktTransfer()
             transferLabel = "SIMULATION"
         }
-        #endif
         Task { await refreshSamples() }
     }
 
@@ -185,7 +185,10 @@ final class ConnectionManager {
                 usedStorageBytes  = info.usedBytes
                 totalStorageBytes = info.totalBytes
             } else {
-                usedStorageBytes = remote.reduce(0) { $0 + $1.size }
+                // Digitakt doesn't expose storage stats via SysEx — use known 1 GB capacity
+                // so the storage meter is visible. Estimate usage from file listing.
+                usedStorageBytes  = remote.reduce(0) { $0 + $1.size }
+                totalStorageBytes = 1_000_000_000
             }
         } catch {
             sampleLoadError = error.localizedDescription
