@@ -140,6 +140,7 @@
 		A78C372A584E2FABD2981087 /* ElektronProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElektronProtocol.swift; sourceTree = "<group>"; };
 		A915367173B99D944147402A /* CKButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKButton.swift; sourceTree = "<group>"; };
 		AD1B3AF560CD2681566EC770 /* AudioOptimizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioOptimizerTests.swift; sourceTree = "<group>"; };
+		AD94D32A2F8F2BDB002FF319 /* Connectakt.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Connectakt.storekit; sourceTree = "<group>"; };
 		B320195E9A8F340B3072ECAC /* ElektronMailbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElektronMailbox.swift; sourceTree = "<group>"; };
 		B6EF0CA517D85FC08AAA1229 /* ElektronMIDITransfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElektronMIDITransfer.swift; sourceTree = "<group>"; };
 		BA7C53C9A83183DCD32F0E97 /* DigitaktTransferProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitaktTransferProtocol.swift; sourceTree = "<group>"; };
@@ -219,6 +220,7 @@
 		15AEFE100772980AB4044F63 = {
 			isa = PBXGroup;
 			children = (
+				AD94D32A2F8F2BDB002FF319 /* Connectakt.storekit */,
 				6A6DCAC0F2FA5ECA7E3B40F9 /* Connectakt */,
 				53E8105CBEA2460BB33BA9AA /* ConnektaktTests */,
 				88EFB87F065438F249DA61AF /* Products */,
