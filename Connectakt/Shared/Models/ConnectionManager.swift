@@ -58,6 +58,9 @@ final class ConnectionManager {
     var usedStorageBytes: Int64 = 0
     var totalStorageBytes: Int64 = 0
 
+    /// Last folder the user browsed to — used as the default upload destination in Recorder.
+    var lastBrowsedPath: String = "/"
+
     var storagePercent: Double {
         guard totalStorageBytes > 0 else { return 0 }
         return Double(usedStorageBytes) / Double(totalStorageBytes)
@@ -151,6 +154,7 @@ final class ConnectionManager {
         status = .disconnected
         samples = []
         usedStorageBytes = 0
+        lastBrowsedPath = "/"
         transfer = nil
         transferLabel = "—"
         isLoadingSamples = false

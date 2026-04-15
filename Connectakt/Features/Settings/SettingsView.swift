@@ -2,31 +2,20 @@ import SwiftUI
 
 struct SettingsView: View {
     @Environment(ConnectionManager.self) private var connection
+    @Environment(StoreManager.self)      private var store
     @State private var autoConnect = true
     @State private var showDiagnostics = false
-    @State private var sampleRate: SampleRate = .khz44
-    @State private var bitDepth: BitDepth = .bit16
-    @State private var channelMode: ChannelMode = .mono
-
-    enum SampleRate: String, CaseIterable {
-        case khz44 = "44.1 KHZ"
-        case khz48 = "48.0 KHZ"
-    }
-
-    enum BitDepth: String, CaseIterable {
-        case bit16 = "16-BIT"
-        case bit24 = "24-BIT"
-    }
-
-    enum ChannelMode: String, CaseIterable {
-        case mono = "MONO"
-        case stereo = "STEREO"
-    }
+    @State private var showPaywall = false
 
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
                 CKHeaderBar(title: "SETTINGS", status: connection.status)
+
+                // Pro upgrade banner (only shown to free users)
+                if !store.isPro {
+                    proUpgradeBanner
+                }
 
                 settingSection("CONNECTION") {
                     toggleRow(label: "AUTO-CONNECT", value: $autoConnect)
@@ -50,10 +39,29 @@ struct SettingsView: View {
                 }
 
                 settingSection("SAMPLE OPTIMIZER") {
-                    pickerRow(label: "SAMPLE RATE", selection: $sampleRate)
-                    pickerRow(label: "BIT DEPTH", selection: $bitDepth)
-                    pickerRow(label: "CHANNELS", selection: $channelMode)
-                    infoRow(label: "TARGET FORMAT", value: "WAV PCM")
+                    infoRow(label: "FORMAT",      value: "WAV PCM")
+                    infoRow(label: "SAMPLE RATE", value: "44.1 KHZ")
+                    infoRow(label: "BIT DEPTH",   value: "16-BIT")
+                    infoRow(label: "CHANNELS",    value: "MONO")
+                    infoRow(label: "NOTE",        value: "DIGITAKT SPEC (FIXED)")
+                }
+
+                settingSection("PURCHASE") {
+                    infoRow(label: "STATUS", value: store.isPro ? "PRO ✓" : "FREE")
+                    if store.isPro {
+                        infoRow(label: "FEATURES", value: "ALL UNLOCKED")
+                    } else {
+                        buttonRow {
+                            CKButton("UPGRADE TO PRO", icon: "lock.open.fill", variant: .primary) {
+                                showPaywall = true
+                            }
+                        }
+                        buttonRow {
+                            CKButton("RESTORE PURCHASES", variant: .ghost) {
+                                Task { await store.restore() }
+                            }
+                        }
+                    }
                 }
 
                 settingSection("ABOUT") {
@@ -80,6 +88,43 @@ struct SettingsView: View {
             MIDIDiagnosticsView()
                 .environment(connection)
         }
+        .sheet(isPresented: $showPaywall) {
+            PaywallView()
+                .environment(store)
+        }
+    }
+
+    // MARK: - Pro Banner
+
+    private var proUpgradeBanner: some View {
+        Button { showPaywall = true } label: {
+            HStack(spacing: 12) {
+                Image(systemName: "lock.open.fill")
+                    .font(.system(size: 16))
+                    .foregroundStyle(ConnektaktTheme.background)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("UNLOCK CONNECTAKT PRO")
+                        .font(ConnektaktTheme.bodyFont)
+                        .foregroundStyle(ConnektaktTheme.background)
+                        .tracking(1)
+                    Text("EDITOR · BATCH OPS · RECORDING · AUV3")
+                        .font(ConnektaktTheme.smallFont)
+                        .foregroundStyle(ConnektaktTheme.background.opacity(0.7))
+                        .tracking(1)
+                }
+                Spacer()
+                Text(store.proProduct?.displayPrice ?? "$7.99")
+                    .font(.system(.callout, design: .monospaced).bold())
+                    .foregroundStyle(ConnektaktTheme.background)
+            }
+            .padding(.horizontal, ConnektaktTheme.paddingMD)
+            .padding(.vertical, 12)
+            .background(ConnektaktTheme.primary)
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+            .padding(.horizontal, ConnektaktTheme.paddingSM)
+            .padding(.top, ConnektaktTheme.paddingMD)
+        }
+        .buttonStyle(.plain)
     }
 
     // MARK: - Section Builder
@@ -143,31 +188,6 @@ struct SettingsView: View {
     }
 
     @ViewBuilder
-    private func pickerRow<T: RawRepresentable & CaseIterable & Hashable>(
-        label: String,
-        selection: Binding<T>
-    ) -> some View where T.RawValue == String, T.AllCases: RandomAccessCollection {
-        HStack {
-            Text(label)
-                .font(ConnektaktTheme.bodyFont)
-                .foregroundStyle(ConnektaktTheme.textSecondary)
-                .tracking(1)
-            Spacer()
-            Picker("", selection: selection) {
-                ForEach(Array(T.allCases), id: \.self) { option in
-                    Text(option.rawValue).tag(option)
-                }
-            }
-            .pickerStyle(.menu)
-            .tint(ConnektaktTheme.primary)
-            .font(ConnektaktTheme.bodyFont)
-        }
-        .padding(.horizontal, ConnektaktTheme.paddingMD)
-        .padding(.vertical, 6)
-        .overlay(Rectangle().fill(ConnektaktTheme.primary.opacity(0.1)).frame(height: 1), alignment: .bottom)
-    }
-
-    @ViewBuilder
     private func buttonRow(@ViewBuilder content: () -> some View) -> some View {
         HStack {
             Spacer()
@@ -191,4 +211,5 @@ struct SettingsView: View {
 #Preview {
     SettingsView()
         .environment(ConnectionManager())
+        .environment(StoreManager())
 }

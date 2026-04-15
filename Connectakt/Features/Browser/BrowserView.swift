@@ -91,10 +91,16 @@ private struct ConnectPromptView: View {
 
 private struct SampleListView: View {
     @Environment(ConnectionManager.self) private var connection
+    @Environment(StoreManager.self)      private var store
+    @State private var showPaywall = false
     @State private var selectedSample: SampleFile?
-    @State private var importer = ImportCoordinator()
-    @State private var downloader = DownloadCoordinator()
+    @State private var importer        = ImportCoordinator()
+    @State private var downloader      = DownloadCoordinator()
+    @State private var batchDownloader = BatchDownloadCoordinator()
+    @State private var batchImporter   = BatchImportCoordinator()
     @State private var pathStack: [String] = ["/"]
+    @State private var isSelectMode        = false
+    @State private var selectedFileIDs: Set<UUID> = []
 
     private var currentPath: String { pathStack.last ?? "/" }
 
@@ -102,12 +108,14 @@ private struct SampleListView: View {
         guard folder.isFolder else { return }
         let next = currentPath == "/" ? "/\(folder.name)" : "\(currentPath)/\(folder.name)"
         pathStack.append(next)
+        connection.lastBrowsedPath = next
         Task { await connection.refreshSamples(path: next) }
     }
 
     private func navigateUp() {
         guard pathStack.count > 1 else { return }
         pathStack.removeLast()
+        connection.lastBrowsedPath = currentPath
         Task { await connection.refreshSamples(path: currentPath) }
     }
 
@@ -117,76 +125,51 @@ private struct SampleListView: View {
         downloader.start(remotePath: remotePath, transfer: transfer)
     }
 
-    private func deletePath(for sample: SampleFile) -> String {
+    private func remotePathFor(_ sample: SampleFile) -> String {
         currentPath == "/" ? "/\(sample.name)" : "\(currentPath)/\(sample.name)"
+    }
+
+    private func enterSelectMode() {
+        isSelectMode    = true
+        selectedSample  = nil
+        selectedFileIDs = []
+    }
+
+    private func exitSelectMode() {
+        isSelectMode    = false
+        selectedFileIDs = []
+    }
+
+    private func toggleSelection(_ sample: SampleFile) {
+        guard !sample.isFolder else { return }
+        if selectedFileIDs.contains(sample.id) {
+            selectedFileIDs.remove(sample.id)
+        } else {
+            selectedFileIDs.insert(sample.id)
+        }
+    }
+
+    private func startBatchDownload() {
+        guard let transfer = connection.transfer else { return }
+        let files = connection.samples
+            .filter { !$0.isFolder && selectedFileIDs.contains($0.id) }
+            .map { (remotePath: remotePathFor($0), name: $0.name) }
+        guard !files.isEmpty else { return }
+        batchDownloader.start(files: files, using: transfer)
+        exitSelectMode()
     }
 
     var body: some View {
         VStack(spacing: 0) {
             // Toolbar
-            HStack {
-                // Back button when inside a subfolder
-                if pathStack.count > 1 {
-                    Button(action: navigateUp) {
-                        Image(systemName: "chevron.left")
-                            .font(.system(size: 11, weight: .semibold))
-                            .foregroundStyle(ConnektaktTheme.primary)
-                    }
-                    .buttonStyle(.plain)
-                }
-
-                Text(currentPath.uppercased())
-                    .font(ConnektaktTheme.smallFont)
-                    .foregroundStyle(ConnektaktTheme.textSecondary)
-                    .tracking(1)
-                    .lineLimit(1)
-                    .truncationMode(.middle)
-
-                if connection.isLoadingSamples {
-                    ProgressView()
-                        .scaleEffect(0.6)
-                        .tint(ConnektaktTheme.primary)
-                } else {
-                    Text("\(connection.samples.count) FILES")
-                        .font(ConnektaktTheme.smallFont)
-                        .foregroundStyle(ConnektaktTheme.textMuted)
-                        .tracking(1)
-                }
-
-                Spacer()
-
-                // Transfer backend badge (diagnostic)
-                Text(connection.transferLabel)
-                    .font(ConnektaktTheme.smallFont)
-                    .foregroundStyle(ConnektaktTheme.textMuted)
-                    .tracking(1)
-                    .padding(.horizontal, 6)
-                    .padding(.vertical, 2)
-                    .background(ConnektaktTheme.surface)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 3)
-                            .stroke(ConnektaktTheme.primary.opacity(0.3), lineWidth: 1)
-                    )
-
-                CKButton("UPLOAD", icon: "arrow.up", variant: .primary) {
-                    importer.triggerFilePicker()
-                }
-
-                let canImport = selectedSample != nil && selectedSample?.isFolder == false
-                CKButton("IMPORT", icon: "arrow.down", variant: .secondary) {
-                    if let sample = selectedSample, !sample.isFolder {
-                        startDownload(sample)
-                    }
-                }
-                .disabled(!canImport)
-                .opacity(canImport ? 1.0 : 0.35)
+            if isSelectMode {
+                selectModeToolbar
+            } else {
+                normalToolbar
             }
-            .padding(.horizontal, ConnektaktTheme.paddingMD)
-            .padding(.vertical, ConnektaktTheme.paddingSM)
-            .background(ConnektaktTheme.surface)
 
-            // Selection status bar
-            if let sel = selectedSample {
+            // Selection status bar (single-select mode only)
+            if !isSelectMode, let sel = selectedSample {
                 HStack(spacing: 6) {
                     Image(systemName: sel.isFolder ? "folder" : "waveform")
                         .font(.system(size: 10))
@@ -204,7 +187,7 @@ private struct SampleListView: View {
                         .foregroundStyle(ConnektaktTheme.textMuted)
                         .tracking(1)
                     Spacer()
-                    Text("TAP IMPORT TO DOWNLOAD")
+                    Text("PRESS IMPORT TO DOWNLOAD")
                         .font(ConnektaktTheme.smallFont)
                         .foregroundStyle(ConnektaktTheme.textMuted)
                         .tracking(1)
@@ -213,6 +196,27 @@ private struct SampleListView: View {
                 .padding(.horizontal, ConnektaktTheme.paddingMD)
                 .padding(.vertical, 5)
                 .background(ConnektaktTheme.primary.opacity(0.08))
+            }
+
+            // Multi-select count bar
+            if isSelectMode {
+                HStack {
+                    Text("\(selectedFileIDs.count) OF \(connection.samples.filter { !$0.isFolder }.count) FILES SELECTED")
+                        .font(ConnektaktTheme.smallFont)
+                        .foregroundStyle(selectedFileIDs.isEmpty ? ConnektaktTheme.textMuted : ConnektaktTheme.primary)
+                        .tracking(1)
+                    Spacer()
+                    if !selectedFileIDs.isEmpty {
+                        Button("SELECT ALL") {
+                            selectedFileIDs = Set(connection.samples.filter { !$0.isFolder }.map { $0.id })
+                        }
+                        .font(ConnektaktTheme.smallFont)
+                        .foregroundStyle(ConnektaktTheme.primary)
+                    }
+                }
+                .padding(.horizontal, ConnektaktTheme.paddingMD)
+                .padding(.vertical, 5)
+                .background(ConnektaktTheme.primary.opacity(0.06))
             }
 
             Rectangle()
@@ -228,27 +232,30 @@ private struct SampleListView: View {
                 ScrollView {
                     LazyVStack(spacing: 0) {
                         ForEach(connection.samples) { sample in
-                            SampleRow(sample: sample, isSelected: selectedSample?.id == sample.id)
-                                .onTapGesture(count: 2) {
-                                    if sample.isFolder {
-                                        navigate(into: sample)
-                                    } else {
-                                        selectedSample = sample
-                                        startDownload(sample)
-                                    }
-                                }
-                                .onTapGesture(count: 1) {
+                            SampleRow(
+                                sample: sample,
+                                isSelected: !isSelectMode && selectedSample?.id == sample.id,
+                                isChecked: isSelectMode && selectedFileIDs.contains(sample.id),
+                                isSelectMode: isSelectMode
+                            )
+                            .onTapGesture {
+                                if isSelectMode {
+                                    toggleSelection(sample)
+                                } else if sample.isFolder {
+                                    navigate(into: sample)
+                                } else {
                                     selectedSample = sample
                                 }
-                                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                                    if !sample.isFolder {
-                                        Button(role: .destructive) {
-                                            Task { await connection.deleteFile(at: deletePath(for: sample)) }
-                                        } label: {
-                                            Label("DELETE", systemImage: "trash")
-                                        }
+                            }
+                            .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                                if !isSelectMode && !sample.isFolder {
+                                    Button(role: .destructive) {
+                                        Task { await connection.deleteFile(at: remotePathFor(sample)) }
+                                    } label: {
+                                        Label("DELETE", systemImage: "trash")
                                     }
                                 }
+                            }
                         }
                     }
                 }
@@ -264,42 +271,151 @@ private struct SampleListView: View {
         }
         // Reset navigation on disconnect
         .onChange(of: connection.status) { _, newValue in
-            if !newValue.isConnected { pathStack = ["/"] }
+            if !newValue.isConnected {
+                pathStack = ["/"]
+                exitSelectMode()
+            }
         }
-        // File picker
+        // File picker (multi for Pro, single for free)
         .fileImporter(
             isPresented: $importer.isShowingFilePicker,
             allowedContentTypes: [.audio, .wav, .aiff, .mp3, .mpeg4Audio],
-            allowsMultipleSelection: false
+            allowsMultipleSelection: store.isPro
         ) { result in
             switch result {
             case .success(let urls):
-                if let url = urls.first { importer.handleFileSelected(url) }
+                if urls.count == 1 {
+                    importer.handleFileSelected(urls[0])
+                } else if urls.count > 1, let transfer = connection.transfer {
+                    batchImporter.start(urls: urls, using: transfer, destination: currentPath)
+                }
             case .failure:
                 break
             }
         }
-        // Optimization sheet (analyze → optimize → ready to upload)
+        // Single-file: optimization sheet
         .sheet(isPresented: Binding(
             get: { importer.showOptimizationSheet },
             set: { if !$0 { importer.dismiss() } }
         )) {
             OptimizationSheet(coordinator: importer, transfer: connection.transfer, destinationFolder: currentPath)
         }
-        // Upload progress sheet
+        // Single-file: upload progress sheet
         .sheet(isPresented: Binding(
             get: { importer.showUploadSheet },
             set: { if !$0 { importer.dismiss() } }
         )) {
             UploadProgressSheet(coordinator: importer)
         }
-        // Download progress sheet
+        // Single-file: download sheet
         .sheet(isPresented: Binding(
             get: { downloader.isActive },
             set: { if !$0 { downloader.dismiss() } }
         )) {
             DownloadSheet(coordinator: downloader)
         }
+        // Batch download sheet
+        .sheet(isPresented: Binding(
+            get: { batchDownloader.isActive },
+            set: { if !$0 { batchDownloader.dismiss() } }
+        )) {
+            BatchDownloadSheet(coordinator: batchDownloader)
+        }
+        // Batch upload sheet
+        .sheet(isPresented: Binding(
+            get: { batchImporter.isActive },
+            set: { if !$0 { batchImporter.dismiss() } }
+        )) {
+            BatchUploadSheet(coordinator: batchImporter, destination: currentPath)
+        }
+        // Paywall
+        .sheet(isPresented: $showPaywall) {
+            PaywallView()
+                .environment(store)
+        }
+    }
+
+    // MARK: - Toolbars
+
+    private var normalToolbar: some View {
+        HStack {
+            if pathStack.count > 1 {
+                Button(action: navigateUp) {
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundStyle(ConnektaktTheme.primary)
+                }
+                .buttonStyle(.plain)
+            }
+
+            Text(currentPath.uppercased())
+                .font(ConnektaktTheme.smallFont)
+                .foregroundStyle(ConnektaktTheme.textSecondary)
+                .tracking(1)
+                .lineLimit(1)
+                .truncationMode(.middle)
+
+            if connection.isLoadingSamples {
+                ProgressView().scaleEffect(0.6).tint(ConnektaktTheme.primary)
+            } else {
+                Text("\(connection.samples.count) FILES")
+                    .font(ConnektaktTheme.smallFont)
+                    .foregroundStyle(ConnektaktTheme.textMuted)
+                    .tracking(1)
+            }
+
+            Spacer()
+
+            Text(connection.transferLabel)
+                .font(ConnektaktTheme.smallFont)
+                .foregroundStyle(ConnektaktTheme.textMuted)
+                .tracking(1)
+                .padding(.horizontal, 6)
+                .padding(.vertical, 2)
+                .background(ConnektaktTheme.surface)
+                .overlay(RoundedRectangle(cornerRadius: 3).stroke(ConnektaktTheme.primary.opacity(0.3), lineWidth: 1))
+
+            CKButton("UPLOAD", icon: "arrow.up", variant: .primary) {
+                importer.triggerFilePicker()
+            }
+
+            let canDownload = selectedSample?.isFolder == false
+            CKButton("DOWNLOAD", icon: "arrow.down", variant: .secondary) {
+                if let sample = selectedSample, !sample.isFolder { startDownload(sample) }
+            }
+            .disabled(!canDownload)
+            .opacity(canDownload ? 1.0 : 0.35)
+
+            CKButton("SELECT", icon: "checkmark.circle", variant: .ghost) {
+                if store.isPro { enterSelectMode() } else { showPaywall = true }
+            }
+        }
+        .padding(.horizontal, ConnektaktTheme.paddingMD)
+        .padding(.vertical, ConnektaktTheme.paddingSM)
+        .background(ConnektaktTheme.surface)
+    }
+
+    private var selectModeToolbar: some View {
+        HStack {
+            CKButton("CANCEL", variant: .ghost) { exitSelectMode() }
+
+            Spacer()
+
+            let count = selectedFileIDs.count
+            let canDownload = count > 0 && connection.transfer != nil
+            CKButton(
+                count > 0 ? "DOWNLOAD (\(count))" : "DOWNLOAD",
+                icon: "arrow.down.circle",
+                variant: count > 0 ? .primary : .secondary
+            ) {
+                startBatchDownload()
+            }
+            .disabled(!canDownload)
+            .opacity(canDownload ? 1.0 : 0.35)
+        }
+        .padding(.horizontal, ConnektaktTheme.paddingMD)
+        .padding(.vertical, ConnektaktTheme.paddingSM)
+        .background(ConnektaktTheme.surface)
     }
 }
 
@@ -307,47 +423,61 @@ private struct SampleListView: View {
 
 private struct SampleRow: View {
     let sample: SampleFile
-    let isSelected: Bool
+    let isSelected:   Bool
+    var isChecked:    Bool = false
+    var isSelectMode: Bool = false
 
     var body: some View {
         HStack(spacing: ConnektaktTheme.paddingSM) {
-            // Type indicator
-            Image(systemName: sample.isFolder ? "folder" : "waveform")
-                .font(.system(size: 11))
-                .foregroundStyle(isSelected ? ConnektaktTheme.background : ConnektaktTheme.textSecondary)
-                .frame(width: 16)
+            // Checkbox (select mode) or type icon (normal mode)
+            if isSelectMode && !sample.isFolder {
+                Image(systemName: isChecked ? "checkmark.circle.fill" : "circle")
+                    .font(.system(size: 16))
+                    .foregroundStyle(isChecked ? ConnektaktTheme.primary : ConnektaktTheme.textMuted)
+                    .frame(width: 20)
+                    .animation(.easeInOut(duration: 0.1), value: isChecked)
+            } else {
+                Image(systemName: sample.isFolder ? "folder" : "waveform")
+                    .font(.system(size: 11))
+                    .foregroundStyle(isSelected ? ConnektaktTheme.background : ConnektaktTheme.textSecondary)
+                    .frame(width: 20)
+            }
 
             Text(sample.name)
                 .font(ConnektaktTheme.bodyFont)
-                .foregroundStyle(isSelected ? ConnektaktTheme.background : ConnektaktTheme.textPrimary)
+                .foregroundStyle(
+                    isChecked   ? ConnektaktTheme.textPrimary :
+                    isSelected  ? ConnektaktTheme.background  :
+                                  ConnektaktTheme.textPrimary
+                )
                 .lineLimit(1)
 
             Spacer()
 
-            Text(String(format: "T:%02X", sample.itemType))
-                .font(.system(size: 9, design: .monospaced))
-                .foregroundStyle(isSelected ? ConnektaktTheme.background.opacity(0.5) : ConnektaktTheme.textMuted)
+            if !sample.isFolder {
+                Text(sample.sizeString)
+                    .font(ConnektaktTheme.smallFont)
+                    .foregroundStyle(isSelected ? ConnektaktTheme.background.opacity(0.7) : ConnektaktTheme.textSecondary)
+                    .monospacedDigit()
+            }
 
-            Text(sample.sizeString)
-                .font(ConnektaktTheme.smallFont)
-                .foregroundStyle(isSelected ? ConnektaktTheme.background.opacity(0.7) : ConnektaktTheme.textSecondary)
-                .monospacedDigit()
-
-            Image(systemName: "chevron.right")
-                .font(.system(size: 9))
-                .foregroundStyle(isSelected ? ConnektaktTheme.background.opacity(0.5) : ConnektaktTheme.textMuted)
+            if !isSelectMode {
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 9))
+                    .foregroundStyle(isSelected ? ConnektaktTheme.background.opacity(0.5) : ConnektaktTheme.textMuted)
+            }
         }
         .padding(.horizontal, ConnektaktTheme.paddingMD)
         .padding(.vertical, 10)
-        .background(isSelected ? ConnektaktTheme.primary : Color.clear)
-        .overlay(
-            Rectangle()
-                .fill(ConnektaktTheme.primary.opacity(0.1))
-                .frame(height: 1),
-            alignment: .bottom
+        .background(
+            isChecked  ? ConnektaktTheme.primary.opacity(0.12) :
+            isSelected ? ConnektaktTheme.primary               :
+                         Color.clear
         )
+        .overlay(Rectangle().fill(ConnektaktTheme.primary.opacity(0.1)).frame(height: 1), alignment: .bottom)
         .contentShape(Rectangle())
         .animation(.easeInOut(duration: 0.1), value: isSelected)
+        .animation(.easeInOut(duration: 0.1), value: isChecked)
     }
 }
 
@@ -601,6 +731,268 @@ private struct DownloadSheet: View {
                 coordinator.dismiss()
             }
         }
+    }
+}
+
+// MARK: - Batch Download Sheet
+
+private struct BatchDownloadSheet: View {
+    var coordinator: BatchDownloadCoordinator
+
+    var body: some View {
+        VStack(spacing: 0) {
+            CKHeaderBar(title: headerTitle, status: .connected(deviceName: "DIGITAKT"))
+
+            if coordinator.isComplete {
+                completeSummary
+            } else {
+                progressList
+            }
+        }
+        .background(ConnektaktTheme.background)
+        .presentationDetents([.medium, .large])
+        .presentationBackground(ConnektaktTheme.background)
+    }
+
+    private var headerTitle: String {
+        coordinator.isComplete ? "DOWNLOAD COMPLETE" : "DOWNLOADING \(coordinator.items.count) FILES"
+    }
+
+    private var progressList: some View {
+        VStack(spacing: 0) {
+            // Overall progress
+            VStack(spacing: 8) {
+                CKProgressBar(progress: coordinator.overallProgress)
+                Text(String(format: "%.0f%%  —  %d / %d FILES",
+                            coordinator.overallProgress * 100,
+                            coordinator.items.filter { $0.status.progressFraction == 1 }.count,
+                            coordinator.items.count))
+                    .font(ConnektaktTheme.smallFont)
+                    .foregroundStyle(ConnektaktTheme.textMuted)
+                    .tracking(1)
+            }
+            .padding(ConnektaktTheme.paddingMD)
+
+            Rectangle().fill(ConnektaktTheme.primary.opacity(0.15)).frame(height: 1)
+
+            ScrollView {
+                LazyVStack(spacing: 0) {
+                    ForEach(coordinator.items) { item in
+                        BatchItemRow(name: item.name, status: item.status)
+                    }
+                }
+            }
+        }
+    }
+
+    private var completeSummary: some View {
+        VStack(spacing: ConnektaktTheme.paddingLG) {
+            Spacer(minLength: 20)
+
+            Image(systemName: coordinator.failedCount == 0 ? "checkmark.circle.fill" : "exclamationmark.circle.fill")
+                .font(.system(size: 48, weight: .light))
+                .foregroundStyle(coordinator.failedCount == 0 ? ConnektaktTheme.waveformGreen : ConnektaktTheme.accent)
+
+            VStack(spacing: 4) {
+                Text("\(coordinator.doneURLs.count) FILES DOWNLOADED")
+                    .font(ConnektaktTheme.largeFont)
+                    .foregroundStyle(ConnektaktTheme.textPrimary)
+                    .tracking(2)
+                if coordinator.failedCount > 0 {
+                    Text("\(coordinator.failedCount) FAILED")
+                        .font(ConnektaktTheme.smallFont)
+                        .foregroundStyle(ConnektaktTheme.accent)
+                        .tracking(1)
+                }
+            }
+
+            if !coordinator.doneURLs.isEmpty {
+                ShareLink(items: coordinator.doneURLs) {
+                    HStack(spacing: 6) {
+                        Image(systemName: "square.and.arrow.up")
+                            .font(.system(size: 12, weight: .semibold))
+                        Text("SHARE ALL / SAVE TO FILES")
+                            .font(ConnektaktTheme.bodyFont)
+                            .tracking(1)
+                    }
+                    .foregroundStyle(ConnektaktTheme.background)
+                    .padding(.horizontal, ConnektaktTheme.paddingMD)
+                    .padding(.vertical, ConnektaktTheme.paddingSM)
+                    .background(ConnektaktTheme.primary)
+                    .clipShape(RoundedRectangle(cornerRadius: 6))
+                }
+            }
+
+            CKButton("DONE", icon: "checkmark", variant: .ghost) {
+                coordinator.dismiss()
+            }
+
+            Spacer(minLength: 20)
+        }
+        .padding(ConnektaktTheme.paddingLG)
+    }
+}
+
+// MARK: - Batch Upload Sheet
+
+private struct BatchUploadSheet: View {
+    var coordinator: BatchImportCoordinator
+    let destination: String
+
+    var body: some View {
+        VStack(spacing: 0) {
+            CKHeaderBar(title: headerTitle, status: .connected(deviceName: "DIGITAKT"))
+
+            if coordinator.isComplete {
+                completeSummary
+            } else {
+                progressList
+            }
+        }
+        .background(ConnektaktTheme.background)
+        .presentationDetents([.medium, .large])
+        .presentationBackground(ConnektaktTheme.background)
+    }
+
+    private var headerTitle: String {
+        coordinator.isComplete ? "UPLOAD COMPLETE" : "UPLOADING \(coordinator.items.count) FILES"
+    }
+
+    private var progressList: some View {
+        VStack(spacing: 0) {
+            VStack(spacing: 8) {
+                CKProgressBar(progress: coordinator.overallProgress)
+                Text(String(format: "%.0f%%  —  %d / %d FILES",
+                            coordinator.overallProgress * 100,
+                            coordinator.doneCount,
+                            coordinator.items.count))
+                    .font(ConnektaktTheme.smallFont)
+                    .foregroundStyle(ConnektaktTheme.textMuted)
+                    .tracking(1)
+            }
+            .padding(ConnektaktTheme.paddingMD)
+
+            HStack(spacing: 6) {
+                Image(systemName: "folder")
+                    .font(.system(size: 10))
+                    .foregroundStyle(ConnektaktTheme.textMuted)
+                Text((destination == "/" ? "/ (ROOT)" : destination).uppercased())
+                    .font(ConnektaktTheme.smallFont)
+                    .foregroundStyle(ConnektaktTheme.textMuted)
+                    .tracking(1)
+                Spacer()
+            }
+            .padding(.horizontal, ConnektaktTheme.paddingMD)
+            .padding(.bottom, 8)
+
+            Rectangle().fill(ConnektaktTheme.primary.opacity(0.15)).frame(height: 1)
+
+            ScrollView {
+                LazyVStack(spacing: 0) {
+                    ForEach(coordinator.items) { item in
+                        BatchItemRow(name: item.name, status: item.status)
+                    }
+                }
+            }
+        }
+    }
+
+    private var completeSummary: some View {
+        VStack(spacing: ConnektaktTheme.paddingLG) {
+            Spacer(minLength: 20)
+
+            Image(systemName: coordinator.failedCount == 0 ? "checkmark.circle.fill" : "exclamationmark.circle.fill")
+                .font(.system(size: 48, weight: .light))
+                .foregroundStyle(coordinator.failedCount == 0 ? ConnektaktTheme.waveformGreen : ConnektaktTheme.accent)
+
+            VStack(spacing: 4) {
+                Text("\(coordinator.doneCount) FILES UPLOADED")
+                    .font(ConnektaktTheme.largeFont)
+                    .foregroundStyle(ConnektaktTheme.textPrimary)
+                    .tracking(2)
+                if coordinator.failedCount > 0 {
+                    Text("\(coordinator.failedCount) FAILED")
+                        .font(ConnektaktTheme.smallFont)
+                        .foregroundStyle(ConnektaktTheme.accent)
+                        .tracking(1)
+                }
+            }
+
+            CKButton("DONE", icon: "checkmark", variant: .ghost) {
+                coordinator.dismiss()
+            }
+
+            Spacer(minLength: 20)
+        }
+        .padding(ConnektaktTheme.paddingLG)
+    }
+}
+
+// MARK: - Batch Item Row (shared)
+
+private struct BatchItemRow<S: Equatable>: View {
+    let name: String
+    let status: S
+
+    // We need concrete rendering — use two specializations via protocol trick.
+    // Instead, accept the display strings directly.
+    fileprivate init(name: String, status: BatchDownloadCoordinator.ItemStatus) where S == BatchDownloadCoordinator.ItemStatus {
+        self.name   = name
+        self.status = status
+        self._label = Self.downloadLabel(status)
+        self._progress = status.progressFraction
+        self._isDone   = { if case .done   = status { return true }; return false }()
+        self._isFailed = { if case .failed = status { return true }; return false }()
+    }
+
+    fileprivate init(name: String, status: BatchImportCoordinator.ItemStatus) where S == BatchImportCoordinator.ItemStatus {
+        self.name   = name
+        self.status = status
+        self._label    = status.label
+        self._progress = status.progressFraction
+        self._isDone   = { if case .done   = status { return true }; return false }()
+        self._isFailed = { if case .failed = status { return true }; return false }()
+    }
+
+    private let _label:    String
+    private let _progress: Double
+    private let _isDone:   Bool
+    private let _isFailed: Bool
+
+    private static func downloadLabel(_ s: BatchDownloadCoordinator.ItemStatus) -> String {
+        switch s {
+        case .pending:            return "WAITING"
+        case .downloading(let p): return String(format: "DOWNLOADING %.0f%%", p * 100)
+        case .done:               return "✓ DONE"
+        case .failed(let msg):    return "✗ \(msg)"
+        }
+    }
+
+    var body: some View {
+        VStack(spacing: 4) {
+            HStack {
+                Image(systemName: _isDone ? "checkmark.circle.fill" : _isFailed ? "exclamationmark.circle" : "arrow.down.circle")
+                    .font(.system(size: 11))
+                    .foregroundStyle(_isDone ? ConnektaktTheme.waveformGreen : _isFailed ? ConnektaktTheme.accent : ConnektaktTheme.primary)
+                    .frame(width: 16)
+                Text(name)
+                    .font(ConnektaktTheme.bodyFont)
+                    .foregroundStyle(ConnektaktTheme.textPrimary)
+                    .lineLimit(1)
+                Spacer()
+                Text(_label)
+                    .font(ConnektaktTheme.smallFont)
+                    .foregroundStyle(_isDone ? ConnektaktTheme.waveformGreen : _isFailed ? ConnektaktTheme.accent : ConnektaktTheme.textMuted)
+                    .tracking(1)
+            }
+            if !_isDone && !_isFailed && _progress > 0 {
+                CKProgressBar(progress: _progress)
+                    .padding(.leading, ConnektaktTheme.paddingLG)
+            }
+        }
+        .padding(.horizontal, ConnektaktTheme.paddingMD)
+        .padding(.vertical, 10)
+        .overlay(Rectangle().fill(ConnektaktTheme.primary.opacity(0.1)).frame(height: 1), alignment: .bottom)
     }
 }
 

@@ -1,0 +1,24 @@
+{
+  "identifier" : "CE1A4B2D-8F3E-4A9C-B5D7-12E3F6A0C8B4",
+  "nonConsumableInAppPurchases" : [
+    {
+      "displayPrice" : "7.99",
+      "familySharable" : true,
+      "internalID" : "A1B2C3D4-E5F6-7890-ABCD-EF1234567890",
+      "localizations" : [
+        {
+          "description" : "Full editor, batch transfer, recording, and AUV3 plugin hosting.",
+          "displayName" : "Connectakt Pro",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.ericerwin.connectakt.pro",
+      "referenceName" : "Connectakt Pro",
+      "type" : "NonConsumable"
+    }
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}

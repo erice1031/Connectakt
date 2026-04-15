@@ -8,17 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		083C0E14E8B0E259735E2216 /* CKStatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F895A52492FE00EA7F8FE67 /* CKStatusBadge.swift */; };
+		08D487EA186DD0C9BA640C2A /* BatchImportCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7447A1A1CD65F33DC6F2B3CE /* BatchImportCoordinator.swift */; };
 		0A97CE0A7733B02C710C7EFB /* ElektronMailbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = B320195E9A8F340B3072ECAC /* ElektronMailbox.swift */; };
 		0DD2FFD4AC73F588149D8321 /* BrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB00A1625168106BDACEDEB3 /* BrowserView.swift */; };
 		0DFE11774E3C480E1C712ED5 /* AudioRecorderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FE6FD6199BADAD02B0F1F4 /* AudioRecorderTests.swift */; };
 		107B0F51EC0A23113E3ABE40 /* ElektronMIDITransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EF0CA517D85FC08AAA1229 /* ElektronMIDITransfer.swift */; };
+		2553F4E38B35348A6545E7F4 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C814BABDD934A3994077BAE0 /* StoreManager.swift */; };
 		288CB2D6CADE6FFD959ACF79 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C7D55A49097AD4089807E6 /* ContentView.swift */; };
 		29EFCE77BEA484ADBC528CF0 /* UploadProgressSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9E1AB6A4153D42605321B4 /* UploadProgressSheet.swift */; };
 		2B1AE55CA4B7DA893FF4EA7F /* CKStatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F895A52492FE00EA7F8FE67 /* CKStatusBadge.swift */; };
 		2CD077E8D7B730F82F5C3E8A /* MusicalGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E1E6AC1D1C3505759080D1 /* MusicalGrid.swift */; };
 		2CEDF8DB48F53CAC946179F7 /* RecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C97EF19A5E6494B0827C773 /* RecorderView.swift */; };
+		2D4C307748BFFC21239FD5A0 /* BatchImportCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7447A1A1CD65F33DC6F2B3CE /* BatchImportCoordinator.swift */; };
 		319C7120026500E7D6B03D43 /* OptimizationSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7260F0651BE1A2E29FB159 /* OptimizationSheet.swift */; };
 		322F4C85B2DFE8EE3FFBF115 /* AudioOptimizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1B3AF560CD2681566EC770 /* AudioOptimizerTests.swift */; };
+		3245781B82EC717B8E6C40DE /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9C47BE1575D9F22182E16B /* PaywallView.swift */; };
 		32A53591FC394125252AC743 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C7D55A49097AD4089807E6 /* ContentView.swift */; };
 		3AE5C060BD8444E82AE69461 /* MIDIDiagnosticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D829A6261210F638E84580 /* MIDIDiagnosticsView.swift */; };
 		3B869D594DC8FD3292D3FA05 /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5E22F7CC4BF80CC5147EA5 /* EditorView.swift */; };
@@ -31,6 +35,7 @@
 		4472644C1D015CEBC7427748 /* RecordingSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176DAA41F43626558AECF38B /* RecordingSession.swift */; };
 		44F4CD508E459A3B7C91BE0D /* CKButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A915367173B99D944147402A /* CKButton.swift */; };
 		47E08680A41BB1CFC1DC38F8 /* MIDIClockReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C46883FB8D895BC3B484BD5 /* MIDIClockReceiver.swift */; };
+		4CC79586083044449A7DBD29 /* BatchDownloadCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D569E60A747BA85A78D1DB88 /* BatchDownloadCoordinator.swift */; };
 		50315435A992AD3E576B3B86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 89413AAE77EADED746853E47 /* Assets.xcassets */; };
 		51CB9F3CA36B42450AFF88C6 /* CKHeaderBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99145EDEE04D45477DA7900F /* CKHeaderBar.swift */; };
 		530C4DCE8C8B775BDE8D3437 /* ConnektaktApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFFB7021E8F0B2CCE826E52 /* ConnektaktApp.swift */; };
@@ -59,16 +64,19 @@
 		9CB99158564B7EB6BFBC2C9B /* AudioOptimizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A27E2C67542316DBB64E24E /* AudioOptimizer.swift */; };
 		A402521C5444EDF2330A9873 /* ConnektaktApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFFB7021E8F0B2CCE826E52 /* ConnektaktApp.swift */; };
 		A84DA47663BAA1DEB3A462BD /* AudioAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0DF0A4C7855A74F3E80D47 /* AudioAnalyzer.swift */; };
+		B28CAAB99277FD827E182043 /* BatchDownloadCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D569E60A747BA85A78D1DB88 /* BatchDownloadCoordinator.swift */; };
 		B55CCA16DCB713215E8F6B92 /* RecordingTrimEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598BEE8840F4F491EBF235FB /* RecordingTrimEditor.swift */; };
 		B76DEB856D748DA8017CE5B3 /* USBDeviceMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDA1CA181523BCB7CCDA54C /* USBDeviceMonitor.swift */; };
 		B81CB901712FAF49FA62D7D8 /* CKLiveWaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD9CEB1C42963084A2D7F5C /* CKLiveWaveformView.swift */; };
 		BCD1CA53E72287916CAC20A3 /* BPMDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 340A3337A1FC628ACA0C8F8F /* BPMDetector.swift */; };
+		BD8A86DFC4767494C628806C /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9C47BE1575D9F22182E16B /* PaywallView.swift */; };
 		C323515DF175D1704B855FBB /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35AF121A6E17FD3D22A45CED /* SettingsView.swift */; };
 		C435EC9306447AB880620F85 /* RecordingTrimEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598BEE8840F4F491EBF235FB /* RecordingTrimEditor.swift */; };
 		C46AC52BCA3F26BBE52AC813 /* DigitaktTransferProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7C53C9A83183DCD32F0E97 /* DigitaktTransferProtocol.swift */; };
 		CA6C483CE5A6A3E4AE7A764A /* ImportCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F36A1861531C2276CA51B9F /* ImportCoordinator.swift */; };
 		CD83E237F4B239F9C7CEDA46 /* RecordingSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176DAA41F43626558AECF38B /* RecordingSession.swift */; };
 		D06DF783A4AF79659B5106D4 /* RecordingHistoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5FC57F54A4147F031E562D /* RecordingHistoryManager.swift */; };
+		D0882BB80BD7BAFDC5B5D7A4 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C814BABDD934A3994077BAE0 /* StoreManager.swift */; };
 		D524A4708149A119C68E44D4 /* ConnektaktTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CE098A1F59F9A78824FA31 /* ConnektaktTests.swift */; };
 		D6F5C5AED6CA9FA849F016A3 /* UploadProgressSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9E1AB6A4153D42605321B4 /* UploadProgressSheet.swift */; };
 		E67B3E3D8D00E4FCC159AB52 /* CKHeaderBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99145EDEE04D45477DA7900F /* CKHeaderBar.swift */; };
@@ -120,6 +128,7 @@
 		5F5FC57F54A4147F031E562D /* RecordingHistoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingHistoryManager.swift; sourceTree = "<group>"; };
 		67393F84B6D8EEEA1B725768 /* CKStorageMeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKStorageMeter.swift; sourceTree = "<group>"; };
 		73D829A6261210F638E84580 /* MIDIDiagnosticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MIDIDiagnosticsView.swift; sourceTree = "<group>"; };
+		7447A1A1CD65F33DC6F2B3CE /* BatchImportCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatchImportCoordinator.swift; sourceTree = "<group>"; };
 		7684740174FC5BAA740F6304 /* MIDIMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MIDIMonitor.swift; sourceTree = "<group>"; };
 		7DFFB7021E8F0B2CCE826E52 /* ConnektaktApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnektaktApp.swift; sourceTree = "<group>"; };
 		89413AAE77EADED746853E47 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -136,10 +145,13 @@
 		BA7C53C9A83183DCD32F0E97 /* DigitaktTransferProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitaktTransferProtocol.swift; sourceTree = "<group>"; };
 		BF0DF0A4C7855A74F3E80D47 /* AudioAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioAnalyzer.swift; sourceTree = "<group>"; };
 		C3D8586DEF8BF8B4E932CDA2 /* Connectakt_iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Connectakt_iOS.entitlements; sourceTree = "<group>"; };
+		C814BABDD934A3994077BAE0 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
 		CB00A1625168106BDACEDEB3 /* BrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserView.swift; sourceTree = "<group>"; };
+		D569E60A747BA85A78D1DB88 /* BatchDownloadCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatchDownloadCoordinator.swift; sourceTree = "<group>"; };
 		DFAD2EAF075738CEA5C26F38 /* RecordingHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingHistoryView.swift; sourceTree = "<group>"; };
 		E7CE098A1F59F9A78824FA31 /* ConnektaktTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnektaktTests.swift; sourceTree = "<group>"; };
 		E8E1E6AC1D1C3505759080D1 /* MusicalGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicalGrid.swift; sourceTree = "<group>"; };
+		EB9C47BE1575D9F22182E16B /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
 		F6FE6FD6199BADAD02B0F1F4 /* AudioRecorderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -198,6 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				072F6C296F748DCFE6ABDDF3 /* Models */,
+				75BBB12EA64EF08136DF6973 /* Store */,
 				C4EF8AE6F6FA70A1BAECBB55 /* UI */,
 			);
 			path = Shared;
@@ -247,9 +260,20 @@
 			path = Connectakt;
 			sourceTree = "<group>";
 		};
+		75BBB12EA64EF08136DF6973 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				EB9C47BE1575D9F22182E16B /* PaywallView.swift */,
+				C814BABDD934A3994077BAE0 /* StoreManager.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
 		800AF527B2BECBB0BBC8B552 /* Browser */ = {
 			isa = PBXGroup;
 			children = (
+				D569E60A747BA85A78D1DB88 /* BatchDownloadCoordinator.swift */,
+				7447A1A1CD65F33DC6F2B3CE /* BatchImportCoordinator.swift */,
 				CB00A1625168106BDACEDEB3 /* BrowserView.swift */,
 				1F36A1861531C2276CA51B9F /* ImportCoordinator.swift */,
 				4F7260F0651BE1A2E29FB159 /* OptimizationSheet.swift */,
@@ -467,6 +491,8 @@
 				9CB99158564B7EB6BFBC2C9B /* AudioOptimizer.swift in Sources */,
 				3C3A8D6F62D55FCF2989CA67 /* AudioRecorder.swift in Sources */,
 				BCD1CA53E72287916CAC20A3 /* BPMDetector.swift in Sources */,
+				4CC79586083044449A7DBD29 /* BatchDownloadCoordinator.swift in Sources */,
+				2D4C307748BFFC21239FD5A0 /* BatchImportCoordinator.swift in Sources */,
 				0DD2FFD4AC73F588149D8321 /* BrowserView.swift in Sources */,
 				F98AD62F41E05733122CDF95 /* CKButton.swift in Sources */,
 				E67B3E3D8D00E4FCC159AB52 /* CKHeaderBar.swift in Sources */,
@@ -489,12 +515,14 @@
 				2CD077E8D7B730F82F5C3E8A /* MusicalGrid.swift in Sources */,
 				F4BFD1CB894559E0A7D0CE84 /* OptimizationModels.swift in Sources */,
 				319C7120026500E7D6B03D43 /* OptimizationSheet.swift in Sources */,
+				3245781B82EC717B8E6C40DE /* PaywallView.swift in Sources */,
 				79FFBF5009A30A1FDD348503 /* RecorderView.swift in Sources */,
 				567798845F5618C9AA901400 /* RecordingHistoryManager.swift in Sources */,
 				9C67250BD5AC3FFF374C08E8 /* RecordingHistoryView.swift in Sources */,
 				4472644C1D015CEBC7427748 /* RecordingSession.swift in Sources */,
 				B55CCA16DCB713215E8F6B92 /* RecordingTrimEditor.swift in Sources */,
 				58F1D03191993E3BD6EE982A /* SettingsView.swift in Sources */,
+				2553F4E38B35348A6545E7F4 /* StoreManager.swift in Sources */,
 				5590AEEE59632FE6DCD79C8B /* Theme.swift in Sources */,
 				5E8EB6F2F17303921C06FD64 /* USBDeviceMonitor.swift in Sources */,
 				D6F5C5AED6CA9FA849F016A3 /* UploadProgressSheet.swift in Sources */,
@@ -509,6 +537,8 @@
 				F286FC66F6D51C0E69528455 /* AudioOptimizer.swift in Sources */,
 				F53AF62C6C265D0D9ABCC92E /* AudioRecorder.swift in Sources */,
 				90E3C085E9E204D948196886 /* BPMDetector.swift in Sources */,
+				B28CAAB99277FD827E182043 /* BatchDownloadCoordinator.swift in Sources */,
+				08D487EA186DD0C9BA640C2A /* BatchImportCoordinator.swift in Sources */,
 				7461E93731537325316AD695 /* BrowserView.swift in Sources */,
 				44F4CD508E459A3B7C91BE0D /* CKButton.swift in Sources */,
 				51CB9F3CA36B42450AFF88C6 /* CKHeaderBar.swift in Sources */,
@@ -531,12 +561,14 @@
 				F96DFACAA790DD59D00450E0 /* MusicalGrid.swift in Sources */,
 				F19CE00F8765D7914E9969A3 /* OptimizationModels.swift in Sources */,
 				65468F9F23E5573D0728A211 /* OptimizationSheet.swift in Sources */,
+				BD8A86DFC4767494C628806C /* PaywallView.swift in Sources */,
 				2CEDF8DB48F53CAC946179F7 /* RecorderView.swift in Sources */,
 				D06DF783A4AF79659B5106D4 /* RecordingHistoryManager.swift in Sources */,
 				8D91C7437095367586CC46D7 /* RecordingHistoryView.swift in Sources */,
 				CD83E237F4B239F9C7CEDA46 /* RecordingSession.swift in Sources */,
 				C435EC9306447AB880620F85 /* RecordingTrimEditor.swift in Sources */,
 				C323515DF175D1704B855FBB /* SettingsView.swift in Sources */,
+				D0882BB80BD7BAFDC5B5D7A4 /* StoreManager.swift in Sources */,
 				42F451F45BC81C4037CF3D27 /* Theme.swift in Sources */,
 				B76DEB856D748DA8017CE5B3 /* USBDeviceMonitor.swift in Sources */,
 				29EFCE77BEA484ADBC528CF0 /* UploadProgressSheet.swift in Sources */,

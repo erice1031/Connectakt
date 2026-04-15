@@ -76,22 +76,27 @@ final class ImportCoordinator {
     func handleFileSelected(_ url: URL) {
         phase = .analyzing
         Task {
-            // Copy from security-scoped URL to a temp location the app owns
-            guard url.startAccessingSecurityScopedResource() else {
-                phase = .failed("PERMISSION DENIED — Could not access the selected file.")
-                return
-            }
-            defer { url.stopAccessingSecurityScopedResource() }
+            // Security-scoped URLs come from the file picker (user-picked files).
+            // Local URLs (e.g. recordings in temporaryDirectory) are not security-scoped;
+            // startAccessingSecurityScopedResource returns false for them — that's fine.
+            let hasScopeAccess = url.startAccessingSecurityScopedResource()
+            defer { if hasScopeAccess { url.stopAccessingSecurityScopedResource() } }
 
             do {
                 let tempURL = FileManager.default.temporaryDirectory
                     .appendingPathComponent(url.lastPathComponent)
-                if FileManager.default.fileExists(atPath: tempURL.path) {
-                    try FileManager.default.removeItem(at: tempURL)
-                }
-                try FileManager.default.copyItem(at: url, to: tempURL)
 
-                let info = try await AudioOptimizer.analyzeFormat(at: tempURL)
+                // Skip the copy if the file is already at the target temp path
+                // (e.g. a recording from AudioRecorder that lives in temporaryDirectory).
+                let sameFile = url.standardizedFileURL.path == tempURL.standardizedFileURL.path
+                if !sameFile {
+                    if FileManager.default.fileExists(atPath: tempURL.path) {
+                        try FileManager.default.removeItem(at: tempURL)
+                    }
+                    try FileManager.default.copyItem(at: url, to: tempURL)
+                }
+
+                let info = try await AudioOptimizer.analyzeFormat(at: sameFile ? url : tempURL)
                 phase = .readyToOptimize(info)
 
             } catch {
@@ -126,8 +131,17 @@ final class ImportCoordinator {
 
         Task {
             do {
-                let folderPath = destinationFolder == "/" ? "" : destinationFolder
-                let remotePath = "\(folderPath)/\(result.outputURL.lastPathComponent)"
+                // Normalize to a full path with leading slash.
+                // "/samples" → "/samples/file.wav", "/" or "" → "/file.wav"
+                let folder: String
+                if destinationFolder == "/" || destinationFolder.isEmpty {
+                    folder = ""
+                } else if destinationFolder.hasPrefix("/") {
+                    folder = destinationFolder
+                } else {
+                    folder = "/\(destinationFolder)"
+                }
+                let remotePath = "\(folder)/\(result.outputURL.lastPathComponent)"
                 try await transfer.uploadSample(
                     localURL: result.outputURL,
                     remotePath: remotePath

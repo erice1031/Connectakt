@@ -6,6 +6,8 @@ struct RecordingHistoryView: View {
 
     /// Called when the user taps TRIM on a session row.
     var onTrim: ((RecordingSession) -> Void)? = nil
+    /// Called when the user taps UPLOAD on a session row.
+    var onUpload: ((RecordingSession) -> Void)? = nil
 
     var body: some View {
         VStack(spacing: 0) {
@@ -38,7 +40,7 @@ struct RecordingHistoryView: View {
                 .padding(.vertical, ConnektaktTheme.paddingLG)
             } else {
                 ForEach(history.sessions) { session in
-                    SessionRow(session: session, onTrim: onTrim)
+                    SessionRow(session: session, onTrim: onTrim, onUpload: onUpload)
                 }
             }
         }
@@ -49,7 +51,8 @@ struct RecordingHistoryView: View {
 
 private struct SessionRow: View {
     let session: RecordingSession
-    var onTrim: ((RecordingSession) -> Void)? = nil
+    var onTrim:   ((RecordingSession) -> Void)? = nil
+    var onUpload: ((RecordingSession) -> Void)? = nil
 
     @Environment(RecordingHistoryManager.self) private var history
     @Environment(ConnectionManager.self) private var connection
@@ -95,6 +98,19 @@ private struct SessionRow: View {
                 }
                 .buttonStyle(.plain)
                 .help("Open trim editor")
+            }
+
+            // UPLOAD button — only shown when connected
+            if connection.status.isConnected, let onUpload {
+                Button {
+                    onUpload(session)
+                } label: {
+                    Image(systemName: "arrow.up.circle")
+                        .font(.system(size: 13))
+                        .foregroundStyle(ConnektaktTheme.primary)
+                }
+                .buttonStyle(.plain)
+                .help("Optimize and upload to Digitakt")
             }
 
             // Delete

@@ -5,6 +5,7 @@ struct ConnektaktApp: App {
     @State private var connectionManager = ConnectionManager()
     @State private var audioRecorder = AudioRecorder()
     @State private var recordingHistory = RecordingHistoryManager()
+    @State private var store = StoreManager()
 
     var body: some Scene {
         WindowGroup {
@@ -12,6 +13,7 @@ struct ConnektaktApp: App {
                 .environment(connectionManager)
                 .environment(audioRecorder)
                 .environment(recordingHistory)
+                .environment(store)
                 .onAppear {
                     connectionManager.startUSBMonitoring()
                 }

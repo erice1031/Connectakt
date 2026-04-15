@@ -20,6 +20,7 @@ struct OptimizationSheet: View {
                     case .readyToOptimize(let info):
                         FormatInfoPanel(info: info)
                         ConversionPlanPanel(info: info)
+                        DestinationPanel(path: destinationFolder)
                         actionBar(info: info)
 
                     case .optimizing(let p):
@@ -27,6 +28,7 @@ struct OptimizationSheet: View {
 
                     case .readyToUpload(let result):
                         ResultPanel(result: result)
+                        DestinationPanel(path: destinationFolder)
                         actionBar(result: result)
 
                     default:
@@ -245,6 +247,37 @@ private struct ResultPanel: View {
 
             infoRow("OUTPUT SIZE",       result.outputSizeString)
             infoRow("CONVERSION TIME",   String(format: "%.2f SEC", result.conversionDurationSeconds))
+        }
+        .ckPanel()
+    }
+}
+
+// MARK: - Destination Panel
+
+private struct DestinationPanel: View {
+    let path: String
+
+    var body: some View {
+        VStack(spacing: 0) {
+            sectionHeader("UPLOAD DESTINATION")
+            HStack(spacing: 8) {
+                Image(systemName: "folder")
+                    .font(.system(size: 11))
+                    .foregroundStyle(ConnektaktTheme.primary)
+                Text(path == "/" ? "/ (ROOT)" : path.uppercased())
+                    .font(ConnektaktTheme.bodyFont)
+                    .foregroundStyle(ConnektaktTheme.textPrimary)
+                    .tracking(1)
+                    .lineLimit(1)
+                    .truncationMode(.middle)
+                Spacer()
+                Text("DIGITAKT")
+                    .font(ConnektaktTheme.smallFont)
+                    .foregroundStyle(ConnektaktTheme.textMuted)
+                    .tracking(1)
+            }
+            .padding(.horizontal, ConnektaktTheme.paddingMD)
+            .padding(.vertical, 10)
         }
         .ckPanel()
     }

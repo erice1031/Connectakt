@@ -22,10 +22,15 @@ struct RecorderView: View {
                     waveformSection
                     transportSection
 
-                    RecordingHistoryView(onTrim: { session in
-                        trimSession    = session
-                        showTrimEditor = true
-                    })
+                    RecordingHistoryView(
+                        onTrim: { session in
+                            trimSession    = session
+                            showTrimEditor = true
+                        },
+                        onUpload: { session in
+                            importer.handleFileSelected(session.fileURL)
+                        }
+                    )
                     .ckPanel()
                     .padding(.horizontal, ConnektaktTheme.paddingMD)
                 }
@@ -53,7 +58,7 @@ struct RecorderView: View {
         )) {
             OptimizationSheet(coordinator: importer,
                               transfer: connection.transfer,
-                              destinationFolder: "SAMPLES")
+                              destinationFolder: connection.lastBrowsedPath)
         }
         // Upload progress sheet
         .sheet(isPresented: Binding(
